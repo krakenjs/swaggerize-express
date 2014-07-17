@@ -1,6 +1,6 @@
 # swaggerexpress
 
-Provide swagger API specification based route handling to your express app.
+Provide [swagger API specification](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) based route handling to your express app.
 
 ### Usage
 
