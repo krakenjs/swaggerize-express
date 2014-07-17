@@ -27,7 +27,7 @@ test('swaggerexpress', function (t) {
 
         request(app).get('/hello').end(function (error, response) {
             t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.strictEqual(response.statusCode, 400, '400 required param missing.');
         });
     });
 

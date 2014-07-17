@@ -16,7 +16,7 @@
                         {
                             "name": "subject",
                             "description": "The subject to be greeted.",
-                            "required": false,
+                            "required": true,
                             "type": "string",
                             "paramType": "path"
                         }
