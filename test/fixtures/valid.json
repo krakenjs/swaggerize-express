@@ -1,0 +1,66 @@
+{
+    "swaggerVersion": "1.2",
+    "apiVersion": "v1",
+    "basePath": "http://localhost:8000/greetings",
+    "resourcePath": "/greetings",
+    "apis": [
+        {
+            "path": "/hello/{subject}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Greet our subject with hello!",
+                    "type": "string",
+                    "nickname": "helloSubject",
+                    "parameters": [
+                        {
+                            "name": "subject",
+                            "description": "The subject to be greeted.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/foo/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "testParent",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "some id.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/foo/{id}/bar",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "testDeep",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "some id.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,3 @@
+[submodule "lib/schema/swagger-spec"]
+	path = lib/schema/swagger-spec
+	url = https://github.com/wordnik/swagger-spec.git
