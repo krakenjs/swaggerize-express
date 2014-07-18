@@ -1,15 +1,15 @@
 'use strict';
 
 var test = require('tape'),
-    swaggerexpress = require('../lib'),
+    swaggycat = require('../lib'),
     express = require('express'),
     request = require('supertest');
 
-test('swaggerexpress', function (t) {
+test('swaggycat', function (t) {
 
     var app = express();
 
-    app.use(swaggerexpress({
+    app.use(swaggycat({
         api: require('./fixtures/valid.json')
     }));
 

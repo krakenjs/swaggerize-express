@@ -1,13 +1,36 @@
-# swaggerexpress
+# swaggycat
 
-Provide [swagger API specification](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) based route handling to your express app.
+```
+ __________________________
+< EXPRESS GOT DAT SWAGGYCAT >
+ --------------------------
+      \
+(_＼ヽ  \
+ 　 ＼＼ .Λ＿Λ.
+ 　　 ＼(　ˇωˇ)
+ 　　　 >　⌒ヽ
+ 　　　/ 　 へ＼
+ 　　 /　　/　＼＼
+ 　　 ﾚ　ノ　　 ヽ_つ
+ 　　/　/
+ 　 /　/|
+ 　(　(ヽ
+ 　|　|、＼
+ 　| 丿 ＼ ⌒)
+ 　| |　　) /
+ `ノ ) 　 Lﾉ
+ (_／
+```
+
+`swaggycat` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md) 
+and Express.
 
 ### Usage
 
 ```javascript
-var swaggerexpress = require('swaggerexpress');
+var swaggycat = require('swaggycat');
 
-app.use(swaggerexpress({
+app.use(swaggycat({
     api: require('./api.json'),
     docs: '/api-docs',
     routes: './routes'

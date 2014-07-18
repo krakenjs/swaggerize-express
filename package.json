@@ -1,14 +1,14 @@
 {
-  "name": "swaggerexpress",
-  "description": "Swagger handler generation for express.",
+  "name": "swaggycat",
+  "description": "Spec-first driven swagger express routing.",
   "version": "0.1.0",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "git://github.paypal.com/trlivingston/swaggerwagon.git"
+    "url": "git://github.paypal.com/trlivingston/swaggycat.git"
   },
-  "bugs": "http://github.paypal.com/trlivingston/swaggerwagon/issues",
+  "bugs": "http://github.paypal.com/trlivingston/swaggycat/issues",
   "publishConfig": {
     "registry": "http://npm.paypal.com"
   },

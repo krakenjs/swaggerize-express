@@ -62,5 +62,20 @@
                 }
             ]
         }
-    ]
+    ],
+    "models": {
+        "User": {
+            "id": "User",
+            "required": ["id", "name"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        }
+    }
 }
