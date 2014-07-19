@@ -16,7 +16,7 @@ test('swaggycat', function (t) {
     t.test('docs', function (t) {
         t.plan(2);
 
-        request(app).get('/api-docs').end(function (error, response) {
+        request(app).get('/greetings/v1/api-docs').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
@@ -25,7 +25,7 @@ test('swaggycat', function (t) {
     t.test('route', function (t) {
         t.plan(2);
 
-        request(app).get('/hello').end(function (error, response) {
+        request(app).get('/greetings/v1/hello').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 400, '400 required param missing.');
         });
@@ -33,9 +33,19 @@ test('swaggycat', function (t) {
 
 
     t.test('route', function (t) {
+        t.plan(3);
+
+        request(app).get('/greetings/v1/hello/doge').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.strictEqual(response.text, 'hello', 'body is correct.');
+        });
+    });
+
+    t.test('route', function (t) {
         t.plan(2);
 
-        request(app).get('/hello/doge').end(function (error, response) {
+        request(app).get('/greetings/v1/foo/1').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
@@ -44,16 +54,7 @@ test('swaggycat', function (t) {
     t.test('route', function (t) {
         t.plan(2);
 
-        request(app).get('/foo/1').end(function (error, response) {
-            t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 200, '200 status.');
-        });
-    });
-
-    t.test('route', function (t) {
-        t.plan(2);
-
-        request(app).get('/foo/1/bar').end(function (error, response) {
+        request(app).get('/greetings/v1/foo/1/bar').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
