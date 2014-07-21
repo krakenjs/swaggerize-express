@@ -7,7 +7,7 @@ var test = require('tape'),
 
 test('schema', function (t) {
 
-    t.test('good', function (t) {
+    t.test('good api', function (t) {
         t.plan(1);
 
         var results = schema.validate(apiDefinition);
@@ -15,10 +15,61 @@ test('schema', function (t) {
         t.ok(results.valid, 'no errors');
     });
 
-    t.test('bad', function (t) {
+    t.test('bad api', function (t) {
         t.plan(2);
 
         var results = schema.validate(badApi);
+
+        t.ok(!results.valid, 'bad');
+        t.ok(results.error, 'has error.');
+    });
+
+    t.test('good model', function (t) {
+        t.plan(1);
+
+        var modelSchema = {
+            "id": "User",
+            "required": ["id", "name"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        };
+
+        var results = schema.validateModel({
+            "id": 123,
+            "name": "John Doe"
+        }, modelSchema);
+
+        t.ok(results.valid, 'no errors');
+    });
+
+    t.test('bad model', function (t) {
+        t.plan(2);
+
+        var modelSchema = {
+            "id": "User",
+            "required": ["id", "name"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        };
+
+        var results = schema.validateModel({
+            "id": "asdf",
+            "name": "John Doe"
+        }, modelSchema);
 
         t.ok(!results.valid, 'bad');
         t.ok(results.error, 'has error.');

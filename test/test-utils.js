@@ -10,7 +10,7 @@ test('utils', function (t) {
 
         var param = utils.convertParam('{id}');
 
-        t.strictEqual(param, ':id', 'is converted.');
+        t.strictEqual(param, ':id?', 'is converted.');
     });
 
     t.test('convertPath', function (t) {
@@ -18,7 +18,7 @@ test('utils', function (t) {
 
         var path = utils.convertPath('/foo/{id}/{bar}/asdf');
 
-        t.strictEqual(path, '/foo/:id/:bar/asdf', 'is converted.');
+        t.strictEqual(path, '/foo/:id?/:bar?/asdf', 'is converted.');
     });
 
 });
