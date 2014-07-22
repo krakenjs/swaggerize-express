@@ -55,7 +55,7 @@
                             "name": "id",
                             "description": "some id.",
                             "required": false,
-                            "type": "string",
+                            "type": "integer",
                             "paramType": "path"
                         }
                     ]
@@ -72,8 +72,7 @@
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "integer"
                 }
             }
         }
