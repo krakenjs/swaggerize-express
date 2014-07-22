@@ -29,7 +29,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "type": "string",
+                    "type": "integer",
                     "nickname": "testParent",
                     "parameters": [
                         {
