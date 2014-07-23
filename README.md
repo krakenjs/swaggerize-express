@@ -10,7 +10,7 @@ and Express.
 - Input validation.
 - Output validation.
 
-`swaggerize-express` is currently `pre-release`.
+`swaggerize-express` is currently `pre-release` and as a result may change without warning.
 
 ### Usage
 
