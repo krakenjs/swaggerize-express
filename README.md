@@ -3,6 +3,8 @@
 `swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
 and Express.
 
+`swaggerize-express` generates express routes with input and output model validation.
+
 ### Usage
 
 ```javascript
@@ -19,7 +21,7 @@ Options:
 
 - `api` - a valid Swagger 1.2 document.
 - `docs` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
-- `handlers` - either a directory structure for route handlers or an premade object.
+- `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
 
 ### Handlers Directory
 
@@ -76,7 +78,7 @@ The arguments passed to a handler function are:
 ### Reply Function
 
 The `reply` function is provided to allow for model validation and error handling. In addition to acting as a `res.send` method,
-it also provides the following properties:
+it also provides the following shortcut properties:
 
 - `_raw` - the raw `response` object.
 - `skip()` - acts as `next()`.
