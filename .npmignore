@@ -55,5 +55,3 @@ lib/schema/swagger-spec/schemas/README.md
 lib/schema/swagger-spec/.gitignore
 lib/schema/swagger-spec/README.md
 lib/schema/swagger-spec/swagger-logo.jpg
-
-DESIGN.md

@@ -3,7 +3,14 @@
 `swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
 and Express.
 
-`swaggerize-express` generates express routes with input and output model validation.
+`swaggerize-express` provides the following features:
+
+- Express routes binding.
+- API documentation route.
+- Input validation.
+- Output validation.
+
+`swaggerize-express` is currently `pre-release`.
 
 ### Usage
 
@@ -73,7 +80,7 @@ The directory generation will yield this object, but it can be provided directly
 The arguments passed to a handler function are:
 
 - `req` - the `request` object.
-- `repy` - an abstraction of the `res.send` in express with some additional behavior.
+- `reply` - an wrapper of `res.send` in express with some additional behavior.
 
 ### Reply Function
 
