@@ -1,7 +1,7 @@
 {
   "name": "swaggerize-express",
   "description": "Spec-first driven swagger express routing.",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "repository": {
     "type": "git",
