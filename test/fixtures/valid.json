@@ -54,8 +54,27 @@
                         {
                             "name": "id",
                             "description": "some id.",
-                            "required": false,
+                            "required": true,
                             "type": "integer",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/baz/{message}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "baz",
+                    "parameters": [
+                        {
+                            "name": "message",
+                            "description": "some message.",
+                            "required": false,
+                            "type": "string",
                             "paramType": "path"
                         }
                     ]

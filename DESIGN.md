@@ -8,6 +8,7 @@ The intermediate `routes` object created per `api` definition has the following 
 
 - `name` - the `nickname` from the spec.
 - `path` - the route path.
+- `mountpath` - the mountpath, combination of `resourcePath` and `apiVersion`.
 - `method` - the HTTP method.
 - `validators` - an object consisting of arrays of `input` and `output` validation stacks.
 - `handler` - the `express` style route handler.
