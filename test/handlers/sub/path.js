@@ -2,6 +2,9 @@
 
 module.exports = {
     get: function getBar(req, reply) {
-        reply('bar');
+        reply({
+            id: 0,
+            name: 'Swaggycat'
+        });
     }
 };

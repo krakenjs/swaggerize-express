@@ -9,9 +9,8 @@
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "Greet our subject with hello!",
                     "type": "string",
-                    "nickname": "helloSubject",
+                    "nickname": "getHello",
                     "parameters": [
                         {
                             "name": "subject",
@@ -25,16 +24,33 @@
             ]
         },
         {
-            "path": "/foo/{id}",
+            "path": "/goodbye/{subject}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "getGoodbye",
+                    "parameters": [
+                        {
+                            "name": "subject",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/sub/{id}",
             "operations": [
                 {
                     "method": "GET",
                     "type": "integer",
-                    "nickname": "testParent",
+                    "nickname": "getSub",
                     "parameters": [
                         {
                             "name": "id",
-                            "description": "some id.",
                             "required": false,
                             "type": "integer",
                             "paramType": "path"
@@ -44,37 +60,17 @@
             ]
         },
         {
-            "path": "/foo/{id}/bar",
+            "path": "/sub/{id}/path",
             "operations": [
                 {
                     "method": "GET",
-                    "type": "string",
-                    "nickname": "testDeep",
+                    "type": "User",
+                    "nickname": "getSubpath",
                     "parameters": [
                         {
                             "name": "id",
-                            "description": "some id.",
                             "required": true,
                             "type": "integer",
-                            "paramType": "path"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "path": "/baz/{message}",
-            "operations": [
-                {
-                    "method": "GET",
-                    "type": "string",
-                    "nickname": "baz",
-                    "parameters": [
-                        {
-                            "name": "message",
-                            "description": "some message.",
-                            "required": false,
-                            "type": "string",
                             "paramType": "path"
                         }
                     ]

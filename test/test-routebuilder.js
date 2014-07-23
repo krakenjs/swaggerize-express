@@ -1,9 +1,9 @@
 'use strict';
 
 var test = require('tape'),
-    api = require('./fixtures/valid.json'),
+    api = require('./fixtures/api.json'),
     path = require('path'),
-buildroutes = require('../lib/buildroutes');
+    buildroutes = require('../lib/buildroutes');
 
 test('routebuilder', function (t) {
 

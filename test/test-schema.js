@@ -2,8 +2,7 @@
 
 var test = require('tape'),
     schema = require('../lib/schema'),
-    apiDefinition = require('./fixtures/valid.json'),
-    badApi = require('./fixtures/bad.json');
+    apiDefinition = require('./fixtures/api.json');
 
 test('schema', function (t) {
 
@@ -18,7 +17,31 @@ test('schema', function (t) {
     t.test('bad api', function (t) {
         t.plan(2);
 
-        var results = schema.validate(badApi);
+        var results = schema.validate({
+            "swaggerVersion": "1.2",
+            "basePath": "http://localhost:8000/greetings",
+            "apis": [
+                {
+                    "path": "/hello/{subject}",
+                    "operations": [
+                        {
+                            "method": "GET",
+                            "summary": "Greet our subject with hello!",
+                            "type": "string",
+                            "parameters": [
+                                {
+                                    "name": "subject",
+                                    "description": "The subject to be greeted.",
+                                    "required": true,
+                                    "type": "string",
+                                    "paramType": "path"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
 
         t.ok(!results.valid, 'bad');
         t.ok(results.error, 'has error.');
