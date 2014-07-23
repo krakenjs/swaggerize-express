@@ -1,36 +1,14 @@
-# swaggycat
+# swaggerize-express
 
-```
- __________________________
-< EXPRESS GOT DAT SWAGGYCAT >
- --------------------------
-      \
-(_＼ヽ  \
- 　 ＼＼ .Λ＿Λ.
- 　　 ＼(　ˇωˇ)
- 　　　 >　⌒ヽ
- 　　　/ 　 へ＼
- 　　 /　　/　＼＼
- 　　 ﾚ　ノ　　 ヽ_つ
- 　　/　/
- 　 /　/|
- 　(　(ヽ
- 　|　|、＼
- 　| 丿 ＼ ⌒)
- 　| |　　) /
- `ノ ) 　 Lﾉ
- (_／
-```
-
-`swaggycat` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
+`swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
 and Express.
 
 ### Usage
 
 ```javascript
-var swaggycat = require('swaggycat');
+var swaggerize = require('swaggerize-express');
 
-app.use(swaggycat({
+app.use(swaggerize({
     api: require('./api.json'),
     docs: '/api-docs',
     handlers: './handlers'
@@ -40,7 +18,7 @@ app.use(swaggycat({
 Options:
 
 - `api` - a valid Swagger 1.2 document.
-- `docs` - the path to expose api docs for swagger-ui, etc.
+- `docs` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
 - `handlers` - either a directory structure for route handlers or an premade object.
 
 ### Handlers Directory
@@ -78,9 +56,10 @@ The directory generation will yield this object, but it can be provided directly
 ```javascript
 {
     'foo': {
-        'get': function (req, reply) { ...},
+        'get': function (req, reply) { ... },
         'bar': {
-            'get': ...
+            'get': function (req, reply) { ... },
+            'post': function (req, reply) { ... }
         }
     }
     ...
@@ -101,4 +80,5 @@ it also provides the following properties:
 
 - `_raw` - the raw `response` object.
 - `skip()` - acts as `next()`.
+- `redirect(url)` - acts as `response.redirect`.
 - `error(e)` - acts as `next(e)`.
