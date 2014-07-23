@@ -3,14 +3,14 @@
 var test = require('tape'),
     api = require('./fixtures/valid.json'),
     path = require('path'),
-    routebuilder = require('../lib/routebuilder');
+buildroutes = require('../lib/buildroutes');
 
 test('routebuilder', function (t) {
 
     t.test('build', function (t) {
         var routes;
 
-        routes = routebuilder.build({ api: api, handlers: path.join(__dirname, 'handlers') });
+        routes = buildroutes({ api: api, handlers: path.join(__dirname, 'handlers') });
 
         t.strictEqual(routes.length, 4, 'added 4 routes.');
 
@@ -28,7 +28,7 @@ test('routebuilder', function (t) {
         t.plan(1);
 
         t.throws(function () {
-            routebuilder.build({ api: api, handlers: 'asdf' });
+            buildroutes({ api: api, handlers: 'asdf' });
         }, 'throws error for bad directory.');
     });
 
