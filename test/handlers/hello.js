@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    get: function getHello(req, reply) {
+    get: function (req, reply) {
         reply('hello');
     }
 };

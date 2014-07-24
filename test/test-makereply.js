@@ -6,7 +6,7 @@ var test = require('tape'),
 test('makereply', function (t) {
 
     t.test('make', function (t) {
-        t.plan(8);
+        t.plan(7);
 
         var res = {
             send: function () {
@@ -28,9 +28,8 @@ test('makereply', function (t) {
 
         t.ok(reply, 'reply made');
 
-        reply.skip();
-        reply.error(new Error('error1'));
-        reply.error('error2');
+        reply.next();
+        reply.next(new Error('error1'));
         reply.redirect();
         reply();
 

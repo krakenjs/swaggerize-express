@@ -91,15 +91,20 @@ The directory generation will yield this object, but it can be provided directly
 ```javascript
 {
     'foo': {
-        'get': function (req, reply) { ... },
+        '$get': function (req, reply) { ... },
         'bar': {
-            'get': function (req, reply) { ... },
-            'post': function (req, reply) { ... }
+            '$get': function (req, reply) { ... },
+            '$post': function (req, reply) { ... }
         }
     }
     ...
 }
 ```
+
+Note that if you are programatically constructing a handlers obj, you must namespace http methods with `$` to 
+avoid conflicts with path names.
+
+Handler keys in files do *not* have to be namespaced in this way.
 
 ### Handler Signature
 
@@ -110,10 +115,10 @@ The arguments passed to a handler function are:
 
 ### Reply Function
 
-The `reply` function is provided to allow for model validation and error handling. In addition to acting as a `res.send` method,
-it also provides the following shortcut properties:
+The `reply` function is provided to allow for model validation and error handling without monkey patching `res.send` 
+(or requiring `res.send` to be used vs `res.json`, etc). In addition to acting as a `res.send` method, it also provides 
+the following convenience properties:
 
 - `_raw` - the raw `response` object.
-- `skip()` - acts as `next()`.
+- `next()` - acts as `res.next()`.
 - `redirect(url)` - acts as `response.redirect`.
-- `error(e)` - acts as `next(e)`.
