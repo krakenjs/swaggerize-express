@@ -101,8 +101,8 @@ The directory generation will yield this object, but it can be provided directly
 }
 ```
 
-Note that if you are programatically constructing a handlers obj, you must namespace http methods with `$` to 
-avoid conflicts with path names.
+Note that if you are programatically constructing a handlers obj, you must namespace *http methods* with `$` to 
+avoid conflicts with path names. These keys should also be *lowercase*.
 
 Handler keys in files do *not* have to be namespaced in this way.
 
