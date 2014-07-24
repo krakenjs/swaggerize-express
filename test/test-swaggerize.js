@@ -1,17 +1,32 @@
 'use strict';
 
 var test = require('tape'),
-    swaggycat = require('../lib'),
+    swaggerize = require('../lib'),
     express = require('express'),
     request = require('supertest');
 
 test('swaggycat valid input/output', function (t) {
 
     var app = express();
-
-    app.use(swaggycat({
+    var swaggycat = swaggerize({
         api: require('./fixtures/api.json')
-    }));
+    });
+
+    app.use(swaggycat);
+
+    t.test('api', function (t) {
+        t.plan(5);
+
+        t.ok(swaggycat.hasOwnProperty('_api'), 'has _api property.');
+        t.ok(swaggycat._api, '_api is an object.');
+
+        t.ok(swaggycat.hasOwnProperty('setUrl'), 'has setUrl property.');
+        t.strictEqual(typeof swaggycat.setUrl, 'function', 'setUrl is a function.');
+
+        swaggycat.setUrl('http://localhost:8080');
+
+        t.strictEqual(swaggycat._api.basePath, 'http://localhost:8080/greetings/v1');
+    });
 
     t.test('docs', function (t) {
         t.plan(2);
@@ -66,7 +81,7 @@ test('swaggycat invalid input/output', function (t) {
 
     var app = express();
 
-    app.use(swaggycat({
+    app.use(swaggerize({
         api: require('./fixtures/api.json'),
         handlers: {
             sub: {

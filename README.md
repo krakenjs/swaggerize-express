@@ -30,6 +30,32 @@ Options:
 - `docs` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
 
+The base url for the api can also be updated via the `setUrl` function on the middleware.
+
+Example:
+
+```javascript
+var http = require('http');
+var express = require('express');
+var swaggerize = require('swaggerize-express');
+
+app = express();
+
+var server = http.createServer(app);
+
+var swagger = swaggerize({
+    api: require('./api.json'),
+    docs: '/api-docs',
+    handlers: './handlers'
+});
+
+app.use(swagger);
+
+server.listen(port, 'localhost', function () {
+    swagger.setUrl('http://' + server.address().address + ':' + server.address().port);
+});
+```
+
 ### Handlers Directory
 
 ```
