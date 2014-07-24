@@ -1,0 +1,31 @@
+'use strict';
+
+var test = require('tape'),
+    expressroutes = require('../lib/expressroutes'),
+    express = require('express'),
+    request = require('supertest');
+
+test('express routes', function (t) {
+    t.plan(5);
+
+    var app = express(), child = express();
+
+    child.once('mount', function (parent) {
+        var stack;
+
+        expressroutes(app, '/test', {
+            api: require('./fixtures/api.json'),
+            handlers: require('path').join(__dirname, 'handlers')
+        });
+
+        stack = Array.prototype.slice.call(parent._router.stack, 3);
+
+        t.strictEqual(stack.length, 4, 'routes added.');
+        t.strictEqual(stack[0].route.path, '/test/api-docs', 'api-docs added.');
+        t.strictEqual(stack[1].route.path, '/test/hello/:subject?', 'hello added.');
+        t.strictEqual(stack[2].route.path, '/test/sub/:id?', 'sub added.');
+        t.strictEqual(stack[3].route.path, '/test/sub/:id?/path', 'sub/path added.');
+    });
+
+    app.use(child);
+});
