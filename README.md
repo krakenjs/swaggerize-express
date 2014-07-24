@@ -7,8 +7,8 @@ and Express.
 
 - Express routes binding.
 - API documentation route.
-- Input validation.
-- Output validation.
+- Input model validation.
+- Output model validation.
 
 `swaggerize-express` is currently `pre-release` and as a result may change without warning.
 
@@ -46,7 +46,7 @@ Matches:
 - `foo/bar.js : /foo/bar`
 - `baz.js : /baz`
 
-Each provides javascript file should follow the format of:
+Each provided javascript file should follow the format of:
 
 ```javascript
 module.exports = {
