@@ -111,7 +111,7 @@ Handler keys in files do *not* have to be namespaced in this way.
 The arguments passed to a handler function are:
 
 - `req` - the `request` object.
-- `reply` - an wrapper of `res.send` in express with some additional behavior.
+- `reply` - a wrapper of `res.send` in express that provides output model validation.
 
 ### Reply Function
 
@@ -121,4 +121,4 @@ the following convenience properties:
 
 - `_raw` - the raw `response` object.
 - `next()` - acts as `res.next()`.
-- `redirect(url)` - acts as `response.redirect`.
+- `redirect(url)` - acts as `res.redirect`.
