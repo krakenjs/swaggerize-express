@@ -4,3 +4,5 @@ node_js:
 branches:
   only:
     - master
+before_install:
+  - git submodule update --init --recursive
