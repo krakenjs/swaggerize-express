@@ -8,6 +8,8 @@
     "swagger",
     "node",
     "rest",
+    "restful",
+    "service",
     "api"
   ],
   "main": "./lib/index",
