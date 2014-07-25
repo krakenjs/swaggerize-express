@@ -41,6 +41,6 @@
   "scripts": {
     "test": "tape test/*.js",
     "cover": "istanbul cover tape -- test/*.js",
-    "lint": "jshint -c .jshintrc index.js lib/"
+    "lint": "jshint -c .jshintrc lib/**/*.js"
   }
 }

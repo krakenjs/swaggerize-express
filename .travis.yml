@@ -6,3 +6,6 @@ branches:
     - master
 before_install:
   - git submodule update --init --recursive
+script:
+  - "npm run-script cover"
+  - "npm run-script lint"
