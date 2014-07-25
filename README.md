@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/krakenjs/swaggerize-express.png)](https://travis-ci.org/krakenjs/swaggerize-express) [![NPM version](https://badge.fury.io/js/swaggerize-express.png)](http://badge.fury.io/js/swaggerize-express)
+
 # swaggerize-express
 
 `swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
@@ -11,6 +13,15 @@ and Express.
 - Output model validation.
 
 `swaggerize-express` is currently `pre-release` and as a result may change without warning.
+
+### Why "Spec First"
+
+There are already a number of modules that help build REST services with express and swagger. However, 
+these modules tend to focus on building the documentation or specification as a side effect of writing 
+the application business logic.
+
+`swaggerize-express` begins with the service specification first. This facilitates writing services that 
+are easier to design, review, and test.
 
 ### Usage
 

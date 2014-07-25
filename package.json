@@ -1,8 +1,16 @@
 {
   "name": "swaggerize-express",
-  "description": "Spec-first driven swagger express routing.",
   "version": "0.1.0-alpha.1",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
+  "description": "Spec-first driven swagger express routing.",
+  "keywords": [
+    "express",
+    "swagger",
+    "node",
+    "rest",
+    "api"
+  ],
+  "main": "./lib/index",
   "repository": {
     "type": "git",
     "url": "git://github.com/krakenjs/swaggerize-express.git"
@@ -32,6 +40,5 @@
     "test": "tape test/*.js",
     "cover": "istanbul cover tape -- test/*.js",
     "lint": "jshint -c .jshintrc index.js lib/"
-  },
-  "main": "./lib/index"
+  }
 }
