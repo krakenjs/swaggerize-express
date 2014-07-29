@@ -125,6 +125,12 @@ You can generate models and handlers stubs by running the following command:
 swaggerize --api [swagger document] --models [models dir] --handlers [handlers dir]
 ```
 
+Example:
+
+```shell
+swaggerize --api config/api.json --models resources/models --handlers resources/handlers
+```
+
 ### Handler Signature
 
 The arguments passed to a handler function are:
