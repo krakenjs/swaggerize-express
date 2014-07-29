@@ -34,7 +34,7 @@ function createHandlers(apis, handlersPath) {
     template = fs.readFileSync(handlerTemplate);
 
     apis.forEach(function (api) {
-        var pathnames, route, methods, file;
+        var pathnames, route;
 
         route = {
             methods: []
