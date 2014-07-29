@@ -12,7 +12,7 @@ test('routebuilder', function (t) {
 
         routes = buildroutes({ api: api, handlers: path.join(__dirname, 'handlers') });
 
-        t.strictEqual(routes.length, 4, 'added 4 routes.');
+        t.strictEqual(routes.length, 5, 'added 5 routes.');
 
         routes.forEach(function (route) {
             t.ok(route.hasOwnProperty('method'), 'has method property.');
