@@ -117,6 +117,14 @@ avoid conflicts with path names. These keys should also be *lowercase*.
 
 Handler keys in files do *not* have to be namespaced in this way.
 
+### Generator
+
+You can generate models and handlers stubs by running the following command:
+
+```shell
+swaggerize --api [api file] --models [models dir] --handlers [handlers dir]
+```
+
 ### Handler Signature
 
 The arguments passed to a handler function are:
