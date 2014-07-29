@@ -16,9 +16,9 @@ test('utils', function (t) {
     t.test('convertPath', function (t) {
         t.plan(1);
 
-        var path = utils.convertPath('/foo/{id}/{bar}/asdf');
+        var path = utils.convertPath('/foo/{id}/asdf/{id}');
 
-        t.strictEqual(path, '/foo/:id/:bar/asdf', 'is converted.');
+        t.strictEqual(path, '/foo/:id/asdf/:id', 'is converted.');
     });
 
     t.test('prefix', function (t) {
