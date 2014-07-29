@@ -24,10 +24,10 @@ test('express routes', function (t) {
 
             t.strictEqual(stack.length, 5, 'routes added.');
             t.strictEqual(stack[0].route.path, '/v1/greetings/api-docs', 'api-docs added.');
-            t.strictEqual(stack[1].route.path, '/v1/greetings/hello/:subject?', 'hello added.');
-            t.strictEqual(stack[2].route.path, '/v1/greetings/sub/:id?', 'sub added.');
-            t.strictEqual(stack[3].route.path, '/v1/greetings/sub/:id?', 'sub added (head).');
-            t.strictEqual(stack[4].route.path, '/v1/greetings/sub/:id?/path', 'sub/path added.');
+            t.strictEqual(stack[1].route.path, '/v1/greetings/hello/:subject', 'hello added.');
+            t.strictEqual(stack[2].route.path, '/v1/greetings/sub/:id', 'sub added.');
+            t.strictEqual(stack[3].route.path, '/v1/greetings/sub/:id', 'sub added (head).');
+            t.strictEqual(stack[4].route.path, '/v1/greetings/sub/:id/path', 'sub/path added.');
         });
 
         app.use(child);

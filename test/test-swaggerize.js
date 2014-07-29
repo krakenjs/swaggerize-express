@@ -42,7 +42,7 @@ test('swaggycat valid input/output', function (t) {
 
         request(app).get('/v1/greetings/hello').end(function (error, response) {
             t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 400, '400 required param missing.');
+            t.strictEqual(response.statusCode, 404, '404 required param missing.');
         });
     });
 
@@ -115,12 +115,12 @@ test('swaggycat invalid input/output', function (t) {
         });
     });
 
-    t.test('null input ok', function (t) {
+    t.test('null input not found', function (t) {
         t.plan(2);
 
-        request(app).get('/v1/greetings/goodbye/').end(function (error, response) {
+        request(app).get('/v1/greetings/goodbye').end(function (error, response) {
             t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.strictEqual(response.statusCode, 404, '404 status.');
         });
     });
 
