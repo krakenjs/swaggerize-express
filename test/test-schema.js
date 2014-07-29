@@ -64,7 +64,7 @@ test('schema', function (t) {
             }
         };
 
-        var results = schema.validateModel({
+        var results = schema.validate({
             "id": 123,
             "name": "John Doe"
         }, modelSchema);
@@ -89,7 +89,7 @@ test('schema', function (t) {
             }
         };
 
-        var results = schema.validateModel({
+        var results = schema.validate({
             "id": "asdf",
             "name": "John Doe"
         }, modelSchema);

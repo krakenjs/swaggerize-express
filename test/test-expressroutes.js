@@ -8,7 +8,7 @@ var test = require('tape'),
 test('express routes', function (t) {
 
     t.test('test api', function (t) {
-        t.plan(5);
+        t.plan(6);
 
         var app = express(), child = express();
 
@@ -22,11 +22,12 @@ test('express routes', function (t) {
 
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
-            t.strictEqual(stack.length, 4, 'routes added.');
+            t.strictEqual(stack.length, 5, 'routes added.');
             t.strictEqual(stack[0].route.path, '/test/api-docs', 'api-docs added.');
             t.strictEqual(stack[1].route.path, '/test/hello/:subject?', 'hello added.');
             t.strictEqual(stack[2].route.path, '/test/sub/:id?', 'sub added.');
-            t.strictEqual(stack[3].route.path, '/test/sub/:id?/path', 'sub/path added.');
+            t.strictEqual(stack[3].route.path, '/test/sub/:id?', 'sub added (head).');
+            t.strictEqual(stack[4].route.path, '/test/sub/:id?/path', 'sub/path added.');
         });
 
         app.use(child);
