@@ -14,6 +14,9 @@ test('makereply', function (t) {
             },
             redirect: function () {
                 t.pass('called redirect.');
+            },
+            end: function () {
+                t.pass('called end');
             }
         };
         var next = function (e) {
