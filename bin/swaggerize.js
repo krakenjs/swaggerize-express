@@ -2,97 +2,16 @@
 'use strict';
 
 var minimist = require('minimist'),
-fs = require('fs'),
-path = require('path'),
-schema = require('swaggerize-express/lib/schema'),
-lodash = require('lodash');
+    fs = require('fs'),
+    path = require('path'),
+    schema = require('swaggerize-express/lib/schema'),
+    create = require('swaggerize-express/bin/lib/create');
 
-var argv, validation, api, apiPath, modelsPath, handlersPath, modelTemplate, handlerTemplate;
+var argv, validation, api, apiPath, modelsPath, handlersPath;
 
 function usage() {
     console.error('Usage: swaggerize --api [api] --models [models dir] --handlers [handlers dir]');
     process.exit(1);
-}
-
-function createModels(models, modelsPath) {
-    var template = fs.readFileSync(modelTemplate);
-
-    Object.keys(models).forEach(function (modelName) {
-        var fileName, model;
-
-        fileName = path.join(modelsPath, modelName.toLowerCase() + '.js');
-
-        if (!fs.existsSync(fileName)) {
-            model = models[modelName];
-            fs.writeFileSync(fileName, lodash.template(template, model));
-        }
-        else {
-            console.warn('%s already exists.', fileName);
-        }
-    });
-}
-
-function createHandlers(apis, handlersPath) {
-    var routes, template;
-
-    routes = {};
-    template = fs.readFileSync(handlerTemplate);
-
-    apis.forEach(function (api) {
-        var routepath, pathnames, route, methods, file;
-
-        routepath = api.path;
-        route = {
-            methods: []
-        };
-        pathnames = [];
-
-        routepath.split('/').forEach(function (element) {
-            if (element && element.indexOf('{') < 0) {
-                pathnames.push(element);
-            }
-        });
-
-        api.operations.forEach(function (operation) {
-            route.methods.push({
-                method: operation.method.toLowerCase(),
-                name: operation.nickname
-            });
-        });
-
-        if (routes[routepath]) {
-            routes[routepath].methods.push.apply(null, route.methods);
-            return;
-        }
-
-        routes[routepath] = route;
-    });
-
-    Object.keys(routes).forEach(function (routePath) {
-        var route = routes[routePath];
-
-        file = path.join(handlersPath, pathnames[pathnames.length - 1] + '.js');
-
-        if (pathnames.length > 1) {
-            file = path.join(handlersPath, pathnames.slice(0, pathnames.length - 1).join('/'));
-
-            if (fs.existsSync(file)) {
-                console.warn('%s already exists.', file);
-            }
-            else {
-                fs.mkdirSync(file);
-            }
-
-            file = path.join(handlersPath, pathnames.join('/') + '.js');
-        }
-
-        if (fs.existsSync(file)) {
-            console.warn('%s already exists.', file);
-        }
-        else {
-            fs.writeFileSync(file, lodash.template(template, route));
-        }
-    });
 }
 
 argv = minimist(process.argv.slice(2));
@@ -109,9 +28,6 @@ if (!apiPath || !(modelsPath || handlersPath)) {
 apiPath = path.resolve(apiPath);
 modelsPath && (modelsPath = path.resolve(modelsPath));
 handlersPath && (handlersPath = path.resolve(handlersPath));
-
-modelTemplate = path.join(__dirname, './templates/model.js');
-handlerTemplate = path.join(__dirname, './templates/handler.js');
 
 [apiPath, modelsPath, handlersPath].forEach(function (filePath) {
     var dir = path.dirname(filePath);
@@ -135,5 +51,5 @@ if (!validation.valid) {
     return;
 }
 
-createModels(api.models, modelsPath);
-createHandlers(api.apis, handlersPath);
+create.models(api.models, modelsPath);
+create.handlers(api.apis, handlersPath);
