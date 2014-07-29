@@ -10,7 +10,7 @@ var minimist = require('minimist'),
 var argv, validation, api, apiPath, modelsPath, handlersPath;
 
 function usage() {
-    console.error('Usage: swaggerize --api [api] --models [models dir] --handlers [handlers dir]');
+    console.error('Usage: swaggerize --api [swagger document] --models [models dir] --handlers [handlers dir]');
     process.exit(1);
 }
 

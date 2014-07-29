@@ -122,7 +122,7 @@ Handler keys in files do *not* have to be namespaced in this way.
 You can generate models and handlers stubs by running the following command:
 
 ```shell
-swaggerize --api [api file] --models [models dir] --handlers [handlers dir]
+swaggerize --api [swagger document] --models [models dir] --handlers [handlers dir]
 ```
 
 ### Handler Signature
