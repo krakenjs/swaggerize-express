@@ -5,8 +5,7 @@ function <%=id%>(options) {
         options = {};
     }
     <%_.forEach(Object.keys(properties), function (prop) {%>
-    this.<%=prop%> = options.<%=prop%>;
-    <%})%>
+    this.<%=prop%> = options.<%=prop%>;<%})%>
 }
 
 module.exports = <%=id%>;

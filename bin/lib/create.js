@@ -37,8 +37,11 @@ function createHandlers(apis, handlersPath) {
         var pathnames, route;
 
         route = {
+            path: api.path,
+            pathname: undefined,
             methods: []
         };
+
         pathnames = [];
 
         api.path.split('/').forEach(function (element) {
@@ -47,28 +50,29 @@ function createHandlers(apis, handlersPath) {
             }
         });
 
-        route.path = pathnames.join('/');
+        route.pathname = pathnames.join('/');
 
         api.operations.forEach(function (operation) {
             route.methods.push({
                 method: operation.method.toLowerCase(),
-                name: operation.nickname
+                name: operation.nickname,
+                output: operation.type
             });
         });
 
-        if (routes[route.path]) {
-            routes[route.path].methods.push.apply(routes[route.path].methods, route.methods);
+        if (routes[route.pathname]) {
+            routes[route.pathname].methods.push.apply(routes[route.pathname].methods, route.methods);
             return;
         }
 
-        routes[route.path] = route;
+        routes[route.pathname] = route;
     });
 
     Object.keys(routes).forEach(function (routePath) {
         var pathnames, route, file;
 
         route = routes[routePath];
-        pathnames = route.path.split('/');
+        pathnames = route.pathname.split('/');
 
         file = path.join(handlersPath, pathnames[pathnames.length - 1] + '.js');
 
