@@ -56,19 +56,6 @@
                             "paramType": "path"
                         }
                     ]
-                },
-                {
-                    "method": "HEAD",
-                    "type": "void",
-                    "nickname": "headSub",
-                    "parameters": [
-                        {
-                            "name": "id",
-                            "required": false,
-                            "type": "integer",
-                            "paramType": "path"
-                        }
-                    ]
                 }
             ]
         },
