@@ -2,10 +2,10 @@
 'use strict';
 
 var minimist = require('minimist'),
-    fs = require('fs'),
-    path = require('path'),
-    schema = require('../lib/schema'),
-    lodash = require('lodash');
+fs = require('fs'),
+path = require('path'),
+schema = require('swaggerize-express/lib/schema'),
+lodash = require('lodash');
 
 var argv, validation, api, apiPath, modelsPath, handlersPath, modelTemplate, handlerTemplate;
 
@@ -33,7 +33,10 @@ function createModels(models, modelsPath) {
 }
 
 function createHandlers(apis, handlersPath) {
-    var template = fs.readFileSync(handlerTemplate);
+    var routes, template;
+
+    routes = {};
+    template = fs.readFileSync(handlerTemplate);
 
     apis.forEach(function (api) {
         var routepath, pathnames, route, methods, file;
@@ -56,6 +59,17 @@ function createHandlers(apis, handlersPath) {
                 name: operation.nickname
             });
         });
+
+        if (routes[routepath]) {
+            routes[routepath].methods.push.apply(null, route.methods);
+            return;
+        }
+
+        routes[routepath] = route;
+    });
+
+    Object.keys(routes).forEach(function (routePath) {
+        var route = routes[routePath];
 
         file = path.join(handlersPath, pathnames[pathnames.length - 1] + '.js');
 
