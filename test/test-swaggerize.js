@@ -25,13 +25,13 @@ test('swaggycat valid input/output', function (t) {
 
         swaggycat.setUrl('http://localhost:8080');
 
-        t.strictEqual(swaggycat._api.basePath, 'http://localhost:8080/greetings/v1');
+        t.strictEqual(swaggycat._api.basePath, 'http://localhost:8080/v1/greetings');
     });
 
     t.test('docs', function (t) {
         t.plan(2);
 
-        request(app).get('/greetings/v1/api-docs').end(function (error, response) {
+        request(app).get('/v1/greetings/api-docs').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
@@ -40,9 +40,9 @@ test('swaggycat valid input/output', function (t) {
     t.test('route', function (t) {
         t.plan(2);
 
-        request(app).get('/greetings/v1/hello').end(function (error, response) {
+        request(app).get('/v1/greetings/hello').end(function (error, response) {
             t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 400, '400 required param missing.');
+            t.strictEqual(response.statusCode, 404, '404 required param missing.');
         });
     });
 
@@ -50,7 +50,7 @@ test('swaggycat valid input/output', function (t) {
     t.test('route', function (t) {
         t.plan(3);
 
-        request(app).get('/greetings/v1/hello/doge').end(function (error, response) {
+        request(app).get('/v1/greetings/hello/doge').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
             t.strictEqual(response.text, 'hello', 'body is correct.');
@@ -60,7 +60,7 @@ test('swaggycat valid input/output', function (t) {
     t.test('route', function (t) {
         t.plan(2);
 
-        request(app).get('/greetings/v1/sub/1').end(function (error, response) {
+        request(app).get('/v1/greetings/sub/1').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
@@ -69,7 +69,7 @@ test('swaggycat valid input/output', function (t) {
     t.test('route', function (t) {
         t.plan(2);
 
-        request(app).get('/greetings/v1/sub/1/path').end(function (error, response) {
+        request(app).get('/v1/greetings/sub/1/path').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
@@ -100,7 +100,7 @@ test('swaggycat invalid input/output', function (t) {
     t.test('bad input', function (t) {
         t.plan(2);
 
-        request(app).get('/greetings/v1/sub/asdf').end(function (error, response) {
+        request(app).get('/v1/greetings/sub/asdf').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 400, '400 status.');
         });
@@ -109,18 +109,18 @@ test('swaggycat invalid input/output', function (t) {
     t.test('bad output', function (t) {
         t.plan(2);
 
-        request(app).get('/greetings/v1/sub/1').end(function (error, response) {
+        request(app).get('/v1/greetings/sub/1').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 500, '500 status.');
         });
     });
 
-    t.test('null input ok', function (t) {
+    t.test('null input not found', function (t) {
         t.plan(2);
 
-        request(app).get('/greetings/v1/goodbye/').end(function (error, response) {
+        request(app).get('/v1/greetings/goodbye').end(function (error, response) {
             t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.strictEqual(response.statusCode, 404, '404 status.');
         });
     });
 

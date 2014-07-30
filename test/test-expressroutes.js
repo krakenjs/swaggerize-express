@@ -15,7 +15,7 @@ test('express routes', function (t) {
         child.once('mount', function (parent) {
             var stack;
 
-            expressroutes(app, '/test', {
+            expressroutes(app, {
                 api: require('./fixtures/api.json'),
                 handlers: require('path').join(__dirname, 'handlers')
             });
@@ -23,11 +23,11 @@ test('express routes', function (t) {
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
             t.strictEqual(stack.length, 5, 'routes added.');
-            t.strictEqual(stack[0].route.path, '/test/api-docs', 'api-docs added.');
-            t.strictEqual(stack[1].route.path, '/test/hello/:subject?', 'hello added.');
-            t.strictEqual(stack[2].route.path, '/test/sub/:id?', 'sub added.');
-            t.strictEqual(stack[3].route.path, '/test/sub/:id?', 'sub added (head).');
-            t.strictEqual(stack[4].route.path, '/test/sub/:id?/path', 'sub/path added.');
+            t.strictEqual(stack[0].route.path, '/v1/greetings/api-docs', 'api-docs added.');
+            t.strictEqual(stack[1].route.path, '/v1/greetings/hello/:subject', 'hello added.');
+            t.strictEqual(stack[2].route.path, '/v1/greetings/sub/:id', 'sub added.');
+            t.strictEqual(stack[3].route.path, '/v1/greetings/sub/:id', 'sub added (head).');
+            t.strictEqual(stack[4].route.path, '/v1/greetings/sub/:id/path', 'sub/path added.');
         });
 
         app.use(child);
@@ -41,7 +41,7 @@ test('express routes', function (t) {
         child.once('mount', function (parent) {
             var stack;
 
-            expressroutes(app, '/test', {
+            expressroutes(app, {
                 api: require('./fixtures/api.json'),
                 handlers: {
 
@@ -51,7 +51,7 @@ test('express routes', function (t) {
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
             t.strictEqual(stack.length, 1, 'only api-docs route added.');
-            t.strictEqual(stack[0].route.path, '/test/api-docs', 'api-docs added.');;
+            t.strictEqual(stack[0].route.path, '/v1/greetings/api-docs', 'api-docs added.');
         });
 
         app.use(child);

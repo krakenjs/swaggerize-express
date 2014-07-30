@@ -67,6 +67,10 @@ server.listen(port, 'localhost', function () {
 });
 ```
 
+### Mount Path
+
+Api `path` values will be prefixed with the swagger document's `resourcePath` value.
+
 ### Handlers Directory
 
 ```
