@@ -30,7 +30,13 @@ modelsPath && (modelsPath = path.resolve(modelsPath));
 handlersPath && (handlersPath = path.resolve(handlersPath));
 
 [apiPath, modelsPath, handlersPath].forEach(function (filePath) {
-    var dir = path.dirname(filePath);
+    var dir;
+
+    if (!filePath) {
+        return;
+    }
+
+    dir = path.dirname(filePath);
     if (!fs.existsSync(dir)) {
         console.error('Directory %s does not exist.', dir);
         process.exit(1);
@@ -51,5 +57,5 @@ if (!validation.valid) {
     return;
 }
 
-create.models(api.models, modelsPath);
-create.handlers(api.apis, handlersPath);
+modelsPath && create.models(api.models, modelsPath);
+handlersPath && create.handlers(api.apis, handlersPath);

@@ -163,6 +163,8 @@ Example:
 swaggerize --api config/api.json --models resources/models --handlers resources/handlers
 ```
 
+`--api` is required, but only one of `--models` or `--handlers` is required.
+
 ### Handler Signature
 
 The arguments passed to a handler function are:
