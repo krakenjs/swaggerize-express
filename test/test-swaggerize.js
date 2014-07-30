@@ -85,8 +85,10 @@ test('swaggycat invalid input/output', function (t) {
         api: require('./fixtures/api.json'),
         handlers: {
             sub: {
-                $get: function (req, reply) {
-                    reply('foobar');
+                '{id}': {
+                    $get: function (req, reply) {
+                        reply('foobar');
+                    }
                 }
             },
             goodbye: {

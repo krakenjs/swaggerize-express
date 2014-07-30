@@ -56,4 +56,28 @@ test('express routes', function (t) {
 
         app.use(child);
     });
+
+    t.test('test variable filenames', function (t) {
+        t.plan(4);
+
+        var app = express(), child = express();
+
+        child.once('mount', function (parent) {
+            var stack;
+
+            expressroutes(app, {
+                api: require('./fixtures/collections.json'),
+                handlers: require('path').join(__dirname, 'handlers')
+            });
+
+            stack = Array.prototype.slice.call(parent._router.stack, 3);
+
+            t.strictEqual(stack.length, 3, 'three routes added.');
+            t.strictEqual(stack[0].route.path, '/v1/collections/api-docs', 'api-docs added.');
+            t.strictEqual(stack[1].route.path, '/v1/collections/stuffs', '/stuffs added.');
+            t.strictEqual(stack[2].route.path, '/v1/collections/stuffs/:id', '/stuffs/:id added.');
+        });
+
+        app.use(child);
+    });
 });
