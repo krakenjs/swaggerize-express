@@ -1,0 +1,36 @@
+{
+    "swaggerVersion": "1.2",
+    "apiVersion": "v1",
+    "basePath": "http://localhost:8000/",
+    "resourcePath": "/v1/collections",
+    "apis": [
+        {
+            "path": "/stuffs",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "stuffs"
+                }
+            ]
+        },
+        {
+            "path": "/stuffs/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "stuffsId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -45,7 +45,7 @@ function createHandlers(apis, handlersPath) {
         pathnames = [];
 
         api.path.split('/').forEach(function (element) {
-            if (element && element.indexOf('{') < 0) {
+            if (element) {
                 pathnames.push(element);
             }
         });

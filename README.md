@@ -7,10 +7,12 @@ and Express.
 
 `swaggerize-express` provides the following features:
 
+- Schema validation.
 - Express routes binding.
 - API documentation route.
 - Input model validation.
 - Output model validation.
+- Models and handlers stubs generator command (`swaggerize`).
 
 `swaggerize-express` is currently `pre-release` and as a result may change without warning.
 
@@ -86,6 +88,32 @@ Matches:
 - `foo.js : /foo`
 - `foo/bar.js : /foo/bar`
 - `baz.js : /baz`
+
+### Path Parameters
+
+The file and directory names in the handlers directory can represent path parameters.
+
+For example, to represent the path `/users/{id}`:
+
+```shell
+handlers
+  |--users
+  |    |--{id}.js
+```
+
+This works with sub-resources as well:
+
+```shell
+handlers
+  |--users
+  |    |--{id}.js
+  |    |--{id}
+  |        |--foo.js
+```
+
+To represent `/users/{id}/foo`.
+
+### Handlers File
 
 Each provided javascript file should follow the format of:
 
