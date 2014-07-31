@@ -34,7 +34,7 @@ app.use(swaggerize({
     api: require('./api.json'),
     docs: '/api-docs',
     handlers: './handlers'
-));
+}));
 ```
 
 Options:
