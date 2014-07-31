@@ -179,3 +179,13 @@ the following convenience properties:
 - `_raw` - the raw `response` object.
 - `next()` - acts as `res.next()`.
 - `redirect(url)` - acts as `res.redirect`.
+
+### Contribution
+
+In order to run the swaggerize-express unit tests, execute the following commands:
+
+```bash
+$ git submodule update --init --recursive
+$ npm install
+$ npm test
+```
