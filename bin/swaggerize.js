@@ -10,7 +10,7 @@ var minimist = require('minimist'),
 var argv, validation, api, apiPath, modelsPath, handlersPath, testsPath;
 
 function usage() {
-    console.error('Usage: swaggerize --api <swagger document> [--models <models dir> AND/OR--handlers <handlers dir>] [--tests <tests dir>]');
+    console.error('swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]');
     process.exit(1);
 }
 
@@ -19,9 +19,9 @@ argv = minimist(process.argv.slice(2));
 apiPath = argv.api;
 modelsPath = argv.models;
 handlersPath = argv.handlers;
-testsPath = argv.tests
+testsPath = argv.tests;
 
-if (!apiPath || !(modelsPath || handlersPath)) {
+if (!apiPath || !(modelsPath || handlersPath || testsPath)) {
     usage();
     return;
 }

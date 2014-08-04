@@ -156,7 +156,7 @@ Handler keys in files do *not* have to be namespaced in this way.
 You can generate models and handlers stubs by running the following command:
 
 ```shell
-swaggerize --api <swagger document> [--models <models dir> AND/OR--handlers <handlers dir>] [--tests <tests dir>]
+swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]
 ```
 
 Example:
@@ -165,7 +165,7 @@ Example:
 swaggerize --api config/api.json --models resources/models --handlers resources/handlers --tests tests/
 ```
 
-`--api` is required, but only one of `--models` or `--handlers` is required.
+`--api` is required, but only one of `--models` or `--handlers` or `--tests` is required.
 
 ### Handler Signature
 
