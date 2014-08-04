@@ -103,7 +103,7 @@ function createTests(api, testsPath, apiPath, handlersPath) {
     var template = fs.readFileSync(testTemplate);
 
     apiPath = path.relative(testsPath, apiPath);
-    handlersPath = path.relative(handlersPath, apiPath);
+    handlersPath = path.relative(testsPath, handlersPath);
 
     api.apis.forEach(function (api) {
         var fileName;
