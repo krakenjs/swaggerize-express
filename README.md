@@ -71,6 +71,8 @@ server.listen(port, 'localhost', function () {
 });
 ```
 
+Also checkout the [Quick Start Guide](QUICKSTART.md).
+
 ### Mount Path
 
 Api `path` values will be prefixed with the swagger document's `resourcePath` value.
