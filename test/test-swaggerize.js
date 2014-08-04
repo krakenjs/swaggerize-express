@@ -97,7 +97,7 @@ test('swaggycat invalid input/output', function (t) {
                 }
             }
         },
-        outputValidation: true
+        outputvalidation: true
     }));
 
     t.test('bad input', function (t) {
