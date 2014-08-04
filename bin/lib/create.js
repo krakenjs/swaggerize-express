@@ -4,10 +4,11 @@ var fs = require('fs'),
     path = require('path'),
     lodash = require('lodash');
 
-var modelTemplate, handlerTemplate;
+var modelTemplate, handlerTemplate, testTemplate;
 
 modelTemplate = path.join(__dirname, './templates/model.js');
 handlerTemplate = path.join(__dirname, './templates/handler.js');
+testTemplate = path.join(__dirname, './templates/test.js');
 
 function createModels(models, modelsPath) {
     var template = fs.readFileSync(modelTemplate);
@@ -98,7 +99,32 @@ function createHandlers(apis, handlersPath) {
     });
 }
 
+function createTests(api, testsPath, apiPath, handlersPath) {
+    var template = fs.readFileSync(testTemplate);
+
+    apiPath = path.relative(testsPath, apiPath);
+    handlersPath = path.relative(testsPath, handlersPath);
+
+    api.apis.forEach(function (api) {
+        var fileName;
+
+        fileName = path.join(testsPath, 'test' + api.path.replace(/\//g, '_') + '.js');
+
+        if (!fs.existsSync(fileName)) {
+            fs.writeFileSync(fileName, lodash.template(template, {
+                apiPath: apiPath,
+                handlers: handlersPath,
+                api: api
+            }));
+        }
+        else {
+            console.warn('%s already exists.', fileName);
+        }
+    });
+}
+
 module.exports = {
     handlers: createHandlers,
-    models: createModels
+    models: createModels,
+    tests: createTests
 };
