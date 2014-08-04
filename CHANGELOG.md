@@ -1,3 +1,9 @@
+### 0.1.0-alpha.4
+
+* Only one of `--handlers` or `--models` is necessary in generator, not both.
+* Generator now has a `--tests` switch for generating tests.
+* Output validation is opt-in via `outputValidation: true`.
+
 ### 0.1.0-alpha.3
 
 * `resourcePath` in swagger document is base `mountpath` for routes.

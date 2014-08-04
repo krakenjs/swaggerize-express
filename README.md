@@ -11,7 +11,7 @@ and Express.
 - Express routes binding.
 - API documentation route.
 - Input model validation.
-- Output model validation.
+- Output model validation (optional).
 - Models and handlers stubs generator command (`swaggerize`).
 
 `swaggerize-express` is currently `pre-release` and as a result may change without warning.
@@ -42,6 +42,7 @@ Options:
 - `api` - a valid Swagger 1.2 document.
 - `docs` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
+- `outputvalidation` - `true` to enable output validation for handlers; generally for dev/test.  
 
 The base url for the api can also be updated via the `setUrl` function on the middleware.
 
@@ -59,7 +60,8 @@ var server = http.createServer(app);
 var swagger = swaggerize({
     api: require('./api.json'),
     docs: '/api-docs',
-    handlers: './handlers'
+    handlers: './handlers',
+    outputvalidation: app.settings.env === 'development'
 });
 
 app.use(swagger);
@@ -154,13 +156,13 @@ Handler keys in files do *not* have to be namespaced in this way.
 You can generate models and handlers stubs by running the following command:
 
 ```shell
-swaggerize --api [swagger document] --models [models dir] --handlers [handlers dir]
+swaggerize --api <swagger document> [--models <models dir> AND/OR--handlers <handlers dir>] [--tests <tests dir>]
 ```
 
 Example:
 
 ```shell
-swaggerize --api config/api.json --models resources/models --handlers resources/handlers
+swaggerize --api config/api.json --models resources/models --handlers resources/handlers --tests tests/
 ```
 
 `--api` is required, but only one of `--models` or `--handlers` is required.
