@@ -15,7 +15,7 @@ test('api', function (t) {
     }));
 
     <%_.forEach(api.operations, function (operation) {%>
-    t.test('test <%=operation.method%> <%=apiPath%>', function (t) {
+    t.test('test <%=operation.method%> <%=api.path%>', function (t) {
         t.plan(2);
 
         request(app).<%=operation.method.toLowerCase()%>('<%=api.path%>')
