@@ -7,10 +7,10 @@ var minimist = require('minimist'),
     schema = require('swaggerize-express/lib/schema'),
     create = require('swaggerize-express/bin/lib/create');
 
-var argv, validation, api, apiPath, modelsPath, handlersPath;
+var argv, validation, api, apiPath, modelsPath, handlersPath, testsPath;
 
 function usage() {
-    console.error('Usage: swaggerize --api [swagger document] --models [models dir] --handlers [handlers dir]');
+    console.error('Usage: swaggerize --api <swagger document> [--models <models dir> AND/OR--handlers <handlers dir>] [--tests <tests dir>]');
     process.exit(1);
 }
 
@@ -19,6 +19,7 @@ argv = minimist(process.argv.slice(2));
 apiPath = argv.api;
 modelsPath = argv.models;
 handlersPath = argv.handlers;
+testsPath = argv.tests
 
 if (!apiPath || !(modelsPath || handlersPath)) {
     usage();
@@ -28,8 +29,19 @@ if (!apiPath || !(modelsPath || handlersPath)) {
 apiPath = path.resolve(apiPath);
 modelsPath && (modelsPath = path.resolve(modelsPath));
 handlersPath && (handlersPath = path.resolve(handlersPath));
+testsPath && (testsPath = path.resolve(testsPath));
 
-[apiPath, modelsPath, handlersPath].forEach(function (filePath) {
+api = require(apiPath);
+
+validation = schema.validate(api);
+
+if (!validation.valid) {
+    console.error(validation.error.message);
+    process.exit(1);
+    return;
+}
+
+[apiPath, modelsPath, handlersPath, testsPath].forEach(function (filePath) {
     var dir;
 
     if (!filePath) {
@@ -47,15 +59,6 @@ handlersPath && (handlersPath = path.resolve(handlersPath));
     }
 });
 
-api = require(apiPath);
-
-validation = schema.validate(api);
-
-if (!validation.valid) {
-    console.error(validation.error.message);
-    process.exit(1);
-    return;
-}
-
 modelsPath && create.models(api.models, modelsPath);
 handlersPath && create.handlers(api.apis, handlersPath);
+testsPath && create.tests(api, testsPath, apiPath, handlersPath);
