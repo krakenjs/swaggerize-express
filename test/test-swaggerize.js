@@ -96,7 +96,8 @@ test('swaggycat invalid input/output', function (t) {
                     reply('baz');
                 }
             }
-        }
+        },
+        outputValidation: true
     }));
 
     t.test('bad input', function (t) {
@@ -123,6 +124,34 @@ test('swaggycat invalid input/output', function (t) {
         request(app).get('/v1/greetings/goodbye').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 404, '404 status.');
+        });
+    });
+
+});
+
+test('output not enabled', function (t) {
+
+    var app = express();
+
+    app.use(swaggerize({
+        api: require('./fixtures/api.json'),
+        handlers: {
+            sub: {
+                '{id}': {
+                    $get: function (req, reply) {
+                        reply('foobar');
+                    }
+                }
+            }
+        }
+    }));
+
+    t.test('bad output', function (t) {
+        t.plan(2);
+
+        request(app).get('/v1/greetings/sub/1').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, 'It is ok, validation is off!');
         });
     });
 
