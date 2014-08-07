@@ -26,6 +26,12 @@ if (!apiPath || !(modelsPath || handlersPath || testsPath)) {
     return;
 }
 
+if (testsPath && !(handlersPath && modelsPath)) {
+    console.error('tests can not be generated without handlers and models.');
+    usage();
+    return;
+}
+
 apiPath = path.resolve(apiPath);
 modelsPath && (modelsPath = path.resolve(modelsPath));
 handlersPath && (handlersPath = path.resolve(handlersPath));
@@ -61,4 +67,6 @@ if (!validation.valid) {
 
 modelsPath && create.models(api.models, modelsPath);
 handlersPath && create.handlers(api.apis, handlersPath);
-testsPath && create.tests(api, testsPath, apiPath, handlersPath);
+
+testsPath && create.tests(api, testsPath, apiPath, handlersPath, modelsPath);
+
