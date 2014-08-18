@@ -4,6 +4,7 @@
 var minimist = require('minimist'),
     fs = require('fs'),
     path = require('path'),
+    mkdirp = require('mkdirp'),
     schema = require('swaggerize-express/lib/schema'),
     create = require('swaggerize-express/bin/lib/create');
 
@@ -48,20 +49,12 @@ if (!validation.valid) {
 }
 
 [apiPath, modelsPath, handlersPath, testsPath].forEach(function (filePath) {
-    var dir;
-
     if (!filePath) {
         return;
     }
 
-    dir = path.dirname(filePath);
-    if (!fs.existsSync(dir)) {
-        console.error('Directory %s does not exist.', dir);
-        process.exit(1);
-        return;
-    }
     if (!fs.existsSync(filePath)) {
-        fs.mkdirSync(filePath);
+        mkdirp.sync(filePath);
     }
 });
 
