@@ -99,11 +99,52 @@ function createHandlers(apis, handlersPath) {
     });
 }
 
-function createTests(api, testsPath, apiPath, handlersPath) {
-    var template = fs.readFileSync(testTemplate);
+function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
+    var models, template;
+
+    models = {};
+    template = fs.readFileSync(testTemplate);
 
     apiPath = path.relative(testsPath, apiPath);
     handlersPath = path.relative(testsPath, handlersPath);
+
+    if (api.models) {
+
+        Object.keys(api.models).forEach(function (key) {
+            var modelSchema, ModelCtor, options;
+
+            options = {};
+            modelSchema = api.models[key];
+            ModelCtor = require(path.join(modelsPath, key.toLowerCase() + '.js'));
+
+            Object.keys(modelSchema.properties).forEach(function (prop) {
+                var defaultValue;
+
+                switch (modelSchema.properties[prop].type) {
+                    case 'integer':
+                    case 'float':
+                    case 'long':
+                    case 'double':
+                    case 'byte':
+                        defaultValue = 0;
+                        break;
+                    case 'string':
+                        defaultValue = String();
+                        break;
+                    case 'boolean':
+                        defaultValue = false;
+                        break;
+                    default:
+                        break;
+                }
+
+                options[prop] = defaultValue;
+            });
+
+            models[key] = new ModelCtor(options);
+        });
+
+    }
 
     api.apis.forEach(function (api) {
         var fileName;
@@ -114,7 +155,8 @@ function createTests(api, testsPath, apiPath, handlersPath) {
             fs.writeFileSync(fileName, lodash.template(template, {
                 apiPath: apiPath,
                 handlers: handlersPath,
-                api: api
+                api: api,
+                models: models
             }));
         }
         else {

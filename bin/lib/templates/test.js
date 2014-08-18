@@ -16,10 +16,30 @@ test('api', function (t) {
 
     <%_.forEach(api.operations, function (operation) {%>
     t.test('test <%=operation.method%> <%=api.path%>', function (t) {
+        <%
+        var path = api.path;
+        var body;
+        if (operation.parameters && operation.parameters.length) {
+            operation.parameters.forEach(function (param) {
+                if (param.paramType === 'path') {
+                    path = api.path.replace(/{([^}]*)}*/, function (p1, p2) {
+                        switch (param.type) {
+                            case 'string': return 'world';
+                            case 'integer': return 1;
+                            default: return '{' + p2 + '}';
+                        }
+                    });
+                }
+                if (param.paramType === 'body') {
+                    body = models[param.type];
+                }
+            });
+        }
+        %><%if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put'){%>var body = <%=JSON.stringify(body)%>;<%}%>
         t.plan(2);
 
-        request(app).<%=operation.method.toLowerCase()%>('<%=api.path%>')
-        .expect(200)
+        request(app).<%=operation.method.toLowerCase()%>('<%=path%>')
+        .expect(200)<%if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put'){%>.send(body)<%}%>
         .end(function (err, res) {
             t.ok(!err, '<%=operation.method.toLowerCase()%> <%=api.path%> no error.');
             t.strictEqual(res.statusCode, 200, '<%=operation.method.toLowerCase()%> <%=api.path%> 200 status.');
