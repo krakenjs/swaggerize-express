@@ -4,8 +4,8 @@ var minimist = require('minimist'),
     fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
-    schema = require('swaggerize-express/lib/schema'),
-    create = require('swaggerize-express/bin/lib/create');
+    schema = require('../../lib/schema'),
+    create = require('./create');
 
 module.exports = function (argp) {
     var argv, apiPath, modelsPath, handlersPath, testsPath, validation, api;
