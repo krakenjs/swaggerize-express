@@ -1,13 +1,13 @@
 'use strict';
 
 var test = require('tape'),
-    spawn = require('child_process').spawn,
+    spawn = require('child_process').execFile,
     fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp');
 
 test('swaggerize command', function (t) {
-    var commandPath = path.resolve('bin/swaggerize');
+    var commandPath = path.resolve('bin/swaggerize.js');
 
     mkdirp.sync(path.resolve('test/temp'));
 
@@ -31,7 +31,9 @@ test('swaggerize command', function (t) {
     t.test('no handlers or models', function (t) {
         t.plan(1);
 
-        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json']);
+        console.log(commandPath);
+
+        var cmd = spawn(commandPath, ['--api', 'test/fixtures/api.json']);
 
         cmd.on('close', function (code) {
             t.strictEqual(code, 1, 'error code 1.');
@@ -41,7 +43,7 @@ test('swaggerize command', function (t) {
     t.test('tests but no handlers and models', function (t) {
         t.plan(1);
 
-        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json', '--tests', 'test/temp/tests']);
+        var cmd = spawn(commandPath, ['--api', 'test/fixtures/api.json', '--tests', 'test/temp/tests']);
 
         cmd.on('close', function (code) {
             t.strictEqual(code, 1, 'error code 1.');
@@ -51,7 +53,7 @@ test('swaggerize command', function (t) {
     t.test('invalid schema fails', function (t) {
         t.plan(1);
 
-        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/badapi.json', '--handlers', 'test/temp/handlers']);
+        var cmd = spawn(commandPath, ['--api', 'test/fixtures/badapi.json', '--handlers', 'test/temp/handlers']);
 
         cmd.on('close', function (code) {
             t.strictEqual(code, 1, 'error code 1.');
@@ -61,10 +63,10 @@ test('swaggerize command', function (t) {
     t.test('handlers', function (t) {
         t.plan(9);
 
-        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers']);
+        var cmd = spawn(commandPath, ['--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers']);
 
         cmd.on('close', function (code) {
-            t.ok(!code);
+            t.ok(!code, 'no error code.');
             t.ok(fs.existsSync(path.resolve('test/temp/handlers')), 'handlers dir exists');
             t.ok(fs.existsSync(path.resolve('test/temp/handlers/goodbye')), 'goodbye dir exists');
             t.ok(fs.existsSync(path.resolve('test/temp/handlers/goodbye/{subject}.js')), 'goodbye/{subject}.js exists');
@@ -79,10 +81,10 @@ test('swaggerize command', function (t) {
     t.test('models', function (t) {
         t.plan(3);
 
-        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json', '--models', 'test/temp/models']);
+        var cmd = spawn(commandPath, ['--api', 'test/fixtures/api.json', '--models', 'test/temp/models']);
 
         cmd.on('close', function (code) {
-            t.ok(!code);
+            t.ok(!code, 'no error code.');
             t.ok(fs.existsSync(path.resolve('test/temp/models')), 'models dir exists');
             t.ok(fs.existsSync(path.resolve('test/temp/models/user.js')), 'user.js exists');
         });
@@ -91,10 +93,10 @@ test('swaggerize command', function (t) {
     t.test('tests', function (t) {
         t.plan(6);
 
-        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers', '--models', 'test/temp/models', '--tests', 'test/temp/tests']);
+        var cmd = spawn(commandPath, ['--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers', '--models', 'test/temp/models', '--tests', 'test/temp/tests']);
 
         cmd.on('close', function (code) {
-            t.ok(!code);
+            t.ok(!code, 'no error code.');
             t.ok(fs.existsSync(path.resolve('test/temp/tests')), 'tests dir exists');
             t.ok(fs.existsSync(path.resolve('test/temp/tests/test_goodbye_{subject}.js')), 'test_goodbye_{subject}.js exists');
             t.ok(fs.existsSync(path.resolve('test/temp/tests/test_hello_{subject}.js')), 'test_hello_{subject}.js exists');
