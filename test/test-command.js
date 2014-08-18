@@ -7,7 +7,7 @@ var test = require('tape'),
     mkdirp = require('mkdirp');
 
 test('swaggerize command', function (t) {
-    var commandPath = require.resolve('swaggerize-express/bin/swaggerize');
+    var commandPath = path.resolve('bin/swaggerize');
 
     mkdirp.sync(path.resolve('test/temp'));
 
