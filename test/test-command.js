@@ -3,9 +3,13 @@
 var test = require('tape'),
     spawn = require('child_process').spawn,
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    mkdirp = require('mkdirp');
 
 test('swaggerize command', function (t) {
+    var commandPath = require.resolve('swaggerize-express/bin/swaggerize');
+
+    mkdirp.sync(path.resolve('test/temp'));
 
     t.on('end', function () {
         function rm(dir) {
@@ -27,7 +31,7 @@ test('swaggerize command', function (t) {
     t.test('no handlers or models', function (t) {
         t.plan(1);
 
-        var cmd = spawn('node', ['bin/swaggerize', '--api', 'test/fixtures/api.json']);
+        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json']);
 
         cmd.on('close', function (code) {
             t.strictEqual(code, 1, 'error code 1.');
@@ -37,7 +41,7 @@ test('swaggerize command', function (t) {
     t.test('tests but no handlers and models', function (t) {
         t.plan(1);
 
-        var cmd = spawn('node', ['bin/swaggerize', '--api', 'test/fixtures/api.json', '--tests', 'test/temp/tests']);
+        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json', '--tests', 'test/temp/tests']);
 
         cmd.on('close', function (code) {
             t.strictEqual(code, 1, 'error code 1.');
@@ -47,7 +51,7 @@ test('swaggerize command', function (t) {
     t.test('invalid schema fails', function (t) {
         t.plan(1);
 
-        var cmd = spawn('node', ['bin/swaggerize', '--api', 'test/fixtures/badapi.json', '--handlers', 'test/temp/handlers']);
+        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/badapi.json', '--handlers', 'test/temp/handlers']);
 
         cmd.on('close', function (code) {
             t.strictEqual(code, 1, 'error code 1.');
@@ -57,7 +61,7 @@ test('swaggerize command', function (t) {
     t.test('handlers', function (t) {
         t.plan(9);
 
-        var cmd = spawn('node', ['bin/swaggerize', '--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers']);
+        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers']);
 
         cmd.on('close', function (code) {
             t.ok(!code);
@@ -75,7 +79,7 @@ test('swaggerize command', function (t) {
     t.test('models', function (t) {
         t.plan(3);
 
-        var cmd = spawn('node', ['bin/swaggerize', '--api', 'test/fixtures/api.json', '--models', 'test/temp/models']);
+        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json', '--models', 'test/temp/models']);
 
         cmd.on('close', function (code) {
             t.ok(!code);
@@ -87,7 +91,7 @@ test('swaggerize command', function (t) {
     t.test('tests', function (t) {
         t.plan(6);
 
-        var cmd = spawn('node', ['bin/swaggerize', '--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers', '--models', 'test/temp/models', '--tests', 'test/temp/tests']);
+        var cmd = spawn('node', [commandPath, '--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers', '--models', 'test/temp/models', '--tests', 'test/temp/tests']);
 
         cmd.on('close', function (code) {
             t.ok(!code);
