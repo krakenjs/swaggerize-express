@@ -26,11 +26,6 @@ module.exports = function (argp) {
         return usage();
     }
 
-    if (testsPath && !(handlersPath && modelsPath)) {
-        console.error('tests can not be generated without handlers and models.');
-        return usage();
-    }
-
     apiPath = path.resolve(apiPath);
     modelsPath && (modelsPath = path.resolve(modelsPath));
     handlersPath && (handlersPath = path.resolve(handlersPath));
@@ -43,6 +38,17 @@ module.exports = function (argp) {
     if (!validation.valid) {
         console.error(validation.error.message);
         return 1;
+    }
+
+    if (testsPath) {
+        if (!handlersPath) {
+            console.error('tests can not be generated without handlers path.');
+            return usage();
+        }
+        if ((api.models && !modelsPath)) {
+            console.error('api contains models, so tests can not be generated without handlers and models paths.');
+            return usage();
+        }
     }
 
     [apiPath, modelsPath, handlersPath, testsPath].forEach(function (filePath) {

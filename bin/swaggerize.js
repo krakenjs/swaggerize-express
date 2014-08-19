@@ -4,5 +4,6 @@
 var minimist = require('minimist'),
     swaggerize = require('swaggerize-express/bin/lib/swaggerize');
 
+var result = swaggerize(process.argv);
 
-process.exit(swaggerize(process.argv));
+process.exit(result);

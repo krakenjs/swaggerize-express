@@ -24,9 +24,18 @@ test('api', function (t) {
                 if (param.paramType === 'path') {
                     path = api.path.replace(/{([^}]*)}*/, function (p1, p2) {
                         switch (param.type) {
-                            case 'string': return 'world';
-                            case 'integer': return 1;
-                            default: return '{' + p2 + '}';
+                            case 'integer':
+                            case 'float':
+                            case 'long':
+                            case 'double':
+                            case 'byte':
+                                return 1;
+                            case 'string':
+                                return 'helloworld';
+                            case 'boolean':
+                                return true;
+                            default:
+                                return '{' + p2 + '}';
                         }
                     });
                 }

@@ -108,7 +108,7 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
     apiPath = path.relative(testsPath, apiPath);
     handlersPath = path.relative(testsPath, handlersPath);
 
-    if (api.models) {
+    if (api.models && modelsPath) {
 
         Object.keys(api.models).forEach(function (key) {
             var modelSchema, ModelCtor, options;
@@ -126,13 +126,13 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
                     case 'long':
                     case 'double':
                     case 'byte':
-                        defaultValue = 0;
+                        defaultValue = 1;
                         break;
                     case 'string':
-                        defaultValue = String();
+                        defaultValue = 'helloworld';
                         break;
                     case 'boolean':
-                        defaultValue = false;
+                        defaultValue = true;
                         break;
                     default:
                         break;
