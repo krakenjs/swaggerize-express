@@ -177,24 +177,6 @@ swaggerize --api config/api.json --models resources/models --handlers resources/
 
 `--api` is required, but only one of `--models` or `--handlers` or `--tests` is required.
 
-### Handler Signature
-
-A standard express handler signature:
-
-```javascript
-function (req, res) { ... }
-```
-
-### Reply Function
-
-The `reply` function is provided to allow for model validation and error handling without monkey patching `res.send`
-(or requiring `res.send` to be used vs `res.json`, etc). In addition to acting as a `res.send` method, it also provides
-the following convenience properties:
-
-- `_raw` - the raw `response` object.
-- `next()` - acts as `res.next()`.
-- `redirect(url)` - acts as `res.redirect`.
-
 ### Contribution
 
 In order to run the swaggerize-express unit tests, execute the following commands:
