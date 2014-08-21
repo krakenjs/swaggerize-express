@@ -22,9 +22,8 @@ test('validation', function (t) {
     inputvalid = validation.input({
         paramType: 'query',
         name: 'id',
-        type: 'integer',
         required: true
-    }, 'string');
+    }, 'integer');
 
     t.test('input pass', function (t) {
         t.plan(1);
@@ -49,6 +48,21 @@ test('validation', function (t) {
                 return undefined;
             },
             params: {
+            },
+        }, {}, function (error) {
+            t.ok(error, 'error.');
+        });
+    });
+
+    t.test('input fail (wrong type)', function (t) {
+        t.plan(1);
+
+        inputvalid({
+            param: function () {
+                return this.params.id;
+            },
+            params: {
+                id: 'a'
             },
         }, {}, function (error) {
             t.ok(error, 'error.');
