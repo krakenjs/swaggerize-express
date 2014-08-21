@@ -31,6 +31,16 @@
                     ]
                 }
             ]
+        },
+        {
+            "path": "/middlewares",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "getMiddlewares"
+                }
+            ]
         }
     ]
 }

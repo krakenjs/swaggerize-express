@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    get: function (req, reply) {
-        reply('hello');
+    get: function (req, res) {
+        res.status(200).send('hello');
     }
 };
