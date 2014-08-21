@@ -5,20 +5,12 @@ var test = require('tape'),
 
 test('utils', function (t) {
 
-    t.test('convertParam', function (t) {
-        t.plan(1);
-
-        var param = utils.convertParam('{id}');
-
-        t.strictEqual(param, ':id', 'is converted.');
-    });
-
     t.test('convertPath', function (t) {
         t.plan(1);
 
-        var path = utils.convertPath('/foo/{id}/asdf/{id}');
+        var path = utils.convertPath('/foo/{id}/asdf/{name}');
 
-        t.strictEqual(path, '/foo/:id/asdf/:id', 'is converted.');
+        t.strictEqual(path, '/foo/:id/asdf/:name', 'is converted.');
     });
 
     t.test('prefix', function (t) {
