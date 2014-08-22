@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    get: function (req, reply) {
-        reply(200);
+    get: function (req, res) {
+        res.status(200).end();
     }
 };

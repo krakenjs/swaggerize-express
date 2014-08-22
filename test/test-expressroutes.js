@@ -58,7 +58,7 @@ test('express routes', function (t) {
     });
 
     t.test('test variable filenames', function (t) {
-        t.plan(4);
+        t.plan(7);
 
         var app = express(), child = express();
 
@@ -72,10 +72,13 @@ test('express routes', function (t) {
 
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
-            t.strictEqual(stack.length, 3, 'three routes added.');
+            t.strictEqual(stack.length, 4, 'three routes added.');
             t.strictEqual(stack[0].route.path, '/v1/collections/api-docs', 'api-docs added.');
             t.strictEqual(stack[1].route.path, '/v1/collections/stuffs', '/stuffs added.');
             t.strictEqual(stack[2].route.path, '/v1/collections/stuffs/:id', '/stuffs/:id added.');
+            t.strictEqual(stack[3].route.path, '/v1/collections/middlewares', '/middlewares added.');
+            t.strictEqual(stack[3].route.stack.length, 2, '/middlewares has middleware.');
+            t.strictEqual(stack[3].route.stack[0].name, 'm1', '/middlewares has middleware named m1.');
         });
 
         app.use(child);

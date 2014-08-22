@@ -1,3 +1,16 @@
+### 0.1.0-alpha.6
+
+WARNING: Breaking changes!
+
+* Removed output validation.
+* Reverted to standard express handlers.
+* Middleware capability.
+
+### 0.1.0-alpha.5
+
+* Better tests generator.
+* Bug fixes.
+
 ### 0.1.0-alpha.4
 
 * Only one of `--handlers` or `--models` is necessary in generator, not both.

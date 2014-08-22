@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-    get: function (req, reply) {
-        reply({
+    get: function (req, res) {
+        res.json({
             id: 0,
             name: 'Swaggycat'
         });

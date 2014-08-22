@@ -29,7 +29,7 @@ test('routebuilder', function (t) {
 
         routes = buildroutes({ api: require('./fixtures/collections.json'), handlers: path.join(__dirname, 'handlers') });
 
-        t.strictEqual(routes.length, 2, 'added 2 routes.');
+        t.strictEqual(routes.length, 3, 'added 2 routes.');
 
         routes.forEach(function (route) {
             t.ok(route.hasOwnProperty('method'), 'has method property.');
