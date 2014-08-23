@@ -2,6 +2,10 @@
 
 # swaggerize-express
 
+**Version:** `1.0.0-alpha.6`
+**Stability:** `unstable`
+**Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
+
 `swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
 and Express.
 
@@ -12,8 +16,6 @@ and Express.
 - API documentation route.
 - Input model validation.
 - Models and handlers stubs generator command (`swaggerize`).
-
-`swaggerize-express` is currently `pre-release` and as a result may change without warning.
 
 ### Why "Spec First"
 
@@ -68,7 +70,7 @@ server.listen(port, 'localhost', function () {
 });
 ```
 
-Also checkout the [Quick Start Guide](QUICKSTART.md).
+Also checkout the [Quick Start Guide](https://github.com/krakenjs/swaggerize-express/blob/master/QUICKSTART.md).
 
 ### Mount Path
 
