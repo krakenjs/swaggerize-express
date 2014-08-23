@@ -2,7 +2,7 @@
 
 # swaggerize-express
 
-**Version:** `1.0.0-alpha.6`
+**Version:** `0.1.0-alpha.6`
 **Stability:** `unstable`
 **Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
 
