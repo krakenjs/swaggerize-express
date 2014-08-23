@@ -33,15 +33,15 @@ var swaggerize = require('swaggerize-express');
 
 app.use(swaggerize({
     api: require('./api.json'),
-    docs: '/api-docs',
-    handlers: './handlers'
+    docspath: '/api-docs',
+    handlerspath: './handlers'
 }));
 ```
 
 Options:
 
 - `api` - a valid Swagger 1.2 document.
-- `docs` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
+- `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
 
 The base url for the api can also be updated via the `setUrl` function on the middleware.
@@ -59,7 +59,7 @@ var server = http.createServer(app);
 
 var swagger = swaggerize({
     api: require('./api.json'),
-    docs: '/api-docs',
+    docspath: '/api-docs',
     handlers: './handlers'
 });
 

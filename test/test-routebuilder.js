@@ -19,6 +19,7 @@ test('routebuilder', function (t) {
             t.ok(route.hasOwnProperty('name'), 'has name property.');
             t.ok(route.hasOwnProperty('path'), 'has path property.');
             t.ok(route.hasOwnProperty('validators'), 'has validators property.');
+            t.ok(route.hasOwnProperty('handler'), 'has handler property.');
         });
 
         t.end();
@@ -36,7 +37,20 @@ test('routebuilder', function (t) {
             t.ok(route.hasOwnProperty('name'), 'has name property.');
             t.ok(route.hasOwnProperty('path'), 'has path property.');
             t.ok(route.hasOwnProperty('validators'), 'has validators property.');
+            t.ok(route.hasOwnProperty('handler'), 'has handler property.');
         });
+
+        t.end();
+    });
+
+    t.test('filenames with path variables', function (t) {
+        var routes;
+
+        routes = buildroutes({ api: require('./fixtures/collections.json'), handlers: path.join(__dirname, 'handlers') });
+
+        t.strictEqual(routes.length, 3, 'added 2 routes.');
+
+        t.strictEqual(routes[1].path, '/stuffs/{id}');
 
         t.end();
     });

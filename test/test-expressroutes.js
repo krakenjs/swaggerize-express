@@ -8,7 +8,7 @@ var test = require('tape'),
 test('express routes', function (t) {
 
     t.test('test api', function (t) {
-        t.plan(6);
+        t.plan(3);
 
         var app = express(), child = express();
 
@@ -17,17 +17,21 @@ test('express routes', function (t) {
 
             expressroutes(app, {
                 api: require('./fixtures/api.json'),
-                handlers: require('path').join(__dirname, 'handlers')
+                docspath: '/api-docs',
+                routes: [
+                    {
+                        method: 'get',
+                        path: '/hello/:subject',
+                        handler: function (req, res) {}
+                    }
+                ]
             });
 
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
-            t.strictEqual(stack.length, 5, 'routes added.');
+            t.strictEqual(stack.length, 2, '2 routes added.');
             t.strictEqual(stack[0].route.path, '/v1/greetings/api-docs', 'api-docs added.');
             t.strictEqual(stack[1].route.path, '/v1/greetings/hello/:subject', 'hello added.');
-            t.strictEqual(stack[2].route.path, '/v1/greetings/sub/:id', 'sub added.');
-            t.strictEqual(stack[3].route.path, '/v1/greetings/sub/:id', 'sub added (head).');
-            t.strictEqual(stack[4].route.path, '/v1/greetings/sub/:id/path', 'sub/path added.');
         });
 
         app.use(child);
@@ -43,9 +47,9 @@ test('express routes', function (t) {
 
             expressroutes(app, {
                 api: require('./fixtures/api.json'),
-                handlers: {
-
-                }
+                docspath: '/api-docs',
+                validators: [],
+                routes: []
             });
 
             stack = Array.prototype.slice.call(parent._router.stack, 3);
@@ -57,8 +61,8 @@ test('express routes', function (t) {
         app.use(child);
     });
 
-    t.test('test variable filenames', function (t) {
-        t.plan(7);
+    t.test('test middlewares in handler', function (t) {
+        t.plan(4);
 
         var app = express(), child = express();
 
@@ -67,18 +71,26 @@ test('express routes', function (t) {
 
             expressroutes(app, {
                 api: require('./fixtures/collections.json'),
-                handlers: require('path').join(__dirname, 'handlers')
+                docspath: '/api-docs',
+                routes: [
+                    {
+                        method: 'get',
+                        path: '/middlewares',
+                        validators: [],
+                        handler: [
+                            function m1(req, res, next) {},
+                            function (req, res) {}
+                        ]
+                    }
+                ]
             });
 
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
-            t.strictEqual(stack.length, 4, 'three routes added.');
-            t.strictEqual(stack[0].route.path, '/v1/collections/api-docs', 'api-docs added.');
-            t.strictEqual(stack[1].route.path, '/v1/collections/stuffs', '/stuffs added.');
-            t.strictEqual(stack[2].route.path, '/v1/collections/stuffs/:id', '/stuffs/:id added.');
-            t.strictEqual(stack[3].route.path, '/v1/collections/middlewares', '/middlewares added.');
-            t.strictEqual(stack[3].route.stack.length, 2, '/middlewares has middleware.');
-            t.strictEqual(stack[3].route.stack[0].name, 'm1', '/middlewares has middleware named m1.');
+            t.strictEqual(stack.length, 2, '2 routes added.');
+            t.strictEqual(stack[1].route.path, '/v1/collections/middlewares', '/middlewares added.');
+            t.strictEqual(stack[1].route.stack.length, 2, '/middlewares has middleware.');
+            t.strictEqual(stack[1].route.stack[0].name, 'm1', '/middlewares has middleware named m1.');
         });
 
         app.use(child);

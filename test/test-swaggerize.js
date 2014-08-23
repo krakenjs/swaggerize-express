@@ -31,7 +31,7 @@ test('swaggycat valid input/output', function (t) {
     t.test('docs', function (t) {
         t.plan(2);
 
-        request(app).get('/v1/greetings/api-docs').end(function (error, response) {
+        request(app).get('/v1/greetings/').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
@@ -77,7 +77,7 @@ test('swaggycat valid input/output', function (t) {
 
 });
 
-test('swaggycat invalid input', function (t) {
+test('input validators', function (t) {
 
     var app = express();
 
