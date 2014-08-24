@@ -22,6 +22,7 @@ test('express routes', function (t) {
                     {
                         method: 'get',
                         path: '/hello/:subject',
+                        before: [],
                         handler: function (req, res) {}
                     }
                 ]
@@ -48,7 +49,7 @@ test('express routes', function (t) {
             expressroutes(app, {
                 api: require('./fixtures/api.json'),
                 docspath: '/api-docs',
-                validators: [],
+                before: [],
                 routes: []
             });
 
@@ -76,7 +77,7 @@ test('express routes', function (t) {
                     {
                         method: 'get',
                         path: '/middlewares',
-                        validators: [],
+                        before: [],
                         handler: [
                             function m1(req, res, next) {},
                             function (req, res) {}
