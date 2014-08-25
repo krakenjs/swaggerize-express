@@ -1,6 +1,6 @@
 {
   "name": "swaggerize-express",
-  "version": "0.1.0-alpha.6",
+  "version": "1.0.0-alpha.6",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "description": "Spec-first driven swagger express routing.",
   "keywords": [
