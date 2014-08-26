@@ -86,14 +86,14 @@ test('input validators', function (t) {
         handlers: {
             sub: {
                 '{id}': {
-                    $get: function (req, reply) {
-                        reply('foobar');
+                    $get: function (req, res) {
+                        res.send('foobar');
                     }
                 }
             },
             goodbye: {
-                $get: function (req, reply) {
-                    reply('baz');
+                $get: function (req, res) {
+                    res.send('baz');
                 }
             }
         }

@@ -2,7 +2,7 @@
 
 # swaggerize-express
 
-- **Version:** `0.1.0-alpha.6`
+- **Version:** `1.0.0-rc.1`
 - **Stability:** `unstable`
 - **Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
 
@@ -34,7 +34,7 @@ var swaggerize = require('swaggerize-express');
 app.use(swaggerize({
     api: require('./api.json'),
     docspath: '/api-docs',
-    handlerspath: './handlers'
+    handlers: './handlers'
 }));
 ```
 
@@ -178,13 +178,3 @@ swaggerize --api config/api.json --models resources/models --handlers resources/
 ```
 
 `--api` is required, but only one of `--models` or `--handlers` or `--tests` is required.
-
-### Contribution
-
-In order to run the swaggerize-express unit tests, execute the following commands:
-
-```bash
-$ git submodule update --init --recursive
-$ npm install
-$ npm test
-```
