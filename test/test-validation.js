@@ -166,23 +166,50 @@ test('validation', function (t) {
         });
     });
 
-    t.test('output pass', function (t) {
+t.test('output pass', function (t) {
         t.plan(1);
 
         outputvalid({
             id: 1,
-            name: 'Joe'
+            name: 'Test'
         }, function (error) {
-            t.ok(!error, 'no error.');
+            t.ok(!error, 'error.');
         });
     });
 
-    t.test('output fail', function (t) {
-        t.plan(1);
+    t.test('output fail (schema fail)', function (t) {
+        t.plan(3);
 
         outputvalid({
-            id: 'a',
-            name: 'Joe'
+            id: 1,
+            name: 2
+        }, function (error) {
+            t.ok(error, 'error.');
+        });
+
+        outputvalid({
+            id: 'Test',
+            name: 1
+        }, function (error) {
+            t.ok(error, 'error.');
+        });
+
+        outputvalid('Test', function (error) {
+            t.ok(error, 'error.');
+        });
+    });
+
+    t.test('output fail (missing required)', function (t) {
+        t.plan(2);
+
+        outputvalid({
+            id: 1
+        }, function (error) {
+            t.ok(error, 'error.');
+        });
+
+        outputvalid({
+            name: 'Test'
         }, function (error) {
             t.ok(error, 'error.');
         });
