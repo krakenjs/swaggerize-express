@@ -2,8 +2,7 @@
 
 var test = require('tape'),
     expressroutes = require('../lib/expressroutes'),
-    express = require('express'),
-    request = require('supertest');
+    express = require('express');
 
 test('express routes', function (t) {
 
