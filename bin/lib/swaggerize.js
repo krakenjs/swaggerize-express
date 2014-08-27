@@ -4,7 +4,7 @@ var minimist = require('minimist'),
     fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
-    schema = require('../../lib/schema'),
+    schema = require('swaggerize-builder/lib/schema'),
     create = require('./create');
 
 module.exports = function (argp) {
