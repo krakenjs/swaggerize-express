@@ -2,9 +2,12 @@
   "name": "swaggerize-express",
   "version": "1.0.0-rc.1",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
-  "description": "Spec-first driven swagger express routing.",
+  "description": "Spec-first REST services with Swagger and Express.",
   "keywords": [
     "swagger",
+    "swagger-node",
+    "swagger-express",
+    "swagger-ui",
     "express",
     "node",
     "node.js",
@@ -27,7 +30,6 @@
   },
   "dependencies": {
     "swaggerize-builder": "^1.0.0",
-    "async": "^0.9.0",
     "caller": "^0.0.1",
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
