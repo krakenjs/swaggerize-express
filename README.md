@@ -86,11 +86,13 @@ handlers
   |--baz.js
 ```
 
-Matches:
+Routes as:
 
-- `foo.js : /foo`
-- `foo/bar.js : /foo/bar`
-- `baz.js : /baz`
+```
+foo.js => /foo
+foo/bar.js => /foo/bar
+baz.js => /baz
+```
 
 ### Path Parameters
 
