@@ -1,3 +1,7 @@
+### 1.0.0-rc.1
+
+* `options.docs` is `options.docspath` and defaults to `/`.
+
 ### 0.1.0-alpha.6
 
 WARNING: Breaking changes!
