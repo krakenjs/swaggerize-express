@@ -1,26 +1,23 @@
 'use strict';
 
-var minimist = require('minimist'),
-    fs = require('fs'),
+var fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
     schema = require('swaggerize-builder/lib/schema'),
     create = require('./create');
 
-module.exports = function (argp) {
-    var argv, apiPath, modelsPath, handlersPath, testsPath, validation, api;
+module.exports = function (options) {
+    var apiPath, modelsPath, handlersPath, testsPath, validation, api;
 
     function usage() {
         console.error('swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]');
         return 1;
     }
 
-    argv = minimist(argp.slice(2));
-
-    apiPath = argv.api;
-    modelsPath = argv.models;
-    handlersPath = argv.handlers;
-    testsPath = argv.tests;
+    apiPath = options.api;
+    modelsPath = options.models;
+    handlersPath = options.handlers;
+    testsPath = options.tests;
 
     if (!apiPath || !(modelsPath || handlersPath || testsPath)) {
         return usage();

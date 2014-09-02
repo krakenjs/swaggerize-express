@@ -50,7 +50,6 @@ Paste the following:
 ```bash
 $ npm init
 $ npm install --save express swaggerize-express
-$ npm install --save-dev tape supertest body-parser
 $ node_modules/.bin/swaggerize --api api.json --handlers handlers --models models --tests tests
 ```
 
