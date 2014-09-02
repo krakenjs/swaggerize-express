@@ -30,7 +30,9 @@ test('swaggerize command', function (t) {
     t.test('no handlers or models', function (t) {
         t.plan(1);
 
-        var code = swaggerize(['foo', 'bar', '--api', 'test/fixtures/api.json']);
+        var code = swaggerize({
+            api: 'test/fixtures/api.json'
+        });
 
         t.strictEqual(code, 1, 'error code 1.');
     });
@@ -38,7 +40,10 @@ test('swaggerize command', function (t) {
     t.test('tests but no handlers and models', function (t) {
         t.plan(1);
 
-        var code = swaggerize(['foo', 'bar', '--api', 'test/fixtures/api.json', '--tests', 'test/temp/tests']);
+        var code = swaggerize({
+            api: 'test/fixtures/api.json',
+            tests: '/test/temp/tests'
+        });
 
         t.strictEqual(code, 1, 'error code 1.');
     });
@@ -46,7 +51,10 @@ test('swaggerize command', function (t) {
     t.test('invalid schema fails', function (t) {
         t.plan(1);
 
-        var code = swaggerize(['foo', 'bar', '--api', 'test/fixtures/badapi.json', '--handlers', 'test/temp/handlers']);
+        var code = swaggerize({
+            api: 'test/fixtures/badapi.json',
+            handlers: 'test/temp/handlers'
+        });
 
         t.strictEqual(code, 1, 'error code 1.');
     });
@@ -54,7 +62,10 @@ test('swaggerize command', function (t) {
     t.test('handlers', function (t) {
         t.plan(9);
 
-        var code = swaggerize(['foo', 'bar', '--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers']);
+        var code = swaggerize({
+            api: 'test/fixtures/api.json',
+            handlers: 'test/temp/handlers'
+        });
 
         t.ok(!code, 'no error code.');
         t.ok(fs.existsSync(path.resolve('test/temp/handlers')), 'handlers dir exists');
@@ -70,7 +81,10 @@ test('swaggerize command', function (t) {
     t.test('models', function (t) {
         t.plan(3);
 
-        var code = swaggerize(['foo', 'bar', '--api', 'test/fixtures/api.json', '--models', 'test/temp/models']);
+        var code = swaggerize({
+            api: 'test/fixtures/api.json',
+            models: 'test/temp/models'
+        });
 
         t.ok(!code, 'no error code.');
         t.ok(fs.existsSync(path.resolve('test/temp/models')), 'models dir exists');
@@ -80,7 +94,12 @@ test('swaggerize command', function (t) {
     t.test('tests', function (t) {
         t.plan(6);
 
-        var code = swaggerize(['foo', 'bar', '--api', 'test/fixtures/api.json', '--handlers', 'test/temp/handlers', '--models', 'test/temp/models', '--tests', 'test/temp/tests']);
+        var code = swaggerize({
+            api: 'test/fixtures/api.json',
+            handlers: 'test/temp/handlers',
+            models: 'test/temp/models',
+            tests: 'test/temp/tests'
+        });
 
         t.ok(!code, 'no error code.');
         t.ok(fs.existsSync(path.resolve('test/temp/tests')), 'tests dir exists');

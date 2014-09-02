@@ -100,7 +100,7 @@ function createHandlers(apis, handlersPath) {
 }
 
 function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
-    var models, template;
+    var models, template, resourcePath;
 
     models = {};
     template = fs.readFileSync(testTemplate);
@@ -146,6 +146,8 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
 
     }
 
+    resourcePath = api.resourcePath;
+
     api.apis.forEach(function (api) {
         var fileName;
 
@@ -155,6 +157,7 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
             fs.writeFileSync(fileName, lodash.template(template, {
                 apiPath: apiPath,
                 handlers: handlersPath,
+                resourcePath: resourcePath,
                 api: api,
                 models: models
             }));

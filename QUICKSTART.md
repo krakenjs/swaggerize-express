@@ -45,22 +45,21 @@ Paste the following:
 }
 ```
 
-### 3. 
+### 3.
 
 ```bash
 $ npm init
 $ npm install --save express swaggerize-express
-$ npm install --save-dev tape
-$ node_modules/.bin/swaggerize --api api.json --handlers handlers --tests tests
+$ node_modules/.bin/swaggerize --api api.json --handlers handlers --models models --tests tests
 ```
 
-### 4. 
+### 4.
 
 ```bash
 $ vim index.js
 ```
 
-Paste the following: 
+Paste the following:
 
 ```javascript
 var http = require('http');
@@ -85,3 +84,5 @@ server.listen(8000, 'localhost', function () {
 ```
 
 ### Done!
+
+You now have working services and can use something like [Swagger UI](https://github.com/wordnik/swagger-ui) to explore your API.
