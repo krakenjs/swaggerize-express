@@ -180,3 +180,13 @@ swaggerize --api config/api.json --models resources/models --handlers resources/
 ```
 
 `--api` is required, but only one of `--models` or `--handlers` or `--tests` is required.
+
+When generating tests, the following `devDependencies` should be met to run the tests:
+
+```json
+{
+    "tape": "^2.4.2",
+    "body-parser": "^1.7.0",
+    "supertest": "^0.13.0"
+}
+```

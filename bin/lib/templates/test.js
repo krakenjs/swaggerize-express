@@ -1,17 +1,19 @@
 'use strict';
 
-var express = require('express'),
-    test = require('tape'),
+var test = require('tape'),
+    path = require('path'),
+    express = require('express'),
     swaggerize = require('swaggerize-express'),
     request = require('supertest');
 
 test('api', function (t) {
     var app = express();
+    <%_.forEach(api.operations, function (operation) { if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put') { %>
+    app.use(require('body-parser')());<%}});%>
 
     app.use(swaggerize({
         api: require('<%=apiPath%>'),
-        handlers: '<%=handlers%>',
-        outputvalidation: true
+        handlers: path.join(__dirname, '<%=handlers%>'),
     }));
 
     <%_.forEach(api.operations, function (operation) {%>
@@ -47,7 +49,7 @@ test('api', function (t) {
         %><%if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put'){%>var body = <%=JSON.stringify(body)%>;<%}%>
         t.plan(2);
 
-        request(app).<%=operation.method.toLowerCase()%>('<%=path%>')
+        request(app).<%=operation.method.toLowerCase()%>('<%=resourcePath%><%=path%>')
         .expect(200)<%if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put'){%>.send(body)<%}%>
         .end(function (err, res) {
             t.ok(!err, '<%=operation.method.toLowerCase()%> <%=api.path%> no error.');
