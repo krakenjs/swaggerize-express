@@ -2,8 +2,7 @@
 
 # swaggerize-express
 
-- **Version:** `1.0.0-rc.1`
-- **Stability:** `unstable`
+- **Stability:** `stable`
 - **Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
 
 `swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
