@@ -2,7 +2,8 @@
 
 var fs = require('fs'),
     path = require('path'),
-    lodash = require('lodash');
+    lodash = require('lodash'),
+    mkdirp = require('mkdirp');
 
 var modelTemplate, handlerTemplate, testTemplate;
 
@@ -20,6 +21,7 @@ function createModels(models, modelsPath) {
 
         if (!fs.existsSync(fileName)) {
             model = models[modelName];
+            mkdirp.sync(path.dirname(fileName));
             fs.writeFileSync(fileName, lodash.template(template, model));
         }
         else {
@@ -90,12 +92,13 @@ function createHandlers(apis, handlersPath) {
             file = path.join(handlersPath, pathnames.join('/') + '.js');
         }
 
-        if (fs.existsSync(file)) {
-            console.warn('%s already exists.', file);
-        }
-        else {
+        if (!fs.existsSync(file)) {
+            mkdirp.sync(path.dirname(file));
             fs.writeFileSync(file, lodash.template(template, route));
+            return;
         }
+
+        console.warn('%s already exists.', file);
     });
 }
 
@@ -161,10 +164,11 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
                 api: api,
                 models: models
             }));
+
+            return;
         }
-        else {
-            console.warn('%s already exists.', fileName);
-        }
+
+        console.warn('%s already exists.', fileName);
     });
 }
 
