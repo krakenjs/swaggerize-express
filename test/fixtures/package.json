@@ -1,10 +1,5 @@
 {
   "name": "testpkg",
   "version": "0.0.0",
-  "description": "test package.json",
-  "devDependencies": {
-    "body-parser": "^1.7.0",
-    "tape": "^2.14.0",
-    "supertest": "^0.13.0"
-  }
+  "description": "test package.json"
 }

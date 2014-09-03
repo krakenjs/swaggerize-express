@@ -1,13 +1,19 @@
+### 1.0.0-rc.3
+
+* Fixed issue where generator failed with deeper `path`.
+
+### 1.0.0-rc.2
+
+* Improved tests generation.
+
 ### 1.0.0-rc.1
 
-* `options.docs` is `options.docspath` and defaults to `/`.
+* __BREAKING CHANGE__: `options.docs` is `options.docspath` and defaults to `/`.
 
 ### 0.1.0-alpha.6
 
-WARNING: Breaking changes!
-
+* __BREAKING CHANGE__: Reverted to standard express handlers.
 * Removed output validation.
-* Reverted to standard express handlers.
 * Middleware capability.
 
 ### 0.1.0-alpha.5
