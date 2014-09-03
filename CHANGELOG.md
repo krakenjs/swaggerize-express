@@ -1,3 +1,11 @@
+### 1.0.0-rc.3
+
+* Fixed issue where generator failed with deeper `path`.
+
+### 1.0.0-rc.2
+
+* Improved tests generation.
+
 ### 1.0.0-rc.1
 
 * `options.docs` is `options.docspath` and defaults to `/`.
