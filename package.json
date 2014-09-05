@@ -1,6 +1,6 @@
 {
   "name": "swaggerize-express",
-  "version": "1.0.0-rc.3",
+  "version": "1.0.0-rc.4",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "description": "Spec-first REST services with Swagger and Express.",
   "keywords": [
@@ -45,7 +45,8 @@
     "istanbul": "^0.2.3",
     "jshint": "^2.4.1",
     "express": "^4.6.1",
-    "supertest": "^0.13.0"
+    "supertest": "^0.13.0",
+    "body-parser": "^1.7.0"
   },
   "scripts": {
     "test": "tape test/*.js",
