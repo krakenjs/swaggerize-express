@@ -48,8 +48,63 @@
                             "paramType": "body"
                         }
                     ]
+                },
+                {
+                    "method": "PUT",
+                    "type": "string",
+                    "nickname": "putTest_id",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "the id.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "the body.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "type": "string",
+                    "nickname": "deleteTest_id",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "the id.",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "body",
+                            "description": "the body.",
+                            "required": true,
+                            "type": "Form",
+                            "paramType": "body"
+                        }
+                    ]
                 }
             ]
         }
-    ]
+    ],
+    "models": {
+        "Form": {
+            "id": "Form",
+            "properties": {
+                "param1": {
+                    "type": "string"
+                },
+                "param2": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }

@@ -18,7 +18,7 @@ if (result === 0 && args.tests) {
     npm.stderr.pipe(process.stdout);
 
     npm.on('close', function (code) {
-      process.exit(code);
+        process.exit(code);
     });
 
     return;

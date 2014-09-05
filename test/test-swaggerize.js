@@ -136,6 +136,12 @@ test('body and query input', function (t) {
                     },
                     $post: function (req, res) {
                         res.send(typeof req.body);
+                    },
+                    $put: function (req, res) {
+                        res.send(typeof req.body);
+                    },
+                    $delete: function (req, res) {
+                        res.send(typeof req.body);
                     }
                 }
             }
@@ -170,5 +176,24 @@ test('body and query input', function (t) {
         });
     });
 
+    t.test('coerce body with form', function (t) {
+        t.plan(3);
+
+        request(app).put('/v1/test/1').send({param1: 'hello', param2: 'world'}).end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.strictEqual(response.text, 'string', 'coerced json to string.');
+        });
+    });
+
+    t.test('body with form uses model', function (t) {
+        t.plan(3);
+
+        request(app).delete('/v1/test/1').send({param1: 'hello', param2: 'world'}).end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.strictEqual(response.text, 'object', 'type came across as object.');
+        });
+    });
 
 });
