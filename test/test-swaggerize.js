@@ -3,6 +3,7 @@
 var test = require('tape'),
     swaggerize = require('../lib'),
     express = require('express'),
+    bodyParser = require('body-parser'),
     request = require('supertest');
 
 test('swagger valid input/output', function (t) {
@@ -116,5 +117,58 @@ test('input validators', function (t) {
             t.strictEqual(response.statusCode, 404, '404 status.');
         });
     });
+
+});
+
+test('body and query input', function (t) {
+
+    var app = express();
+
+    app.use(bodyParser());
+
+    app.use(swaggerize({
+        api: require('./fixtures/input.json'),
+        handlers: {
+            test: {
+                '{id}': {
+                    $get: function (req, res) {
+                        res.send('get');
+                    },
+                    $post: function (req, res) {
+                        res.send(typeof req.body);
+                    }
+                }
+            }
+        }
+    }));
+
+    t.test('good query', function (t) {
+        t.plan(2);
+
+        request(app).get('/v1/test/1?q1=foobar').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+        });
+    });
+
+    t.test('missing body', function (t) {
+        t.plan(2);
+
+        request(app).post('/v1/test/1').send('').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 400, '400 status.');
+        });
+    });
+
+    t.test('coerce body', function (t) {
+        t.plan(3);
+
+        request(app).post('/v1/test/1').send({hello: 'world'}).end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.strictEqual(response.text, 'string', 'coerced json to string.');
+        });
+    });
+
 
 });
