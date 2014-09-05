@@ -1,3 +1,7 @@
+### 1.0.0-rc.4
+
+* Fixed issue related to [#18](https://github.com/krakenjs/swaggerize-express/issues/18) and [expressjs/body-parser#44](https://github.com/expressjs/body-parser/issues/44).
+
 ### 1.0.0-rc.3
 
 * Fixed issue where generator failed with deeper `path`.
