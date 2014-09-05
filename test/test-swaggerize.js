@@ -82,8 +82,10 @@ test('input validators', function (t) {
 
     var app = express();
 
+    app.use(bodyParser());
+
     app.use(swaggerize({
-        api: require('./fixtures/api.json'),
+        api: require('./fixtures/input.json'),
         handlers: {
             sub: {
                 '{id}': {
@@ -96,39 +98,7 @@ test('input validators', function (t) {
                 $get: function (req, res) {
                     res.send('baz');
                 }
-            }
-        }
-    }));
-
-    t.test('bad input', function (t) {
-        t.plan(2);
-
-        request(app).get('/v1/greetings/sub/asdf').end(function (error, response) {
-            t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 400, '400 status.');
-        });
-    });
-
-    t.test('null input not found', function (t) {
-        t.plan(2);
-
-        request(app).get('/v1/greetings/goodbye').end(function (error, response) {
-            t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 404, '404 status.');
-        });
-    });
-
-});
-
-test('body and query input', function (t) {
-
-    var app = express();
-
-    app.use(bodyParser());
-
-    app.use(swaggerize({
-        api: require('./fixtures/input.json'),
-        handlers: {
+            },
             test: {
                 '{id}': {
                     $get: function (req, res) {
@@ -148,6 +118,24 @@ test('body and query input', function (t) {
         }
     }));
 
+    t.test('bad input', function (t) {
+        t.plan(2);
+
+        request(app).get('/v1/sub/asdf').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 400, '400 status.');
+        });
+    });
+
+    t.test('null input not found', function (t) {
+        t.plan(2);
+
+        request(app).get('/v1/goodbye').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 404, '404 status.');
+        });
+    });
+
     t.test('good query', function (t) {
         t.plan(2);
 
@@ -161,6 +149,15 @@ test('body and query input', function (t) {
         t.plan(2);
 
         request(app).post('/v1/test/1').send('').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 400, '400 status.');
+        });
+    });
+
+    t.test('missing body with form', function (t) {
+        t.plan(2);
+
+        request(app).put('/v1/test/1').send('').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 400, '400 status.');
         });
