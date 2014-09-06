@@ -37,7 +37,7 @@ module.exports = function (options) {
         if (validation.error.subErrors) {
             validation.error.subErrors.forEach(function (subError) {
                 console.error('%s: %s', subError.dataPath, subError);
-            })
+            });
         }
         return 1;
     }
