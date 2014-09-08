@@ -20,8 +20,29 @@ Paste the following:
 {
     "swaggerVersion": "1.2",
     "apiVersion": "1.0.0",
+    "apis": [
+        {
+            "path": "/greetings",
+            "description": "greetings operations"
+        }
+    ]
+}
+```
+
+Next:
+
+```bash
+$ vim greetings.json
+```
+
+Paste the following:
+
+```json
+{
+    "swaggerVersion": "1.2",
+    "apiVersion": "1.0.0",
     "basePath": "http://localhost:8000/",
-    "resourcePath": "/v1/helloworld",
+    "resourcePath": "/greetings",
     "apis": [
         {
             "path": "/hello/{name}",
@@ -29,7 +50,7 @@ Paste the following:
                 {
                     "method": "GET",
                     "type": "string",
-                    "nickname": "getHello",
+                    "nickname": "greetHello",
                     "parameters": [
                         {
                             "name": "name",
@@ -50,7 +71,7 @@ Paste the following:
 ```bash
 $ npm init
 $ npm install --save express swaggerize-express
-$ node_modules/.bin/swaggerize --api api.json --handlers handlers --models models --tests tests
+$ node_modules/.bin/swaggerize --api greetings.json --handlers handlers --models models --tests tests
 ```
 
 ### 4.
@@ -71,9 +92,12 @@ app = express();
 var server = http.createServer(app);
 
 var swagger = swaggerize({
-    api: require('./api.json'),
-    handlers: './handlers',
-    outputvalidation: app.settings.env === 'development'
+    meta: require('./api.json'),
+    resources: [
+        {
+            api: require('./greetings.json')
+        }
+    ]
 });
 
 app.use(swagger);

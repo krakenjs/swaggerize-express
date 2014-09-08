@@ -1,3 +1,11 @@
+### 1.0.0-rc.5
+
+* Enable multiple resources and a resource listing document (under `options.meta`) as per Swagger specification.
+* __BREAKING CHANGE__: `options.api` and `options.handlers` should now be located under an array `options.resources`.
+* __BREAKING CHANGE__: `app._api` property removed.
+
+See: (Swagger File Structure)[https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#42-file-structure].
+
 ### 1.0.0-rc.4
 
 * Fixed issue related to [#18](https://github.com/krakenjs/swaggerize-express/issues/18) and [expressjs/body-parser#44](https://github.com/expressjs/body-parser/issues/44).

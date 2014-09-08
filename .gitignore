@@ -18,7 +18,6 @@ html-report
 xunit.xml
 node_modules
 npm-debug.log
-test/fixtures/package.json
 
 .project
 .idea

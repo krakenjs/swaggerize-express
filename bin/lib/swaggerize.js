@@ -10,7 +10,7 @@ module.exports = function (options) {
     var apiPath, modelsPath, handlersPath, testsPath, validation, api;
 
     function usage() {
-        console.error('swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]');
+        console.error('swaggerize --api <swagger api document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]');
         return 1;
     }
 
