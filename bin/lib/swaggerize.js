@@ -33,7 +33,12 @@ module.exports = function (options) {
     validation = schema.validate(api);
 
     if (!validation.valid) {
-        console.error(validation.error.message);
+        console.error('%s (at %s)', validation.error, validation.error.dataPath);
+        if (validation.error.subErrors) {
+            validation.error.subErrors.forEach(function (subError) {
+                console.error('%s (at %s)', subError, subError.dataPath);
+            });
+        }
         return 1;
     }
 
