@@ -16,13 +16,13 @@ and Express.
 - Input model validation.
 - Models and handlers stubs generator command (`swaggerize`).
 
-### Why "Spec First"
+### Why "Design First"
 
 There are already a number of modules that help build REST services with express and swagger. However,
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
-`swaggerize-express` begins with the service specification first. This facilitates writing services that
+`swaggerize-express` begins with the service definition first. This facilitates writing services that
 are easier to design, review, and test.
 
 ### Usage
