@@ -1,0 +1,48 @@
+{
+    "swaggerVersion": "1.2",
+    "apiVersion": "v1",
+    "basePath": "http://localhost:8000/",
+    "resourcePath": "/collections",
+    "apis": [
+        {
+            "path": "/stuffs",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "stuffs",
+                    "parameters": []
+                }
+            ]
+        },
+        {
+            "path": "/stuffs/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "stuffsId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/middlewares",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "getMiddlewares",
+                    "parameters": []
+                }
+            ]
+        }
+    ]
+}
