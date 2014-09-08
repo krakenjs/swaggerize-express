@@ -1,4 +1,4 @@
-### 1.0.0-rc.5
+### 2.0.0-rc.1
 
 * Enable multiple resources and a resource listing document (under `options.meta`) as per Swagger specification.
 * __BREAKING CHANGE__: `options.api` and `options.handlers` should now be located under an array `options.resources`.
