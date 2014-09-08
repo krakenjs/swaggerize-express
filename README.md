@@ -57,7 +57,8 @@ app = express();
 var server = http.createServer(app);
 
 var swagger = swaggerize({
-    api: require('./api.json'),
+    meta: require('./api.json')
+    apis: [require('./resource.json')],
     docspath: '/api-docs',
     handlers: './handlers'
 });
@@ -166,7 +167,7 @@ Handler keys in files do *not* have to be namespaced in this way.
 
 ### Generator
 
-You can generate models and handlers stubs by running the following command:
+You can generate models acnd handlers stubs by running the following command:
 
 ```shell
 swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]

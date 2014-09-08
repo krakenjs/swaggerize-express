@@ -1,0 +1,108 @@
+{
+    "swaggerVersion": "1.2",
+    "apiVersion": "v1",
+    "basePath": "http://localhost:8000/",
+    "resourcePath": "/greetings",
+    "apis": [
+        {
+            "path": "/hello/{subject}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "getHello",
+                    "parameters": [
+                        {
+                            "name": "subject",
+                            "description": "The subject to be greeted.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/goodbye/{subject}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "string",
+                    "nickname": "getGoodbye",
+                    "parameters": [
+                        {
+                            "name": "subject",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/sub/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "integer",
+                    "nickname": "getSub",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "path"
+                        }
+                    ]
+                },
+                {
+                    "method": "HEAD",
+                    "type": "void",
+                    "nickname": "headSub",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "required": false,
+                            "type": "integer",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/sub/{id}/path",
+            "operations": [
+                {
+                    "method": "GET",
+                    "type": "User",
+                    "nickname": "getSubpath",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "required": true,
+                            "type": "integer",
+                            "paramType": "path"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {
+        "User": {
+            "id": "User",
+            "required": ["id", "name"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
