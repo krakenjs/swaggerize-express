@@ -1,6 +1,4 @@
 {
     "swaggerVersion": "1.2",
-    "apiVersion": "v1",
-    "basePath": "http://localhost:8000/",
-    "resourcePath": "/v1/collections"
+    "apiVersion": "v1"
 }

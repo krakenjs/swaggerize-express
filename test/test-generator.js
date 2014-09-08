@@ -31,7 +31,7 @@ test('swaggerize command', function (t) {
         t.plan(1);
 
         var code = swaggerize({
-            api: 'test/fixtures/api.json'
+            api: 'test/fixtures/resources/greetings.json'
         });
 
         t.strictEqual(code, 1, 'error code 1.');
@@ -41,7 +41,7 @@ test('swaggerize command', function (t) {
         t.plan(1);
 
         var code = swaggerize({
-            api: 'test/fixtures/api.json',
+            api: 'test/fixtures/resources/greetings.json',
             tests: '/test/temp/tests'
         });
 
@@ -63,7 +63,7 @@ test('swaggerize command', function (t) {
         t.plan(9);
 
         var code = swaggerize({
-            api: 'test/fixtures/api.json',
+            api: 'test/fixtures/resources/greetings.json',
             handlers: 'test/temp/handlers'
         });
 
@@ -82,7 +82,7 @@ test('swaggerize command', function (t) {
         t.plan(3);
 
         var code = swaggerize({
-            api: 'test/fixtures/api.json',
+            api: 'test/fixtures/resources/greetings.json',
             models: 'test/temp/models'
         });
 
@@ -95,7 +95,7 @@ test('swaggerize command', function (t) {
         t.plan(6);
 
         var code = swaggerize({
-            api: 'test/fixtures/api.json',
+            api: 'test/fixtures/resources/greetings.json',
             handlers: 'test/temp/handlers',
             models: 'test/temp/models',
             tests: 'test/temp/tests'

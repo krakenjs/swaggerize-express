@@ -41,7 +41,7 @@ test('swaggerize command', function (t) {
         t.test('npm devDependencies', function (t) {
             t.plan(5);
 
-            execFile('../../bin/swaggerize.js', ['--api', '../fixtures/api.json', '--handlers', 'handlers', '--models', 'models', '--tests', 'tests'], function (error, stdout, stderr) {
+            execFile('../../bin/swaggerize.js', ['--api', '../fixtures/resources/greetings.json', '--handlers', 'handlers', '--models', 'models', '--tests', 'tests'], function (error, stdout, stderr) {
                 var pkg;
 
                 stdout && console.log(stdout.toString());
