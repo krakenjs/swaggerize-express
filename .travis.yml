@@ -4,8 +4,9 @@ node_js:
 branches:
   only:
     - master
-before_install:
-  - git submodule update --init --recursive
+    - v1.0.0
+    - v2.0.0
+    - v3.0.0
 script:
   - "npm run-script cover"
   - "npm run-script lint"
