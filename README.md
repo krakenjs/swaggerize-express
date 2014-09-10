@@ -182,7 +182,7 @@ Handler keys in files do *not* have to be namespaced in this way.
 
 ### Generator
 
-You can generate models acnd handlers stubs by running the following command:
+You can generate stubs by running the following command:
 
 ```shell
 swaggerize --api <swagger api document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]
