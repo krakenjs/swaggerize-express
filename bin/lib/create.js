@@ -3,7 +3,8 @@
 var fs = require('fs'),
     path = require('path'),
     lodash = require('lodash'),
-    mkdirp = require('mkdirp');
+    mkdirp = require('mkdirp'),
+    utils = require('swaggerize-builder/lib/utils');
 
 var modelTemplate, handlerTemplate, testTemplate;
 
@@ -30,24 +31,24 @@ function createModels(models, modelsPath) {
     });
 }
 
-function createHandlers(apis, handlersPath) {
+function createHandlers(paths, handlersPath) {
     var routes, template;
 
     routes = {};
     template = fs.readFileSync(handlerTemplate);
 
-    apis.forEach(function (api) {
+    Object.keys(paths).forEach(function (path) {
         var pathnames, route;
 
         route = {
-            path: api.path,
+            path: path,
             pathname: undefined,
             methods: []
         };
 
         pathnames = [];
 
-        api.path.split('/').forEach(function (element) {
+        path.split('/').forEach(function (element) {
             if (element) {
                 pathnames.push(element);
             }
@@ -55,11 +56,19 @@ function createHandlers(apis, handlersPath) {
 
         route.pathname = pathnames.join('/');
 
-        api.operations.forEach(function (operation) {
+        utils.verbs.forEach(function (verb) {
+            var operation = paths[path][verb];
+
+            if (!operation) {
+                return;
+            }
+
             route.methods.push({
-                method: operation.method.toLowerCase(),
-                name: operation.nickname,
-                output: operation.type
+                method: verb,
+                name: operation.operationId,
+                description: operation.description,
+                parameters: operation.parameters,
+                produces: operation.produces
             });
         });
 
@@ -111,13 +120,13 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
     apiPath = path.relative(testsPath, apiPath);
     handlersPath = path.relative(testsPath, handlersPath);
 
-    if (api.models && modelsPath) {
+    if (api.definitions && modelsPath) {
 
         Object.keys(api.models).forEach(function (key) {
             var modelSchema, ModelCtor, options;
 
             options = {};
-            modelSchema = api.models[key];
+            modelSchema = api.definitions[key];
             ModelCtor = require(path.join(modelsPath, key.toLowerCase() + '.js'));
 
             Object.keys(modelSchema.properties).forEach(function (prop) {

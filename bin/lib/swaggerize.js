@@ -47,7 +47,7 @@ module.exports = function (options) {
             console.error('tests can not be generated without handlers path.');
             return usage();
         }
-        if ((api.models && !modelsPath)) {
+        if ((api.definitions && !modelsPath)) {
             console.error('api contains models, so tests can not be generated without handlers and models paths.');
             return usage();
         }
@@ -63,8 +63,8 @@ module.exports = function (options) {
         }
     });
 
-    modelsPath && create.models(api.models, modelsPath);
-    handlersPath && create.handlers(api.apis, handlersPath);
+    modelsPath && create.models(api.definitions, modelsPath);
+    handlersPath && create.handlers(api.paths, handlersPath);
 
     testsPath && create.tests(api, testsPath, apiPath, handlersPath, modelsPath);
 
