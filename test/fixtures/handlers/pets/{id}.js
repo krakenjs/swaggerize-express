@@ -5,9 +5,10 @@ var store = require('../../lib/store');
 
 module.exports = {
     get: function (req, res) {
-        res.json(store.get(req.params('id')));
+        res.json(store.get(req.param('id')));
     },
     delete: function (req, res) {
-        res.json(store.delete(req.params('id')));
+        store.delete(req.param('id'));
+        res.json(store.all());
     }
 };
