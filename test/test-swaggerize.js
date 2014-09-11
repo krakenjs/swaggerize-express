@@ -129,21 +129,11 @@ test('input validation', function (t) {
     t.test('missing body', function (t) {
         t.plan(2);
 
-        request(app).post('/pets').send().end(function (error, response) {
+        request(app).post('/pets').send('').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 400, '400 status.');
         });
     });
-
-    t.test('invalid body model', function (t) {
-        t.plan(2);
-
-        request(app).post('/pets').send({foo: 'bar'}).end(function (error, response) {
-            t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 400, '400 status.');
-        });
-    });
-
     //
     // t.test('coerce body', function (t) {
     //     t.plan(3);

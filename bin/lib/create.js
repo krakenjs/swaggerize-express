@@ -23,6 +23,9 @@ function createModels(models, modelsPath) {
         if (!fs.existsSync(fileName)) {
             model = models[modelName];
             mkdirp.sync(path.dirname(fileName));
+            if (!model.id) {
+                model.id = modelName;
+            }
             fs.writeFileSync(fileName, lodash.template(template, model));
         }
         else {
@@ -122,7 +125,7 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
 
     if (api.definitions && modelsPath) {
 
-        Object.keys(api.models).forEach(function (key) {
+        Object.keys(api.definitions).forEach(function (key) {
             var modelSchema, ModelCtor, options;
 
             options = {};
@@ -158,26 +161,34 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
 
     }
 
-    resourcePath = api.resourcePath;
+    resourcePath = api.basePath;
 
-    api.apis.forEach(function (api) {
+    Object.keys(api.paths).forEach(function (opath) {
         var fileName;
 
-        fileName = path.join(testsPath, 'test' + api.path.replace(/\//g, '_') + '.js');
+        utils.verbs.forEach(function (verb) {
+            var operation = api.paths[opath][verb];
 
-        if (!fs.existsSync(fileName)) {
-            fs.writeFileSync(fileName, lodash.template(template, {
-                apiPath: apiPath,
-                handlers: handlersPath,
-                resourcePath: resourcePath,
-                api: api,
-                models: models
-            }));
+            if (!operation) {
+                return;
+            }
 
-            return;
-        }
+            fileName = path.join(testsPath, 'test' + opath.replace(/\//g, '_') + '.js');
 
-        console.warn('%s already exists.', fileName);
+            if (!fs.existsSync(fileName)) {
+                fs.writeFileSync(fileName, lodash.template(template, {
+                    apiPath: apiPath,
+                    handlers: handlersPath,
+                    resourcePath: resourcePath,
+                    api: api,
+                    models: models
+                }));
+
+                return;
+            }
+
+            console.warn('%s already exists.', fileName);
+        });
     });
 }
 

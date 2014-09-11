@@ -6,7 +6,7 @@ var test = require('tape'),
     path = require('path'),
     mkdirp = require('mkdirp');
 
-test.only('swaggerize command', function (t) {
+test('swaggerize command', function (t) {
 
     mkdirp.sync(path.resolve('test/temp'));
 
@@ -75,7 +75,7 @@ test.only('swaggerize command', function (t) {
     });
 
     t.test('models', function (t) {
-        t.plan(3);
+        t.plan(4);
 
         var code = swaggerize({
             api: 'test/fixtures/defs/pets.json',
@@ -84,11 +84,12 @@ test.only('swaggerize command', function (t) {
 
         t.ok(!code, 'no error code.');
         t.ok(fs.existsSync(path.resolve('test/temp/models')), 'models dir exists');
-        t.ok(fs.existsSync(path.resolve('test/temp/models/user.js')), 'user.js exists');
+        t.ok(fs.existsSync(path.resolve('test/temp/models/Pet.js')), 'user.js exists');
+        t.ok(fs.existsSync(path.resolve('test/temp/models/Error.js')), 'user.js exists');
     });
 
     t.test('tests', function (t) {
-        t.plan(6);
+        t.plan(4);
 
         var code = swaggerize({
             api: 'test/fixtures/defs/pets.json',
@@ -99,10 +100,8 @@ test.only('swaggerize command', function (t) {
 
         t.ok(!code, 'no error code.');
         t.ok(fs.existsSync(path.resolve('test/temp/tests')), 'tests dir exists');
-        t.ok(fs.existsSync(path.resolve('test/temp/tests/test_goodbye_{subject}.js')), 'test_goodbye_{subject}.js exists');
-        t.ok(fs.existsSync(path.resolve('test/temp/tests/test_hello_{subject}.js')), 'test_hello_{subject}.js exists');
-        t.ok(fs.existsSync(path.resolve('test/temp/tests/test_sub_{id}.js')), 'test_sub_{id}.js exists');
-        t.ok(fs.existsSync(path.resolve('test/temp/tests/test_sub_{id}_path.js')), 'test_sub_{id}_path.js exists');
+        t.ok(fs.existsSync(path.resolve('test/temp/tests/test_pets_{id}.js')), 'test_goodbye_{subject}.js exists');
+        t.ok(fs.existsSync(path.resolve('test/temp/tests/test_pets.js')), 'test_hello_{subject}.js exists');
     });
 
 });
