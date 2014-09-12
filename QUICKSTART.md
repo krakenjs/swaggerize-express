@@ -92,7 +92,7 @@ app = express();
 var server = http.createServer(app);
 
 var swagger = swaggerize({
-    meta: require('./api.json'),
+    listing: require('./api.json'),
     resources: [
         {
             api: require('./greetings.json')

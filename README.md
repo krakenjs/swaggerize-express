@@ -31,7 +31,7 @@ are easier to design, review, and test.
 var swaggerize = require('swaggerize-express');
 
 app.use(swaggerize({
-    meta: require('./fixtures/api.json'),
+    listing: require('./fixtures/api.json'),
     resources: [
         {
             api: require('./fixtures/resources/greetings.json'),
@@ -44,7 +44,7 @@ app.use(swaggerize({
 
 Options:
 
-- `meta` - a valid Swagger 1.2 resource listing document.
+- `listing` - a valid Swagger 1.2 resource listing document.
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
 
 Resources:
@@ -69,7 +69,7 @@ app = express();
 var server = http.createServer(app);
 
 var swagger = swaggerize({
-    meta: require('./fixtures/api.json'),
+    listing: require('./fixtures/api.json'),
     resources: [
         {
             api: require('./fixtures/resources/greetings.json')

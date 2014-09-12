@@ -7,12 +7,12 @@ var test = require('tape'),
     path = require('path'),
     request = require('supertest');
 
-test('invalid meta schema', function (t) {
+test('invalid listing schema', function (t) {
     t.plan(1);
 
     t.throws(function () {
         swaggerize({
-            meta: require('./fixtures/badapi.json'),
+            listing: require('./fixtures/badapi.json'),
             resources: [
                 {
                     api: require('./fixtures/resources/greetings.json'),
@@ -28,7 +28,7 @@ test('swagger valid input/output', function (t) {
     var app = express();
 
     var swagger = swaggerize({
-        meta: require('./fixtures/api.json'),
+        listing: require('./fixtures/api.json'),
         resources: [
             {
                 api: require('./fixtures/resources/greetings.json'),
@@ -40,14 +40,15 @@ test('swagger valid input/output', function (t) {
     app.use(swagger);
 
     t.test('api', function (t) {
-        t.plan(3);
+        t.plan(4);
 
+        t.ok(swagger.hasOwnProperty('_api'), 'has _api property.');
         t.ok(swagger.hasOwnProperty('setUrl'), 'has setUrl property.');
         t.strictEqual(typeof swagger.setUrl, 'function', 'setUrl is a function.');
 
         swagger.setUrl('http://localhost:8080');
 
-        t.strictEqual(swagger._resources[0].api.basePath, 'http://localhost:8080/greetings');
+        t.strictEqual(swagger._api.resources[0].api.basePath, 'http://localhost:8080/greetings');
     });
 
     t.test('docs', function (t) {
@@ -115,7 +116,7 @@ test('input validators', function (t) {
     app.use(bodyParser());
 
     app.use(swaggerize({
-        meta: require('./fixtures/api.json'),
+        listing: require('./fixtures/api.json'),
         resources: [
             {
                 api: require('./fixtures/resources/input.json'),

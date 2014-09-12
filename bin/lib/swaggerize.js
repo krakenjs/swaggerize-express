@@ -6,13 +6,22 @@ var fs = require('fs'),
     schema = require('swaggerize-builder/lib/schema'),
     create = require('./create');
 
+function usage() {
+    console.error('swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]');
+    return 1;
+}
+
+function printValidationErrors(error) {
+    console.error('%s (at %s)', error, error.dataPath || '/');
+    if (error.subErrors) {
+        error.subErrors.forEach(function (subError) {
+            console.error('%s (at %s)', subError, subError.dataPath || '/');
+        });
+    }
+}
+
 module.exports = function (options) {
     var apiPath, modelsPath, handlersPath, testsPath, validation, api;
-
-    function usage() {
-        console.error('swaggerize --api <swagger api document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]');
-        return 1;
-    }
 
     apiPath = options.api;
     modelsPath = options.models;
@@ -33,12 +42,7 @@ module.exports = function (options) {
     validation = schema.validate(api);
 
     if (!validation.valid) {
-        console.error('%s (at %s)', validation.error, validation.error.dataPath);
-        if (validation.error.subErrors) {
-            validation.error.subErrors.forEach(function (subError) {
-                console.error('%s (at %s)', subError, subError.dataPath);
-            });
-        }
+        printValidationErrors(validation.error);
         return 1;
     }
 

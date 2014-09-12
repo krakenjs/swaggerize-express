@@ -15,7 +15,7 @@ test('express routes', function (t) {
             var stack;
 
             expressroutes(app, {
-                meta: require('./fixtures/api.json'),
+                listing: require('./fixtures/api.json'),
                 docspath: '/api-docs',
                 resources: [
                     {
@@ -54,7 +54,7 @@ test('express routes', function (t) {
             var stack;
 
             expressroutes(app, {
-                meta: require('./fixtures/api.json'),
+                listing: require('./fixtures/api.json'),
                 docspath: '/api-docs',
                 resources: [
                     {
@@ -82,7 +82,7 @@ test('express routes', function (t) {
             var stack;
 
             expressroutes(app, {
-                meta: require('./fixtures/api.json'),
+                listing: require('./fixtures/api.json'),
                 docspath: '/api-docs',
                 resources: [
                     {
