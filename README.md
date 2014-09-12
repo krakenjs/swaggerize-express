@@ -5,7 +5,7 @@
 - **Stability:** `stable`
 - **Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
 
-`swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
+`swaggerize-express` is a "design first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
 and Express.
 
 `swaggerize-express` provides the following features:
@@ -22,7 +22,7 @@ There are already a number of modules that help build REST services with express
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
-`swaggerize-express` begins with the service definition first. This facilitates writing services that
+`swaggerize-express` begins with the service definition. This facilitates writing services that
 are easier to design, review, and test.
 
 ### Usage
