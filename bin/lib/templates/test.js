@@ -8,23 +8,24 @@ var test = require('tape'),
 
 test('api', function (t) {
     var app = express();
-    <%_.forEach(api.operations, function (operation) { if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put') { %>
+    
+    <%_.forEach(operations, function (operation) { if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put') { %>
     app.use(require('body-parser')());<%}});%>
 
     app.use(swaggerize({
         api: require('<%=apiPath%>'),
-        handlers: path.join(__dirname, '<%=handlers%>'),
+        handlers: path.join(__dirname, '<%=handlers%>')
     }));
 
-    <%_.forEach(api.operations, function (operation) {%>
-    t.test('test <%=operation.method%> <%=api.path%>', function (t) {
+    <%_.forEach(operations, function (operation) {%>
+    t.test('test <%=operation.method%> <%=operation.path%>', function (t) {
         <%
-        var path = api.path;
+        var path = operation.path;
         var body;
         if (operation.parameters && operation.parameters.length) {
-            operation.parameters.forEach(function (param) {
-                if (param.paramType === 'path') {
-                    path = api.path.replace(/{([^}]*)}*/, function (p1, p2) {
+            _.forEach(operation.parameters, function (param) {
+                if (param.in === 'path') {
+                    path = operation.path.replace(/{([^}]*)}*/, function (p1, p2) {
                         switch (param.type) {
                             case 'integer':
                             case 'float':
@@ -33,7 +34,7 @@ test('api', function (t) {
                             case 'byte':
                                 return 1;
                             case 'string':
-                                return 'helloworld';
+                                return 'test';
                             case 'boolean':
                                 return true;
                             default:
@@ -41,19 +42,22 @@ test('api', function (t) {
                         }
                     });
                 }
-                if (param.paramType === 'body') {
-                    body = models[param.type];
+                if (param.in === 'body') {
+                    body = models[param.schema.$ref.slice(param.schema.$ref.lastIndexOf('/') + 1)];
                 }
             });
-        }
-        %><%if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put'){%>var body = <%=JSON.stringify(body)%>;<%}%>
-        t.plan(2);
+        }%>t.plan(2);
+        <%if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put'){%>
+        var body = {<%_.forEach(Object.keys(body), function (k, i) {%>
+            '<%=k%>': <%=JSON.stringify(body[k])%><%if (i < Object.keys(body).length - 1) {%>, <%}%><%})%>
+        };
+        <%}%>
 
         request(app).<%=operation.method.toLowerCase()%>('<%=resourcePath%><%=path%>')
         .expect(200)<%if (operation.method.toLowerCase() === 'post' || operation.method.toLowerCase() === 'put'){%>.send(body)<%}%>
         .end(function (err, res) {
-            t.ok(!err, '<%=operation.method.toLowerCase()%> <%=api.path%> no error.');
-            t.strictEqual(res.statusCode, 200, '<%=operation.method.toLowerCase()%> <%=api.path%> 200 status.');
+            t.ok(!err, '<%=operation.method.toLowerCase()%> <%=operation.path%> no error.');
+            t.strictEqual(res.statusCode, 200, '<%=operation.method.toLowerCase()%> <%=operation.path%> 200 status.');
         });
     });
     <%});%>

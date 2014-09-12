@@ -134,35 +134,5 @@ test('input validation', function (t) {
             t.strictEqual(response.statusCode, 400, '400 status.');
         });
     });
-    //
-    // t.test('coerce body', function (t) {
-    //     t.plan(3);
-    //
-    //     request(app).post('/v1/test/1').send({hello: 'world'}).end(function (error, response) {
-    //         t.ok(!error, 'no error.');
-    //         t.strictEqual(response.statusCode, 200, '200 status.');
-    //         t.strictEqual(response.text, 'string', 'coerced json to string.');
-    //     });
-    // });
-    //
-    // t.test('coerce body with form', function (t) {
-    //     t.plan(3);
-    //
-    //     request(app).put('/v1/test/1').send({param1: 'hello', param2: 'world'}).end(function (error, response) {
-    //         t.ok(!error, 'no error.');
-    //         t.strictEqual(response.statusCode, 200, '200 status.');
-    //         t.strictEqual(response.text, 'string', 'coerced json to string.');
-    //     });
-    // });
-    //
-    // t.test('body with form uses model', function (t) {
-    //     t.plan(3);
-    //
-    //     request(app).delete('/v1/test/1').send({param1: 'hello', param2: 'world'}).end(function (error, response) {
-    //         t.ok(!error, 'no error.');
-    //         t.strictEqual(response.statusCode, 200, '200 status.');
-    //         t.strictEqual(response.text, 'object', 'type came across as object.');
-    //     });
-    // });
 
 });

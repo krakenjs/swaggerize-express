@@ -6,25 +6,28 @@ var test = require('tape'),
     path = require('path'),
     mkdirp = require('mkdirp');
 
-test('swaggerize command', function (t) {
+function rm(dir) {
+    var files = fs.readdirSync(dir);
 
-    mkdirp.sync(path.resolve('test/temp'));
+    files && files.forEach(function (file) {
+        var info = fs.statSync(file = path.join(dir, file));
+
+        info.isFile() && fs.unlinkSync(file);
+        info.isDirectory() && rm(file);
+    });
+
+    fs.rmdirSync(dir);
+}
+
+test('swaggerize command', function (t) {
+    var tempDir = path.resolve('test/temp');
+
+    fs.existsSync(tempDir) && rm(tempDir);
+
+    mkdirp.sync(tempDir);
 
     t.on('end', function () {
-        function rm(dir) {
-            var files = fs.readdirSync(dir);
-
-            files && files.forEach(function (file) {
-                var info = fs.statSync(file = path.join(dir, file));
-
-                info.isFile() && fs.unlinkSync(file);
-                info.isDirectory() && rm(file);
-            });
-
-            fs.rmdirSync(dir);
-        }
-
-        rm(path.resolve('test/temp'));
+        rm(tempDir);
     });
 
     t.test('no handlers or models', function (t) {

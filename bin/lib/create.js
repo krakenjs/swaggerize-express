@@ -164,31 +164,42 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
     resourcePath = api.basePath;
 
     Object.keys(api.paths).forEach(function (opath) {
-        var fileName;
+        var fileName, operations;
+
+        operations = [];
 
         utils.verbs.forEach(function (verb) {
-            var operation = api.paths[opath][verb];
+            var operation = {};
 
-            if (!operation) {
+            if (!api.paths[opath][verb]) {
                 return;
             }
 
-            fileName = path.join(testsPath, 'test' + opath.replace(/\//g, '_') + '.js');
+            Object.keys(api.paths[opath][verb]).forEach(function (key) {
+                operation[key] = api.paths[opath][verb][key];
+            });
 
-            if (!fs.existsSync(fileName)) {
-                fs.writeFileSync(fileName, lodash.template(template, {
-                    apiPath: apiPath,
-                    handlers: handlersPath,
-                    resourcePath: resourcePath,
-                    api: api,
-                    models: models
-                }));
+            operation.path = opath;
+            operation.method = verb;
 
-                return;
-            }
-
-            console.warn('%s already exists.', fileName);
+            operations.push(operation);
         });
+
+        fileName = path.join(testsPath, 'test' + opath.replace(/\//g, '_') + '.js');
+
+        if (!fs.existsSync(fileName)) {
+            fs.writeFileSync(fileName, lodash.template(template, {
+                apiPath: apiPath,
+                handlers: handlersPath,
+                resourcePath: resourcePath,
+                operations: operations,
+                models: models
+            }));
+
+            return;
+        }
+
+        console.warn('%s already exists.', fileName);
     });
 }
 
