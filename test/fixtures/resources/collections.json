@@ -2,7 +2,7 @@
     "swaggerVersion": "1.2",
     "apiVersion": "v1",
     "basePath": "http://localhost:8000/",
-    "resourcePath": "/v1/collections",
+    "resourcePath": "/collections",
     "apis": [
         {
             "path": "/stuffs",
@@ -10,7 +10,8 @@
                 {
                     "method": "GET",
                     "type": "string",
-                    "nickname": "stuffs"
+                    "nickname": "stuffs",
+                    "parameters": []
                 }
             ]
         },
@@ -38,7 +39,8 @@
                 {
                     "method": "GET",
                     "type": "string",
-                    "nickname": "getMiddlewares"
+                    "nickname": "getMiddlewares",
+                    "parameters": []
                 }
             ]
         }

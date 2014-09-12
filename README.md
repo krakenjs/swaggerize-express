@@ -5,7 +5,7 @@
 - **Stability:** `stable`
 - **Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
 
-`swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
+`swaggerize-express` is a "design first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
 and Express.
 
 `swaggerize-express` provides the following features:
@@ -16,13 +16,13 @@ and Express.
 - Input model validation.
 - Models and handlers stubs generator command (`swaggerize`).
 
-### Why "Spec First"
+### Why "Design First"
 
 There are already a number of modules that help build REST services with express and swagger. However,
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
-`swaggerize-express` begins with the service specification first. This facilitates writing services that
+`swaggerize-express` begins with the service definition. This facilitates writing services that
 are easier to design, review, and test.
 
 ### Usage
@@ -31,17 +31,29 @@ are easier to design, review, and test.
 var swaggerize = require('swaggerize-express');
 
 app.use(swaggerize({
-    api: require('./api.json'),
-    docspath: '/api-docs',
-    handlers: './handlers'
+    listing: require('./fixtures/api.json'),
+    resources: [
+        {
+            api: require('./fixtures/resources/greetings.json'),
+            handlers: path.join(__dirname, './handlers')
+        }
+    ],
+    docspath: '/api-docs'
 }));
 ```
 
 Options:
 
-- `api` - a valid Swagger 1.2 document.
-- `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
+- `listing` - a valid Swagger 1.2 resource listing document.
+- `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/api-docs`.
+
+Resources:
+
+- `api` - a valid Swagger 1.2 API document.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
+- `basedir` - the default directory to search for `handlers` (defaults to caller's `basedir`).
+
+See (Swagger File Formats)[https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#42-file-structure].
 
 The base url for the api can also be updated via the `setUrl` function on the middleware.
 
@@ -57,9 +69,13 @@ app = express();
 var server = http.createServer(app);
 
 var swagger = swaggerize({
-    api: require('./api.json'),
-    docspath: '/api-docs',
-    handlers: './handlers'
+    listing: require('./fixtures/api.json'),
+    resources: [
+        {
+            api: require('./fixtures/resources/greetings.json')
+        }
+    ],
+    docspath: '/api-docs'
 });
 
 app.use(swagger);
@@ -166,16 +182,12 @@ Handler keys in files do *not* have to be namespaced in this way.
 
 ### Generator
 
-You can generate models and handlers stubs by running the following command:
+You can generate stubs by running the following command:
 
 ```shell
-swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]
+swaggerize --api <swagger api document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]
 ```
 
 Example:
-
-```shell
-swaggerize --api config/api.json --models resources/models --handlers resources/handlers --tests tests/
-```
 
 `--api` is required, but only one of `--models` or `--handlers` or `--tests` is required.
