@@ -16,7 +16,7 @@ test('swaggerize', function (t) {
         handlers: path.join(__dirname, 'fixtures/handlers')
     });
 
-    app.use(bodyParser());
+    app.use(bodyParser.json());
     app.use(swagger);
 
     t.test('api', function (t) {
@@ -88,7 +88,7 @@ test('input validation', function (t) {
 
     var app = express();
 
-    app.use(bodyParser());
+    app.use(bodyParser.json());
 
     app.use(swaggerize({
         api: require('./fixtures/defs/pets.json'),
