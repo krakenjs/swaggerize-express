@@ -87,8 +87,8 @@ test('swaggerize command', function (t) {
 
         t.ok(!code, 'no error code.');
         t.ok(fs.existsSync(path.resolve('test/temp/models')), 'models dir exists');
-        t.ok(fs.existsSync(path.resolve('test/temp/models/Pet.js')), 'user.js exists');
-        t.ok(fs.existsSync(path.resolve('test/temp/models/Error.js')), 'user.js exists');
+        t.ok(fs.existsSync(path.resolve('test/temp/models/pet.js')), 'pet.js exists');
+        t.ok(fs.existsSync(path.resolve('test/temp/models/error.js')), 'error.js exists');
     });
 
     t.test('tests', function (t) {
