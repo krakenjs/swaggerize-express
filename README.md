@@ -5,7 +5,7 @@
 - **Stability:** `stable`
 - **Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
 
-`swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md)
+`swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/2.0.md)
 and Express.
 
 `swaggerize-express` provides the following features:
@@ -16,13 +16,13 @@ and Express.
 - Input model validation.
 - Models and handlers stubs generator command (`swaggerize`).
 
-### Why "Spec First"
+### Why "Design First"
 
 There are already a number of modules that help build REST services with express and swagger. However,
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
-`swaggerize-express` begins with the service specification first. This facilitates writing services that
+`swaggerize-express` begins with the service definition first. This facilitates writing services that
 are easier to design, review, and test.
 
 ### Usage
@@ -39,11 +39,11 @@ app.use(swaggerize({
 
 Options:
 
-- `api` - a valid Swagger 1.2 document.
+- `api` - a valid Swagger 2.0 document.
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
 
-The base url for the api can also be updated via the `setUrl` function on the middleware.
+The base url for the api can also be updated via the `setHost` function on the middleware.
 
 Example:
 
@@ -65,7 +65,7 @@ var swagger = swaggerize({
 app.use(swagger);
 
 server.listen(port, 'localhost', function () {
-    swagger.setUrl('http://' + server.address().address + ':' + server.address().port);
+    swagger.setHost(server.address().address + ':' + server.address().port);
 });
 ```
 
@@ -73,7 +73,7 @@ Also checkout the [Quick Start Guide](https://github.com/krakenjs/swaggerize-exp
 
 ### Mount Path
 
-Api `path` values will be prefixed with the swagger document's `resourcePath` value.
+Api `path` values will be prefixed with the swagger document's `basePath` value.
 
 ### Handlers Directory
 

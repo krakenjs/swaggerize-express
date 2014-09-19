@@ -3,7 +3,8 @@
 var fs = require('fs'),
     path = require('path'),
     lodash = require('lodash'),
-    mkdirp = require('mkdirp');
+    mkdirp = require('mkdirp'),
+    utils = require('swaggerize-builder/lib/utils');
 
 var modelTemplate, handlerTemplate, testTemplate;
 
@@ -22,6 +23,9 @@ function createModels(models, modelsPath) {
         if (!fs.existsSync(fileName)) {
             model = models[modelName];
             mkdirp.sync(path.dirname(fileName));
+            if (!model.id) {
+                model.id = modelName;
+            }
             fs.writeFileSync(fileName, lodash.template(template, model));
         }
         else {
@@ -30,24 +34,24 @@ function createModels(models, modelsPath) {
     });
 }
 
-function createHandlers(apis, handlersPath) {
+function createHandlers(paths, handlersPath) {
     var routes, template;
 
     routes = {};
     template = fs.readFileSync(handlerTemplate);
 
-    apis.forEach(function (api) {
+    Object.keys(paths).forEach(function (path) {
         var pathnames, route;
 
         route = {
-            path: api.path,
+            path: path,
             pathname: undefined,
             methods: []
         };
 
         pathnames = [];
 
-        api.path.split('/').forEach(function (element) {
+        path.split('/').forEach(function (element) {
             if (element) {
                 pathnames.push(element);
             }
@@ -55,11 +59,19 @@ function createHandlers(apis, handlersPath) {
 
         route.pathname = pathnames.join('/');
 
-        api.operations.forEach(function (operation) {
+        utils.verbs.forEach(function (verb) {
+            var operation = paths[path][verb];
+
+            if (!operation) {
+                return;
+            }
+
             route.methods.push({
-                method: operation.method.toLowerCase(),
-                name: operation.nickname,
-                output: operation.type
+                method: verb,
+                name: operation.operationId,
+                description: operation.description,
+                parameters: operation.parameters,
+                produces: operation.produces
             });
         });
 
@@ -111,13 +123,13 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
     apiPath = path.relative(testsPath, apiPath);
     handlersPath = path.relative(testsPath, handlersPath);
 
-    if (api.models && modelsPath) {
+    if (api.definitions && modelsPath) {
 
-        Object.keys(api.models).forEach(function (key) {
+        Object.keys(api.definitions).forEach(function (key) {
             var modelSchema, ModelCtor, options;
 
             options = {};
-            modelSchema = api.models[key];
+            modelSchema = api.definitions[key];
             ModelCtor = require(path.join(modelsPath, key.toLowerCase() + '.js'));
 
             Object.keys(modelSchema.properties).forEach(function (prop) {
@@ -149,19 +161,38 @@ function createTests(api, testsPath, apiPath, handlersPath, modelsPath) {
 
     }
 
-    resourcePath = api.resourcePath;
+    resourcePath = api.basePath;
 
-    api.apis.forEach(function (api) {
-        var fileName;
+    Object.keys(api.paths).forEach(function (opath) {
+        var fileName, operations;
 
-        fileName = path.join(testsPath, 'test' + api.path.replace(/\//g, '_') + '.js');
+        operations = [];
+
+        utils.verbs.forEach(function (verb) {
+            var operation = {};
+
+            if (!api.paths[opath][verb]) {
+                return;
+            }
+
+            Object.keys(api.paths[opath][verb]).forEach(function (key) {
+                operation[key] = api.paths[opath][verb][key];
+            });
+
+            operation.path = opath;
+            operation.method = verb;
+
+            operations.push(operation);
+        });
+
+        fileName = path.join(testsPath, 'test' + opath.replace(/\//g, '_') + '.js');
 
         if (!fs.existsSync(fileName)) {
             fs.writeFileSync(fileName, lodash.template(template, {
                 apiPath: apiPath,
                 handlers: handlersPath,
                 resourcePath: resourcePath,
-                api: api,
+                operations: operations,
                 models: models
             }));
 

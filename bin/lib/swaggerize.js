@@ -3,11 +3,11 @@
 var fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
-    schema = require('swaggerize-builder/lib/schema'),
+    tv4 = require('tv4'),
     create = require('./create');
 
 module.exports = function (options) {
-    var apiPath, modelsPath, handlersPath, testsPath, validation, api;
+    var apiPath, modelsPath, handlersPath, testsPath, api;
 
     function usage() {
         console.error('swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]');
@@ -30,15 +30,7 @@ module.exports = function (options) {
 
     api = require(apiPath);
 
-    validation = schema.validate(api);
-
-    if (!validation.valid) {
-        console.error('%s (at %s)', validation.error, validation.error.dataPath);
-        if (validation.error.subErrors) {
-            validation.error.subErrors.forEach(function (subError) {
-                console.error('%s (at %s)', subError, subError.dataPath);
-            });
-        }
+    if (validate(api)) {
         return 1;
     }
 
@@ -47,7 +39,7 @@ module.exports = function (options) {
             console.error('tests can not be generated without handlers path.');
             return usage();
         }
-        if ((api.models && !modelsPath)) {
+        if ((api.definitions && !modelsPath)) {
             console.error('api contains models, so tests can not be generated without handlers and models paths.');
             return usage();
         }
@@ -63,10 +55,29 @@ module.exports = function (options) {
         }
     });
 
-    modelsPath && create.models(api.models, modelsPath);
-    handlersPath && create.handlers(api.apis, handlersPath);
+    modelsPath && create.models(api.definitions, modelsPath);
+    handlersPath && create.handlers(api.paths, handlersPath);
 
     testsPath && create.tests(api, testsPath, apiPath, handlersPath, modelsPath);
 
     return 0;
 };
+
+function validate(api) {
+    var schema, validator, validation;
+
+    schema = require('swaggerize-builder/lib/schema/swagger-spec/schemas/v2.0/schema.json');
+    validator = tv4.freshApi();
+
+    validation = validator.validateResult(api, schema);
+
+    if (!validation.valid) {
+        console.error('%s (at %s)', validation.error.message, validation.error.dataPath || '/');
+        if (validation.error.subErrors) {
+            validation.error.subErrors.forEach(function (subError) {
+                console.error('%s (at %s)', subError, subError.dataPath);
+            });
+        }
+        return 1;
+    }
+}

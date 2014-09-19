@@ -1,10 +1,11 @@
 {
   "name": "swaggerize-express",
-  "version": "1.0.0-rc.4",
+  "version": "3.0.0-alpha.1",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
-  "description": "Spec-first REST services with Swagger and Express.",
+  "description": "Design-first REST services with Swagger and Express.",
   "keywords": [
     "swagger",
+    "swagger 2.0",
     "swagger-node",
     "swagger-express",
     "swagger-ui",
@@ -29,13 +30,14 @@
     "node": "0.10.x"
   },
   "dependencies": {
-    "swaggerize-builder": "^1.0.0",
+    "swaggerize-builder": "^2.0.0",
     "caller": "^0.0.1",
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
     "lodash": "^2.4.1",
     "minimist": "^0.2.0",
-    "mkdirp": "^0.5.0"
+    "mkdirp": "^0.5.0",
+    "tv4": "^1.1.0"
   },
   "peerDependencies": {
     "express": "^4.0.0"

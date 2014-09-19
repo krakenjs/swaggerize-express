@@ -10,47 +10,14 @@ $ mkdir helloworld && cd $_
 
 ### 2.
 
-```bash
-$ vim api.json
-```
-
-Paste the following:
-
-```json
-{
-    "swaggerVersion": "1.2",
-    "apiVersion": "1.0.0",
-    "basePath": "http://localhost:8000/",
-    "resourcePath": "/v1/helloworld",
-    "apis": [
-        {
-            "path": "/hello/{name}",
-            "operations": [
-                {
-                    "method": "GET",
-                    "type": "string",
-                    "nickname": "getHello",
-                    "parameters": [
-                        {
-                            "name": "name",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "path"
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-}
-```
+Grab the (Swagger Pet Store example)[https://github.com/wordnik/swagger-spec/blob/master/examples/v2.0/json/petstore.json].
 
 ### 3.
 
 ```bash
 $ npm init
 $ npm install --save express swaggerize-express
-$ node_modules/.bin/swaggerize --api api.json --handlers handlers --models models --tests tests
+$ node_modules/.bin/swaggerize --api petstore.json --handlers handlers --models models --tests tests
 ```
 
 ### 4.
@@ -71,15 +38,14 @@ app = express();
 var server = http.createServer(app);
 
 var swagger = swaggerize({
-    api: require('./api.json'),
-    handlers: './handlers',
-    outputvalidation: app.settings.env === 'development'
+    api: require('./petstore.json'),
+    handlers: './handlers'
 });
 
 app.use(swagger);
 
 server.listen(8000, 'localhost', function () {
-    swagger.setUrl('http://' + server.address().address + ':' + server.address().port);
+    swagger.setHost(server.address().address + ':' + server.address().port);
 });
 ```
 

@@ -6,14 +6,31 @@ var test = require('tape'),
     path = require('path'),
     mkdirp = require('mkdirp');
 
+function rm(dir) {
+    var files = fs.readdirSync(dir);
+
+    files && files.forEach(function (file) {
+        var info = fs.statSync(file = path.join(dir, file));
+
+        info.isFile() && fs.unlinkSync(file);
+        info.isDirectory() && rm(file);
+    });
+
+    fs.rmdirSync(dir);
+}
+
 test('swaggerize command', function (t) {
-    var cwd, writeStream;
+    var cwd, writeStream, tempDir;
 
     cwd = process.cwd();
 
-    mkdirp.sync(path.resolve('test/temp'));
+    tempDir = path.resolve('test/temp');
 
-    process.chdir(path.resolve('test/temp'));
+    fs.existsSync(tempDir) && rm(tempDir);
+
+    mkdirp.sync(tempDir);
+
+    process.chdir(tempDir);
 
     writeStream = fs.createWriteStream('package.json');
 
@@ -21,31 +38,15 @@ test('swaggerize command', function (t) {
 
         t.on('end', function () {
             process.chdir(cwd);
-
-            function rm(dir) {
-                var files = fs.readdirSync(dir);
-
-                files && files.forEach(function (file) {
-                    var info = fs.statSync(file = path.join(dir, file));
-
-                    info.isFile() && fs.unlinkSync(file);
-                    info.isDirectory() && rm(file);
-                });
-
-                fs.rmdirSync(dir);
-            }
-
-            rm(path.resolve('test/temp'));
+            rm(tempDir);
         });
 
         t.test('npm devDependencies', function (t) {
             t.plan(5);
 
-            execFile('../../bin/swaggerize.js', ['--api', '../fixtures/api.json', '--handlers', 'handlers', '--models', 'models', '--tests', 'tests'], function (error, stdout, stderr) {
+            execFile('../../bin/swaggerize.js', ['--api', '../fixtures/defs/pets.json', '--handlers', 'handlers', '--models', 'models', '--tests', 'tests'], function (error, stdout, stderr) {
                 var pkg;
 
-                stdout && console.log(stdout.toString());
-                stderr && console.log(stderr.toString());
                 error && console.error(error);
 
                 t.ok(!error, 'no error.');
