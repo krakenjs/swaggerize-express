@@ -2,6 +2,8 @@
 
 # swaggerize-express
 
+**WARNING:** This module now uses Swagger 2.0. For the Swagger 1.2 compatible version, see the 2.0.0 branch versions.
+
 - **Stability:** `stable`
 - **Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
 
