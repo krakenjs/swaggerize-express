@@ -25,6 +25,12 @@ the application business logic.
 `swaggerize-express` begins with the service definition. This facilitates writing services that
 are easier to design, review, and test.
 
+### Installation
+
+```
+$ npm install swaggerize-express@^2.0.0
+```
+
 ### Usage
 
 ```javascript
