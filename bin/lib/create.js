@@ -68,10 +68,10 @@ function createHandlers(paths, handlersPath) {
 
             route.methods.push({
                 method: verb,
-                name: operation.operationId,
-                description: operation.description,
-                parameters: operation.parameters,
-                produces: operation.produces
+                name: operation.operationId || '',
+                description: operation.description || '',
+                parameters: operation.parameters || [],
+                produces: operation.produces || []
             });
         });
 
