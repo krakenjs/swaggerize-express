@@ -58,16 +58,14 @@ app = express();
 
 var server = http.createServer(app);
 
-var swagger = swaggerize({
+app.use(swaggerize({
     api: require('./api.json'),
     docspath: '/api-docs',
     handlers: './handlers'
 });
 
-app.use(swagger);
-
 server.listen(port, 'localhost', function () {
-    swagger.setHost(server.address().address + ':' + server.address().port);
+    app.setHost(server.address().address + ':' + server.address().port);
 });
 ```
 

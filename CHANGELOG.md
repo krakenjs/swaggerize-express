@@ -1,3 +1,8 @@
+### 3.0.1
+
+- `app._api` is `app.api`.
+- `api` and `setHost` are now on the `parent`, not the middleware.
+
 ### 3.0.0
 
 - Swagger 2.0 compatible.

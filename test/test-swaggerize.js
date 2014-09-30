@@ -22,15 +22,15 @@ test('swaggerize', function (t) {
     t.test('api', function (t) {
         t.plan(5);
 
-        t.ok(swagger.hasOwnProperty('_api'), 'has _api property.');
-        t.ok(swagger._api, '_api is an object.');
+        t.ok(app.hasOwnProperty('api'), 'has api property.');
+        t.ok(app.api, 'api is an object.');
 
-        t.ok(swagger.hasOwnProperty('setHost'), 'has setHost property.');
-        t.strictEqual(typeof swagger.setHost, 'function', 'setHost is a function.');
+        t.ok(app.hasOwnProperty('setHost'), 'has setHost property.');
+        t.strictEqual(typeof app.setHost, 'function', 'setHost is a function.');
 
-        swagger.setHost('localhost:8080');
+        app.setHost('localhost:8080');
 
-        t.strictEqual(swagger._api.host, 'localhost:8080');
+        t.strictEqual(app.api.host, 'localhost:8080');
     });
 
     t.test('docs', function (t) {
