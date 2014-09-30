@@ -22,7 +22,7 @@ test('swaggerize', function (t) {
     t.test('api', function (t) {
         t.plan(5);
 
-        t.ok(app.hasOwnProperty('api'), 'has _api property.');
+        t.ok(app.hasOwnProperty('api'), 'has api property.');
         t.ok(app.api, 'api is an object.');
 
         t.ok(app.hasOwnProperty('setHost'), 'has setHost property.');
