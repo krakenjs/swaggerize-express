@@ -35,7 +35,10 @@ module.exports = function (options) {
         validate(api);
     }
     catch (e) {
-        console.error('schema validation failed: %s', e.message);
+        console.error('schema validation failed.');
+        for (var i = 0; i < (e.details || []).length; i++) {
+            console.error('%s (at %s).', e.details[i].message, e.details[i].path);
+        }
         return 1;
     }
 
