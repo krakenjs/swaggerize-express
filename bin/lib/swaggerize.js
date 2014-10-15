@@ -1,9 +1,10 @@
 'use strict';
 
-var fs = require('fs'),
+var assert = require('assert'),
+    fs = require('fs'),
     path = require('path'),
     mkdirp = require('mkdirp'),
-    tv4 = require('tv4'),
+    enjoi = require('enjoi'),
     create = require('./create');
 
 module.exports = function (options) {
@@ -30,9 +31,18 @@ module.exports = function (options) {
 
     api = require(apiPath);
 
-    if (validate(api)) {
+    try {
+        validate(api);
+    }
+    catch (e) {
+        console.error('schema validation failed.');
+        for (var i = 0; i < (e.details || []).length; i++) {
+            console.error('%s (at %s).', e.details[i].message, e.details[i].path);
+        }
         return 1;
     }
+
+
 
     if (testsPath) {
         if (!handlersPath) {
@@ -63,21 +73,12 @@ module.exports = function (options) {
     return 0;
 };
 
-function validate(api) {
-    var schema, validator, validation;
+function validate(api, callback) {
+    var schema;
 
-    schema = require('swaggerize-builder/lib/schema/swagger-spec/schemas/v2.0/schema.json');
-    validator = tv4.freshApi();
+    schema = enjoi(require('swaggerize-builder/lib/schema/swagger-spec/schemas/v2.0/schema.json'));
 
-    validation = validator.validateResult(api, schema);
-
-    if (!validation.valid) {
-        console.error('%s (at %s)', validation.error.message, validation.error.dataPath || '/');
-        if (validation.error.subErrors) {
-            validation.error.subErrors.forEach(function (subError) {
-                console.error('%s (at %s)', subError, subError.dataPath);
-            });
-        }
-        return 1;
-    }
+    schema.validate(api, function (error) {
+        assert.ifError(error);
+    });
 }
