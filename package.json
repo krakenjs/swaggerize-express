@@ -1,6 +1,6 @@
 {
   "name": "swaggerize-express",
-  "version": "3.0.0-alpha.3",
+  "version": "3.0.0-rc.1",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "description": "Design-first REST services with Swagger and Express.",
   "keywords": [
@@ -18,9 +18,6 @@
     "api"
   ],
   "main": "./lib/index",
-  "bin": {
-    "swaggerize": "bin/swaggerize.js"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/krakenjs/swaggerize-express.git"
