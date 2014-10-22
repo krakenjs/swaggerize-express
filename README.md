@@ -16,7 +16,6 @@ and Express.
 - Express routes binding.
 - API documentation route.
 - Input model validation.
-- Models and handlers stubs generator command (`swaggerize`).
 
 ### Why "Design First"
 
@@ -27,7 +26,35 @@ the application business logic.
 `swaggerize-express` begins with the service definition first. This facilitates writing services that
 are easier to design, review, and test.
 
-### Usage
+### Quick Start with a Generator
+
+This guide will let you go from an `api.json` to a service project in no time flat.
+
+First install `generator-swaggerize` (and `yo` if you haven't already):
+
+```bash
+$ npm install -g yo
+$ npm install -g generator-swaggerize
+```
+
+Now run the generator.
+
+```bash
+$ mkdir petstore && cd $_
+$ yo swaggerize
+```
+
+Follow the prompts (note: make sure to choose `express` as your framework choice).
+
+When asked for a swagger document, you can try this one:
+
+```
+https://raw.githubusercontent.com/wordnik/swagger-spec/master/examples/v2.0/json/petstore.json
+```
+
+You now have a working api and can use something like [Swagger UI](https://github.com/wordnik/swagger-ui) to explore it.
+
+### Manual Usage
 
 ```javascript
 var swaggerize = require('swaggerize-express');
@@ -68,8 +95,6 @@ server.listen(port, 'localhost', function () {
     app.setHost(server.address().address + ':' + server.address().port);
 });
 ```
-
-Also checkout the [Quick Start Guide](https://github.com/krakenjs/swaggerize-express/blob/master/QUICKSTART.md).
 
 ### Mount Path
 
@@ -163,19 +188,3 @@ Note that if you are programatically constructing a handlers obj, you must names
 avoid conflicts with path names. These keys should also be *lowercase*.
 
 Handler keys in files do *not* have to be namespaced in this way.
-
-### Generator
-
-You can generate models and handlers stubs by running the following command:
-
-```shell
-swaggerize --api <swagger document> [[--models <models dir>] | [--handlers <handlers dir>] | [--tests <tests dir>]]
-```
-
-Example:
-
-```shell
-swaggerize --api config/api.json --models resources/models --handlers resources/handlers --tests tests/
-```
-
-`--api` is required, but only one of `--models` or `--handlers` or `--tests` is required.
