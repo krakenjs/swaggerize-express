@@ -29,8 +29,8 @@ test('express routes', function (t) {
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
             t.strictEqual(stack.length, 2, '2 routes added.');
-            t.strictEqual(stack[0].route.path, '/api-docs', 'api-docs added.');
-            t.strictEqual(stack[1].route.path, '/pets/:id', 'hello added.');
+            t.strictEqual(stack[0].route.path, '/v1/petstore/api-docs', 'api-docs added.');
+            t.strictEqual(stack[1].route.path, '/v1/petstore/pets/:id', 'hello added.');
         });
 
         app.use(child);
@@ -53,7 +53,7 @@ test('express routes', function (t) {
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
             t.strictEqual(stack.length, 1, 'only api-docs route added.');
-            t.strictEqual(stack[0].route.path, '/api-docs', 'api-docs added.');
+            t.strictEqual(stack[0].route.path, '/v1/petstore/api-docs', 'api-docs added.');
         });
 
         app.use(child);
@@ -85,7 +85,7 @@ test('express routes', function (t) {
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
             t.strictEqual(stack.length, 2, '2 routes added.');
-            t.strictEqual(stack[1].route.path, '/pets', '/pets added.');
+            t.strictEqual(stack[1].route.path, '/v1/petstore/pets', '/pets added.');
             t.strictEqual(stack[1].route.stack.length, 2, '/pets has middleware.');
             t.strictEqual(stack[1].route.stack[0].name, 'm1', '/pets has middleware named m1.');
         });

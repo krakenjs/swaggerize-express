@@ -13,6 +13,7 @@
         }
     },
     "host": "petstore.swagger.wordnik.com",
+    "basePath": "/v1/petstore",
     "schemes": [
         "http"
     ],

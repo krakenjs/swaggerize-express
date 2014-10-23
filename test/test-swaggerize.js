@@ -36,7 +36,7 @@ test('swaggerize', function (t) {
     t.test('docs', function (t) {
         t.plan(2);
 
-        request(app).get('/api-docs').end(function (error, response) {
+        request(app).get('/v1/petstore/api-docs').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
@@ -45,7 +45,7 @@ test('swaggerize', function (t) {
     t.test('post /pets', function (t) {
         t.plan(3);
 
-        request(app).post('/pets').send({id: 0, name: 'Cat'}).end(function (error, response) {
+        request(app).post('/v1/petstore/pets').send({id: 0, name: 'Cat'}).end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
             t.strictEqual(response.body.name, 'Cat', 'body is correct.');
@@ -55,7 +55,7 @@ test('swaggerize', function (t) {
     t.test('get /pets', function (t) {
         t.plan(3);
 
-        request(app).get('/pets').end(function (error, response) {
+        request(app).get('/v1/petstore/pets').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
             t.strictEqual(response.body.length, 1, 'body is correct.');
@@ -65,7 +65,7 @@ test('swaggerize', function (t) {
     t.test('get /pets/:id', function (t) {
         t.plan(3);
 
-        request(app).get('/pets/0').end(function (error, response) {
+        request(app).get('/v1/petstore/pets/0').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
             t.strictEqual(response.body.name, 'Cat', 'body is correct.');
@@ -75,7 +75,7 @@ test('swaggerize', function (t) {
     t.test('delete /pets', function (t) {
         t.plan(3);
 
-        request(app).delete('/pets/0').end(function (error, response) {
+        request(app).delete('/v1/petstore/pets/0').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
             t.strictEqual(response.body.length, 0, 'body is correct.');
@@ -119,7 +119,7 @@ test('input validation', function (t) {
     t.test('good query', function (t) {
         t.plan(3);
 
-        request(app).get('/pets?tags=kitty,serious').end(function (error, response) {
+        request(app).get('/v1/petstore/pets?tags=kitty,serious').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
             t.strictEqual(response.body.tags.length, 2, 'query parsed.');
@@ -129,7 +129,7 @@ test('input validation', function (t) {
     t.test('missing body', function (t) {
         t.plan(2);
 
-        request(app).post('/pets').send('').end(function (error, response) {
+        request(app).post('/v1/petstore/pets').send('').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 400, '400 status.');
         });
