@@ -18,9 +18,9 @@ See also:
 - [swaggerize-hapi](https://github.com/krakenjs/swaggerize-hapi)
 - [generator-swaggerize](https://www.npmjs.org/package/generator-swaggerize)
 
-### Why "Design First"
+### Why "Design Driven"
 
-There are already a number of modules that help build RESTful APIs with express and swagger. However,
+There are already a number of modules that help build RESTful APIs for node with swagger. However,
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
