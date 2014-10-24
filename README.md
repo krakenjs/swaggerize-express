@@ -2,29 +2,29 @@
 
 # swaggerize-express
 
-**WARNING:** This module now uses Swagger 2.0. For the Swagger 1.2 compatible version, see the 2.0.0 branch versions.
+**WARNING:** This module now uses Swagger 2.0. For the Swagger 1.2 compatible version, see the 2.0.0 branch.
 
-- **Stability:** `stable`
-- **Changelog:** [https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md](https://github.com/krakenjs/swaggerize-express/blob/master/CHANGELOG.md)
-
-`swaggerize-express` is a "spec first" approach to building RESTful services with a [Swagger spec](https://github.com/wordnik/swagger-spec/blob/master/versions/2.0.md)
-and Express.
+`swaggerize-express` is a design-driven approach to building RESTful apis with [Swagger](http://swagger.io) and [Express](http://expressjs.com).
 
 `swaggerize-express` provides the following features:
 
-- Schema validation.
-- Express routes binding.
+- API schema validation.
+- Routes based on the Swagger document.
 - API documentation route.
-- Input model validation.
+- Input validation.
+
+See also:
+- [swaggerize-builder](https://github.com/krakenjs/swaggerize-builder)
+- [swaggerize-hapi](https://github.com/krakenjs/swaggerize-hapi)
+- [generator-swaggerize](https://www.npmjs.org/package/generator-swaggerize)
 
 ### Why "Design First"
 
-There are already a number of modules that help build REST services with express and swagger. However,
+There are already a number of modules that help build RESTful APIs with express and swagger. However,
 these modules tend to focus on building the documentation or specification as a side effect of writing
 the application business logic.
 
-`swaggerize-express` begins with the service definition first. This facilitates writing services that
-are easier to design, review, and test.
+`swaggerize-express` begins with the swagger document first. This facilitates writing APIs that are easier to design, review, and test.
 
 ### Quick Start with a Generator
 
@@ -102,6 +102,8 @@ Api `path` values will be prefixed with the swagger document's `basePath` value.
 
 ### Handlers Directory
 
+The `options.handlers` option specifies a directory to scan for handlers. These handlers are bound to the api `paths` defined in the swagger document.
+
 ```
 handlers
   |--foo
@@ -110,7 +112,7 @@ handlers
   |--baz.js
 ```
 
-Routes as:
+Will route as:
 
 ```
 foo.js => /foo
@@ -120,7 +122,7 @@ baz.js => /baz
 
 ### Path Parameters
 
-The file and directory names in the handlers directory can represent path parameters.
+The file and directory names in the handlers directory can also represent path parameters.
 
 For example, to represent the path `/users/{id}`:
 
@@ -130,7 +132,7 @@ handlers
   |    |--{id}.js
 ```
 
-This works with sub-resources as well:
+This works with directory names as well:
 
 ```shell
 handlers
@@ -144,7 +146,9 @@ To represent `/users/{id}/foo`.
 
 ### Handlers File
 
-Each provided javascript file should follow the format of:
+Each provided javascript file should export an object containing functions with HTTP verbs as keys.
+
+Example:
 
 ```javascript
 module.exports = {
@@ -154,22 +158,14 @@ module.exports = {
 }
 ```
 
-Where each http method has a handler.
-
-Optionally, middleware can be used by providing an array:
-
-```javascript
-module.exports = {
-    get: [
-        function (req, res, next) { next(); },
-        function (req, res) { ... }
-    ],
-}
-```
-
 ### Handlers Object
 
-The directory generation will yield this object, but it can be provided directly as `options.handlers` as well:
+The directory generation will yield this object, but it can be provided directly as `options.handlers`.
+
+Note that if you are programatically constructing a handlers obj this way, you must namespace HTTP verbs with `$` to
+avoid conflicts with path names. These keys should also be *lowercase*.
+
+Example:
 
 ```javascript
 {
@@ -183,8 +179,5 @@ The directory generation will yield this object, but it can be provided directly
     ...
 }
 ```
-
-Note that if you are programatically constructing a handlers obj, you must namespace *http methods* with `$` to
-avoid conflicts with path names. These keys should also be *lowercase*.
 
 Handler keys in files do *not* have to be namespaced in this way.
