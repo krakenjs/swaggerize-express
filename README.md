@@ -158,6 +158,21 @@ module.exports = {
 }
 ```
 
+### Handler Middleware
+
+Handlers can also specify middleware chains by providing an array of handler functions under the verb:
+
+```javascript
+module.exports = {
+    get: [
+        function m1(req, res, next) { ... },
+        function m2(req, res, next) { ... },
+        function handler(req, res)  { ... }
+    ],
+    ...
+}
+```
+
 ### Handlers Object
 
 The directory generation will yield this object, but it can be provided directly as `options.handlers`.
