@@ -33,6 +33,17 @@ test('swaggerize', function (t) {
         t.strictEqual(app.api.host, 'localhost:8080');
     });
 
+    t.test('api as path', function (t) {
+        t.plan(1);
+
+        t.doesNotThrow(function () {
+            swaggerize({
+                api: path.join(__dirname, './fixtures/defs/pets.json'),
+                handlers: path.join(__dirname, 'fixtures/handlers')
+            });
+        });
+    });
+
     t.test('docs', function (t) {
         t.plan(2);
 
