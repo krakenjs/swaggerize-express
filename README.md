@@ -1,6 +1,11 @@
-[![Build Status](https://travis-ci.org/krakenjs/swaggerize-express.png)](https://travis-ci.org/krakenjs/swaggerize-express) [![NPM version](https://badge.fury.io/js/swaggerize-express.png)](http://badge.fury.io/js/swaggerize-express)
+swaggerize-express
+==================
 
-# swaggerize-express
+Lead Maintainer: [Trevor Livingston](https://github.com/tlivings/)  
+
+[![Build Status](https://travis-ci.org/krakenjs/swaggerize-express.svg?branch=master)](https://travis-ci.org/krakenjs/swaggerize-express)  
+[![NPM version](https://badge.fury.io/js/swaggerize-express.png)](http://badge.fury.io/js/swaggerize-express)  
+
 
 **WARNING:** This module now uses Swagger 2.0. For the Swagger 1.2 compatible version, see the 2.0.0 branch.
 
