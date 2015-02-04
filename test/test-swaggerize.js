@@ -102,29 +102,29 @@ test('input validation', function (t) {
     app.use(bodyParser.json());
 
     var options = {
-      api: require('./fixtures/defs/pets.json'),
-      handlers: {
-        'pets': {
-          '{id}': {
-            $get: function (req, res) {
+        api: require('./fixtures/defs/pets.json'),
+        handlers: {
+            'pets': {
+                '{id}': {
+                    $get: function (req, res) {
 
-            },
-            $delete: function (req, res) {
-              res.send(typeof req.body);
+                    },
+                    $delete: function (req, res) {
+                        res.send(typeof req.body);
+                    }
+                },
+                $get: function (req, res) {
+                    res.json({
+                        id: 0,
+                        name: 'Cat',
+                        tags: req.param('tags')
+                    });
+                  },
+                $post: function (req, res) {
+                    res.send(typeof req.body);
+                }
             }
-          },
-          $get: function (req, res) {
-            res.json({
-              id: 0,
-              name: 'Cat',
-              tags: req.param('tags')
-            });
-          },
-          $post: function (req, res) {
-            res.send(typeof req.body);
-          }
         }
-      }
     };
 
     app.use(swaggerize(options));
