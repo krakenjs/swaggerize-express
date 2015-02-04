@@ -101,31 +101,33 @@ test('input validation', function (t) {
 
     app.use(bodyParser.json());
 
-    app.use(swaggerize({
-        api: require('./fixtures/defs/pets.json'),
-        handlers: {
-            'pets': {
-                '{id}': {
-                    $get: function (req, res) {
+    var options = {
+      api: require('./fixtures/defs/pets.json'),
+      handlers: {
+        'pets': {
+          '{id}': {
+            $get: function (req, res) {
 
-                    },
-                    $delete: function (req, res) {
-                        res.send(typeof req.body);
-                    }
-                },
-                $get: function (req, res) {
-                    res.json({
-                        id: 0,
-                        name: 'Cat',
-                        tags: req.param('tags')
-                    });
-                },
-                $post: function (req, res) {
-                    res.send(typeof req.body);
-                }
+            },
+            $delete: function (req, res) {
+              res.send(typeof req.body);
             }
+          },
+          $get: function (req, res) {
+            res.json({
+              id: 0,
+              name: 'Cat',
+              tags: req.param('tags')
+            });
+          },
+          $post: function (req, res) {
+            res.send(typeof req.body);
+          }
         }
-    }));
+      }
+    };
+
+    app.use(swaggerize(options));
 
     t.test('good query', function (t) {
         t.plan(3);
@@ -146,4 +148,24 @@ test('input validation', function (t) {
         });
     });
 
+    t.test('replace body with validated version', function(t) {
+        t.plan(3);
+
+        options.routes.forEach(function(route) {
+            route.validators.forEach(function(validator) {
+                if(!validator.schema) { return; }
+
+                validator.schema._settings = {
+                    allowUnknown: true,
+                    stripUnknown: true
+                };
+            });
+        });
+
+        request(app).post('/v1/petstore/pets').send({id: 0, name: 'fluffy', extra: ''}).end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.ok(!response.body.extra, 'extra parameters are ignored and stripped')
+        });
+    });
 });
