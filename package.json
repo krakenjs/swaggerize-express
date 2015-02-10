@@ -30,6 +30,7 @@
     "caller": "^0.0.1",
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
+    "js-yaml": "^3.2.6",
     "lodash": "^2.4.1",
     "minimist": "^0.2.0",
     "mkdirp": "^0.5.0",
