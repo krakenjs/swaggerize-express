@@ -147,3 +147,28 @@ test('input validation', function (t) {
     });
 
 });
+
+test('yaml support', function (t) {
+    var app = express();
+
+    t.test('api as yaml', function (t) {
+        t.plan(1);
+
+        t.doesNotThrow(function () {
+            app.use(swaggerize({
+                api: path.join(__dirname, './fixtures/defs/pets.json'),
+                handlers: path.join(__dirname, 'fixtures/handlers')
+            }));
+        });
+    });
+
+    t.test('get /pets', function (t) {
+        t.plan(2);
+
+        request(app).get('/v1/petstore/pets').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+        });
+    });
+
+});
