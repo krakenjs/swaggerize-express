@@ -156,7 +156,7 @@ test('yaml support', function (t) {
 
         t.doesNotThrow(function () {
             app.use(swaggerize({
-                api: path.join(__dirname, './fixtures/defs/pets.json'),
+                api: path.join(__dirname, './fixtures/defs/pets.yaml'),
                 handlers: path.join(__dirname, 'fixtures/handlers')
             }));
         });
