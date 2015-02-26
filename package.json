@@ -2,7 +2,7 @@
   "name": "swaggerize-express",
   "version": "3.0.3",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
-  "description": "Design-first REST services with Swagger and Express.",
+  "description": "Design-driven apis with swagger 2.0 and express.",
   "keywords": [
     "swagger",
     "swagger 2.0",
