@@ -16,7 +16,7 @@ Lead Maintainer: [Trevor Livingston](https://github.com/tlivings/)
 - Input validation.
 
 See also:
-- [swaggerize-builder](https://github.com/krakenjs/swaggerize-builder)
+- [swaggerize-routes](https://github.com/krakenjs/swaggerize-routes)
 - [swaggerize-hapi](https://github.com/krakenjs/swaggerize-hapi)
 - [generator-swaggerize](https://www.npmjs.org/package/generator-swaggerize)
 
@@ -201,3 +201,35 @@ Example:
 ```
 
 Handler keys in files do *not* have to be namespaced in this way.
+
+### Security Middleware
+
+If a security definition exists for a path in the swagger document, and an appropriate authorize function exists (defined using
+`x-authorize` in the `securityDefinitions` as per [swaggerize-routes](https://github.com/krakenjs/swaggerize-routes#security-object)),
+then it will be used as middleware for that path.
+
+In addition, a `requiredScopes` property will be injected onto the `request` object to check against.
+
+For example:
+
+```javascript
+//x-authorize: auth_oauth.js
+function authorize(req, res, next) {
+    validate(req, function (error, availablescopes) {
+        if (!error) {
+            for (var i = 0; i < req.requiredScopes.length; i++) {
+                if (availablescopes.indexOf(req.requiredScopes[i]) > -1) {
+                    next();
+                    return;
+                }
+            }
+
+            res.statusCode = 403;
+            next(new Error('Do not have the required scopes.'));
+            return;
+        }
+
+        next(error);
+    });
+}
+```

@@ -1,5 +1,6 @@
 ### 4.0.0
 
+* Support for `swaggerize-routes` security.
 * New `app.swagger` property.
 * `app.api` is now accessed as `app.swagger.api`.
 * `app.setHost` is removed (simply set `app.swagger.api.host`).

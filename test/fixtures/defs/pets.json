@@ -28,12 +28,6 @@
             "get": {
                 "description": "Returns all pets from the system that the user has access to",
                 "operationId": "findPets",
-                "produces": [
-                    "application/json",
-                    "application/xml",
-                    "text/xml",
-                    "text/html"
-                ],
                 "parameters": [
                     {
                         "name": "tags",
@@ -76,9 +70,6 @@
             "post": {
                 "description": "Creates a new pet in the store.  Duplicates are allowed",
                 "operationId": "addPet",
-                "produces": [
-                    "application/json"
-                ],
                 "parameters": [
                     {
                         "name": "pet",
@@ -110,11 +101,12 @@
             "get": {
                 "description": "Returns a user based on a single ID, if the user does not have access to the pet",
                 "operationId": "findPetById",
-                "produces": [
-                    "application/json",
-                    "application/xml",
-                    "text/xml",
-                    "text/html"
+                "security": [
+                  {
+                    "githubAccessCode":[
+                        "user"
+                    ]
+                  }
                 ],
                 "parameters": [
                     {
@@ -166,6 +158,20 @@
                     }
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "githubAccessCode": {
+          "x-authorize": "fixtures/security/auth_default.js",
+          "type": "oauth2",
+          "scopes": {
+            "user": "Grants read/write access to profile info only. Note that this scope includes user:email and user:follow.",
+            "user:email": "Grants read access to a user’s email addresses.",
+            "user:follow": "Grants access to follow or unfollow other users."
+          },
+          "flow": "accessCode",
+          "authorizationUrl": "https://github.com/login/oauth/authorize",
+          "tokenUrl": "https://github.com/login/oauth/access_token"
         }
     },
     "definitions": {
