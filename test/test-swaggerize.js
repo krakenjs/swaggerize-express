@@ -121,7 +121,7 @@ test('input validation', function (t) {
                     });
                   },
                 $post: function (req, res) {
-                    res.send(typeof req.body);
+                    res.send(req.body);
                 }
             }
         }
@@ -149,7 +149,7 @@ test('input validation', function (t) {
     });
 
     t.test('replace body with validated version', function(t) {
-        t.plan(3);
+        t.plan(5);
 
         options.routes.forEach(function(route) {
             route.validators.forEach(function(validator) {
@@ -165,6 +165,8 @@ test('input validation', function (t) {
         request(app).post('/v1/petstore/pets').send({id: 0, name: 'fluffy', extra: ''}).end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
+            t.ok(response.body.id === 0, 'id should exist and be zero');
+            t.ok(response.body.name === 'fluffy', 'name should exist and equal "fluffy"');
             t.ok(!response.body.extra, 'extra parameters are ignored and stripped')
         });
     });
