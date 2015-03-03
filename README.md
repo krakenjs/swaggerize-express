@@ -74,7 +74,10 @@ Options:
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
 
-The base url for the api can also be updated via the `setHost` function on the middleware.
+After using this middleware, a new property will be available on the `app` called `swagger`, containing the following properties:
+
+- `api` - the api document.
+- `routes` - the route definitions based on the api document.
 
 Example:
 
@@ -94,7 +97,7 @@ app.use(swaggerize({
 });
 
 server.listen(port, 'localhost', function () {
-    app.setHost(server.address().address + ':' + server.address().port);
+    app.swagger.api.host = server.address().address + ':' + server.address().port;
 });
 ```
 

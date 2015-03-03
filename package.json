@@ -1,6 +1,6 @@
 {
   "name": "swaggerize-express",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "description": "Design-driven apis with swagger 2.0 and express.",
   "keywords": [
@@ -50,7 +50,7 @@
   "scripts": {
     "test": "tape test/*.js",
     "cover": "istanbul cover tape -- test/*.js",
-    "lint": "jshint -c .jshintrc lib/*.js bin/*.js bin/lib/*.js"
+    "lint": "jshint -c .jshintrc lib/*.js lib/*.js"
   },
   "licenses": [
     {
