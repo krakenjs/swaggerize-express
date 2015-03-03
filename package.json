@@ -1,8 +1,8 @@
 {
   "name": "swaggerize-express",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
-  "description": "Design-first REST services with Swagger and Express.",
+  "description": "Design-driven apis with swagger 2.0 and express.",
   "keywords": [
     "swagger",
     "swagger 2.0",
@@ -30,6 +30,7 @@
     "caller": "^0.0.1",
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
+    "js-yaml": "^3.2.6",
     "lodash": "^2.4.1",
     "minimist": "^0.2.0",
     "mkdirp": "^0.5.0",

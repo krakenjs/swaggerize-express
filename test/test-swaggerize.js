@@ -117,7 +117,7 @@ test('input validation', function (t) {
                     res.json({
                         id: 0,
                         name: 'Cat',
-                        tags: req.param('tags')
+                        tags: req.query.tags.split(',')
                     });
                   },
                 $post: function (req, res) {
@@ -168,4 +168,29 @@ test('input validation', function (t) {
             t.ok(!response.body.extra, 'extra parameters are ignored and stripped')
         });
     });
+});
+
+test('yaml support', function (t) {
+    var app = express();
+
+    t.test('api as yaml', function (t) {
+        t.plan(1);
+
+        t.doesNotThrow(function () {
+            app.use(swaggerize({
+                api: path.join(__dirname, './fixtures/defs/pets.yaml'),
+                handlers: path.join(__dirname, 'fixtures/handlers')
+            }));
+        });
+    });
+
+    t.test('get /pets', function (t) {
+        t.plan(2);
+
+        request(app).get('/v1/petstore/pets').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+        });
+    });
+
 });
