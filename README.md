@@ -74,7 +74,7 @@ Options:
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
 
-The base url for the api can also be updated via the `setHost` function on the middleware.
+The base url for the api can also be updated via the `setHost` function on the middleware. The base path can also be updated taht way, using `setBasePath` function on the middleware.
 
 Example:
 
