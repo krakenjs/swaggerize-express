@@ -104,6 +104,14 @@ test('input validation', function (t) {
     app.use(swaggerize({
         api: require('./fixtures/defs/pets.json'),
         handlers: {
+            'cattles':{
+                $get: function(req, res){
+                    res.json({
+                        id: 0,
+                        name: 'Liberty Bell'
+                    });
+                }
+            },
             'pets': {
                 '{id}': {
                     $get: function (req, res) {
@@ -127,7 +135,7 @@ test('input validation', function (t) {
         }
     }));
 
-    t.test('good query', function (t) {
+    t.test('good pets query', function (t) {
         t.plan(3);
 
         request(app).get('/v1/petstore/pets?tags=kitty,serious').end(function (error, response) {
@@ -144,6 +152,26 @@ test('input validation', function (t) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 400, '400 status.');
         });
+    });
+
+    t.test('good cattle query', function(t){
+        t.plan(3);
+
+        request(app).get('/v1/petstore/cattles?breed=Holstein').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
+            t.strictEqual(response.body.name, "Liberty Bell", 'query parsed.');
+        });
+ 
+    });
+
+    t.test('missing required query parameter', function(t){
+        t.plan(2);
+
+        request(app).get('/v1/petstore/cattles').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 400, '400 status.');
+        }); 
     });
 
 });
