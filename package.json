@@ -51,7 +51,7 @@
   "scripts": {
     "test": "tape test/*.js",
     "cover": "istanbul cover tape -- test/*.js",
-    "lint": "jshint -c .jshintrc lib/*.js lib/*.js"
+    "lint": "jshint -c .jshintrc lib/*.js"
   },
   "licenses": [
     {
