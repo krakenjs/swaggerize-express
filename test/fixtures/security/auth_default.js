@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function authorize(req, res, next) {
-    getScopesFor(req.headers['authorize'], function (error, availablescopes) {
+    validate(req, function (error, availablescopes) {
         if (!error) {
             for (var i = 0; i < req.requiredScopes.length; i++) {
                 if (availablescopes.indexOf(req.requiredScopes[i]) > -1) {
@@ -9,15 +9,20 @@ module.exports = function authorize(req, res, next) {
                     return;
                 }
             }
-            res.statusCode = 403;
-            next(new Error('Do not have the required scopes.'));
+
+            error = new Error('Do not have the required scopes.');
+            error.status = 403;
+
+            next(error);
             return;
         }
         next(error);
     });
 }
 
-function getScopesFor(auth, callback) {
+function validate(req, callback) {
+    var auth = req.headers['authorize'];
+
     if (!auth) {
         callback(null, []);
         return;

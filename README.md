@@ -224,8 +224,10 @@ function authorize(req, res, next) {
                 }
             }
 
-            res.statusCode = 403;
-            next(new Error('Do not have the required scopes.'));
+            error = new Error('Do not have the required scopes.');
+            error.status = 403;
+
+            next(error);
             return;
         }
 
