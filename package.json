@@ -1,6 +1,6 @@
 {
   "name": "swaggerize-express",
-  "version": "3.0.3",
+  "version": "4.0.0",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "description": "Design-driven apis with swagger 2.0 and express.",
   "keywords": [
@@ -27,6 +27,7 @@
     "node": "0.10.x"
   },
   "dependencies": {
+    "async": "^0.9.0",
     "caller": "^0.0.1",
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
@@ -34,7 +35,7 @@
     "lodash": "^2.4.1",
     "minimist": "^0.2.0",
     "mkdirp": "^0.5.0",
-    "swaggerize-builder": "^2.0.0"
+    "swaggerize-routes": "^1.0.0"
   },
   "peerDependencies": {
     "express": "^4.0.0"
@@ -50,7 +51,7 @@
   "scripts": {
     "test": "tape test/*.js",
     "cover": "istanbul cover tape -- test/*.js",
-    "lint": "jshint -c .jshintrc lib/*.js bin/*.js bin/lib/*.js"
+    "lint": "jshint -c .jshintrc lib/*.js"
   },
   "licenses": [
     {

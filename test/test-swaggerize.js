@@ -20,17 +20,18 @@ test('swaggerize', function (t) {
     app.use(swagger);
 
     t.test('api', function (t) {
-        t.plan(5);
+        t.plan(7);
 
-        t.ok(app.hasOwnProperty('api'), 'has api property.');
-        t.ok(app.api, 'api is an object.');
+        t.ok(app.hasOwnProperty('swagger'), 'app has swagger property.');
+        t.ok(app.swagger, 'swagger is an object.');
 
-        t.ok(app.hasOwnProperty('setHost'), 'has setHost property.');
-        t.strictEqual(typeof app.setHost, 'function', 'setHost is a function.');
+        t.ok(app.swagger.hasOwnProperty('api'), 'app.swagger has api property.');
+        t.ok(app.swagger.api, 'app.swagger.api is an object.');
 
-        app.setHost('localhost:8080');
+        t.ok(app.swagger.hasOwnProperty('routes'), 'app.swagger has routes property.');
+        t.ok(app.swagger.routes, 'app.swagger.routes is an object.');
 
-        t.strictEqual(app.api.host, 'localhost:8080');
+        t.strictEqual(app.mountpath, '/v1/petstore', 'mount path set.');
     });
 
     t.test('api as path', function (t) {
@@ -74,9 +75,14 @@ test('swaggerize', function (t) {
     });
 
     t.test('get /pets/:id', function (t) {
-        t.plan(3);
+        t.plan(5);
 
         request(app).get('/v1/petstore/pets/0').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 403, '403 status.');
+        });
+
+        request(app).get('/v1/petstore/pets/0').set('authorize', 'abcd').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
             t.strictEqual(response.body.name, 'Cat', 'body is correct.');

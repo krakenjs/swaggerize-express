@@ -16,7 +16,7 @@ Lead Maintainer: [Trevor Livingston](https://github.com/tlivings/)
 - Input validation.
 
 See also:
-- [swaggerize-builder](https://github.com/krakenjs/swaggerize-builder)
+- [swaggerize-routes](https://github.com/krakenjs/swaggerize-routes)
 - [swaggerize-hapi](https://github.com/krakenjs/swaggerize-hapi)
 - [generator-swaggerize](https://www.npmjs.org/package/generator-swaggerize)
 
@@ -74,7 +74,10 @@ Options:
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
 
-The base url for the api can also be updated via the `setHost` function on the middleware.
+After using this middleware, a new property will be available on the `app` called `swagger`, containing the following properties:
+
+- `api` - the api document.
+- `routes` - the route definitions based on the api document.
 
 Example:
 
@@ -94,7 +97,7 @@ app.use(swaggerize({
 });
 
 server.listen(port, 'localhost', function () {
-    app.setHost(server.address().address + ':' + server.address().port);
+    app.swagger.api.host = server.address().address + ':' + server.address().port;
 });
 ```
 
@@ -198,3 +201,37 @@ Example:
 ```
 
 Handler keys in files do *not* have to be namespaced in this way.
+
+### Security Middleware
+
+If a security definition exists for a path in the swagger document, and an appropriate authorize function exists (defined using
+`x-authorize` in the `securityDefinitions` as per [swaggerize-routes](https://github.com/krakenjs/swaggerize-routes#security-object)),
+then it will be used as middleware for that path.
+
+In addition, a `requiredScopes` property will be injected onto the `request` object to check against.
+
+For example:
+
+```javascript
+//x-authorize: auth_oauth.js
+function authorize(req, res, next) {
+    validate(req, function (error, availablescopes) {
+        if (!error) {
+            for (var i = 0; i < req.requiredScopes.length; i++) {
+                if (availablescopes.indexOf(req.requiredScopes[i]) > -1) {
+                    next();
+                    return;
+                }
+            }
+
+            error = new Error('Do not have the required scopes.');
+            error.status = 403;
+
+            next(error);
+            return;
+        }
+
+        next(error);
+    });
+}
+```
