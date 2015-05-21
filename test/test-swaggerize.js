@@ -123,7 +123,7 @@ test('input validation', function (t) {
                     res.json({
                         id: 0,
                         name: 'Cat',
-                        tags: req.query.tags.split(',')
+                        tags: req.query.tags
                     });
                 },
                 $post: function (req, res) {
