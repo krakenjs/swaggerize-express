@@ -106,6 +106,7 @@ test('input validation', function (t) {
     var app = express();
 
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded());
 
     var options = {
         api: require('./fixtures/defs/pets.json'),
@@ -128,6 +129,11 @@ test('input validation', function (t) {
                 },
                 $post: function (req, res) {
                     res.send(req.body);
+                }
+            },
+            upload: {
+                $post: function (req, res) {
+                    res.send(200);
                 }
             }
         }
@@ -174,6 +180,15 @@ test('input validation', function (t) {
             t.ok(response.body.id === 0, 'id should exist and be zero');
             t.ok(response.body.name === 'fluffy', 'name should exist and equal "fluffy"');
             t.ok(!response.body.extra, 'extra parameters are ignored and stripped')
+        });
+    });
+
+    t.test('form data', function (t) {
+        t.plan(2);
+
+        request(app).post('/v1/petstore/upload').send('upload=asdf').send('name=thing').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 200, '200 status.');
         });
     });
 });
