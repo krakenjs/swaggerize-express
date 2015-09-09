@@ -1,6 +1,6 @@
 {
   "name": "swaggerize-express",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "description": "Design-driven apis with swagger 2.0 and express.",
   "keywords": [
