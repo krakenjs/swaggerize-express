@@ -99,6 +99,15 @@ test('swaggerize', function (t) {
         });
     });
 
+    t.test('put /pets 405', function (t) {
+        t.plan(3);
+        request(app).put('/v1/petstore/pets').end(function (error, response) {
+            t.ok(!error, 'no error.');
+            t.strictEqual(response.statusCode, 405, '405 status.');
+            t.strictEqual(response.headers.allow, 'GET, POST', 'Allow Header')
+        });
+    });
+
 });
 
 test('input validation', function (t) {
