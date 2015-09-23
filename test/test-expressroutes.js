@@ -30,8 +30,8 @@ test('express routes', function (t) {
 
             t.strictEqual(stack.length, 3, '3 routes added.');
             t.strictEqual(stack[0].route.path, '/v1/petstore/api-docs', 'api-docs added.');
-            t.strictEqual(stack[1].regexp.toString(), '/^\\/v1\\/petstore\\/pets\\/([^\\/]+?)(?:\\/(?=$))?$/i', 'bleb');
-            t.strictEqual(stack[2].route.path, '/v1/petstore/pets/:id', 'hello added.');
+            t.strictEqual(stack[1].route.path, '/v1/petstore/pets/:id', 'hello added.');
+            t.strictEqual(stack[2].regexp.toString(), '/^\\/v1\\/petstore\\/pets\\/([^\\/]+?)(?:\\/(?=$))?$/i', 'bleb');
         });
 
         app.use(child);
@@ -86,10 +86,10 @@ test('express routes', function (t) {
             stack = Array.prototype.slice.call(parent._router.stack, 3);
 
             t.strictEqual(stack.length, 3, '3 routes added.');
-            t.strictEqual(stack[1].regexp.toString(), '/^\\/v1\\/petstore\\/pets(?:\\/(?=$))?$/i', 'bleb');
-            t.strictEqual(stack[2].route.path, '/v1/petstore/pets', '/pets added.');
-            t.strictEqual(stack[2].route.stack.length, 2, '/pets has middleware.');
-            t.strictEqual(stack[2].route.stack[0].name, 'm1', '/pets has middleware named m1.');
+            t.strictEqual(stack[1].route.path, '/v1/petstore/pets', '/pets added.');
+            t.strictEqual(stack[1].route.stack.length, 2, '/pets has middleware.');
+            t.strictEqual(stack[1].route.stack[0].name, 'm1', '/pets has middleware named m1.');
+            t.strictEqual(stack[2].regexp.toString(), '/^\\/v1\\/petstore\\/pets(?:\\/(?=$))?$/i', 'bleb');
         });
 
         app.use(child);
