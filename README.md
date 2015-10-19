@@ -73,7 +73,6 @@ Options:
 - `api` - a valid Swagger 2.0 document.
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
 - `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
-- `express` - express settings overrides.
 
 After using this middleware, a new property will be available on the `app` called `swagger`, containing the following properties:
 
