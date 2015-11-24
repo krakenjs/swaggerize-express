@@ -2,6 +2,10 @@
   "name": "swaggerize-express",
   "version": "4.0.2",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
+  "contributors": [
+    "Trevor Livingston <tlivings@gmail.com>",
+    "Subeesh Chothendavida <subeeshcbabu@yahoo.co.in>"
+  ],
   "description": "Design-driven apis with swagger 2.0 and express.",
   "keywords": [
     "swagger",
@@ -24,11 +28,11 @@
   },
   "bugs": "http://github.com/krakenjs/swaggerize-express/issues",
   "engines": {
-    "node": "0.10.x"
+    "node": "<=4.x"
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "caller": "^0.0.1",
+    "async": "^1.5.0",
+    "caller": "^1.0.1",
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
     "js-yaml": "^3.2.6",
@@ -38,11 +42,11 @@
     "express": "^4.0.0"
   },
   "devDependencies": {
-    "tape": "^2.4.2",
-    "istanbul": "^0.2.3",
+    "tape": "^4.2.2",
+    "istanbul": "~0.4.0",
     "jshint": "^2.4.1",
     "express": "^4.6.1",
-    "supertest": "^0.13.0",
+    "supertest": "^1.1.0",
     "body-parser": "^1.7.0"
   },
   "scripts": {
