@@ -205,7 +205,7 @@ Handler keys in files do *not* have to be namespaced in this way.
 
 ### Security Middleware
 
-If a security definition exists for a path in the swagger document, and an appropriate authorize function exists (defined using
+If a security definition exists for a path in the swagger API definition, and an appropriate authorize function exists (defined using
 `x-authorize` in the `securityDefinitions` as per [swaggerize-routes](https://github.com/krakenjs/swaggerize-routes#security-object)),
 then it will be used as middleware for that path.
 
@@ -213,10 +213,48 @@ In addition, a `requiredScopes` property will be injected onto the `request` obj
 
 For example:
 
+Swagger API definition:
+
+```json
+    .
+    .
+    .
+
+    //A route with security object.
+    "security": [
+        {
+            "petstore_auth": [
+                "write_pets",
+                "read_pets"
+            ]
+        }
+    ]
+    .
+    .
+    .
+    //securityDefinitions
+    "securityDefinitions": {
+        "petstore_auth": {
+            "x-authorize": "lib/auth_oauth.js", // This path has to be relative to the project root.
+            "scopes": {
+                "write_pets": "modify pets in your account",
+                "read_pets": "read your pets"
+            }
+        }
+    },
+```
+
+Sample `x-authorize` code -  lib/auth_oauth.js :
+
 ```javascript
 //x-authorize: auth_oauth.js
 function authorize(req, res, next) {
     validate(req, function (error, availablescopes) {
+        /*
+         * `req.requiredScopes` is set by the `swaggerize-express` module to help
+         * with the scope and security validation.
+         *
+         */
         if (!error) {
             for (var i = 0; i < req.requiredScopes.length; i++) {
                 if (availablescopes.indexOf(req.requiredScopes[i]) > -1) {
