@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function authorize(req, res, next) {
+module.exports = function authorize(req, res, next, securityDefinition) {
     validate(req, function (error, availablescopes) {
         if (!error) {
             for (var i = 0; i < req.requiredScopes.length; i++) {
