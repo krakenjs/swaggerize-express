@@ -274,3 +274,12 @@ function authorize(req, res, next) {
     });
 }
 ```
+
+The context for `authorize` will be bound to the security definition, such that:
+
+```javascript
+function authorize(req, res, next) {
+    this.authorizationUrl; //from securityDefinition for this route's type.
+    //...
+}
+```
