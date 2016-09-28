@@ -4,7 +4,8 @@
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "contributors": [
     "Trevor Livingston <tlivings@gmail.com>",
-    "Subeesh Chothendavida <subeeshcbabu@yahoo.co.in>"
+    "Subeesh Chothendavida <subeeshcbabu@yahoo.co.in>",
+    "Jannis Pohl <j.pohl@qn-solutions.de>"
   ],
   "description": "Design-driven apis with swagger 2.0 and express.",
   "keywords": [
@@ -36,6 +37,7 @@
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
     "js-yaml": "^3.2.6",
+    "multer": "^1.2.0",
     "path-to-regexp": "^1.2.1",
     "swaggerize-routes": "^1.0.0"
   },

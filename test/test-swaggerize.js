@@ -195,7 +195,7 @@ test('input validation', function (t) {
     t.test('form data', function (t) {
         t.plan(2);
 
-        request(app).post('/v1/petstore/upload').send('upload=asdf').send('name=thing').end(function (error, response) {
+        request(app).post('/v1/petstore/upload').attach('upload', __dirname + '/fixtures/defs/pets.yaml').field('name', 'thing').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 200, '200 status.');
         });
