@@ -295,10 +295,9 @@ convenience during development, it is possible.  In this scenario, you
 will want to do two things:
 
 1. Remove the express parent app view configuration from the settings
-that are configured on the parent app during mount.  A convenience
-function `expressParentAppRemoveViewSettings` is already prepared to
-do exactly this.  This will allow any other template rendering system
-you may have already configured intact.
+that are configured on the parent app during mount.  This will allow
+any other template rendering system you may have already configured
+intact.
 
 2. Stand up the API server relatively late in your `server.js`.  This
 will give this middleware a fair chance at being the last thing that
@@ -308,12 +307,14 @@ Example:
 
 ```
 
+var Swaggerize = require('swaggerize-express');
+delete Swaggerize.expressOptions['views'];
+delete Swaggerize.expressOptions['view cache'];
+delete Swaggerize.expressOptions['view engine'];
+
 ... the bulk of your other server stuff goes here ...
 
-// API ======================================================================
-var Swaggerize = require('swaggerize-express');
-Swaggerize.expressParentAppRemoveViewSettings(); // convenience function to remove view configuration settings.
-
+// Stand up API =============================================================
 app.use(Swaggerize({
     api: path.resolve('./<API_NAME>/config/swagger.json'),
     handlers: path.resolve('./<API_NAME>/handlers')
