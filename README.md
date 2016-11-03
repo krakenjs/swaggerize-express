@@ -283,3 +283,43 @@ function authorize(req, res, next) {
     //...
 }
 ```
+
+### Running alongside a node development webserver
+
+For production, it is recommended to run the API separate from the
+webserver.  And as such, this middleware assumes that it is the only
+thing running inside the express app.
+
+However, if you would like to run your API alongside a webserver as a
+convenience during development, it is possible.  In this scenario, you
+will want to do two things:
+
+1. Remove the express parent app view configuration from the settings
+that are configured on the parent app during mount.  A convenience
+function `expressParentAppRemoveViewSettings` is already prepared to
+do exactly this.  This will allow any other template rendering system
+you may have already configured intact.
+
+2. Stand up the API server relatively late in your `server.js`.  This
+will give this middleware a fair chance at being the last thing that
+configures required settings on the parent express application.
+
+Example:
+
+```
+
+... the bulk of your other server stuff goes here ...
+
+// API ======================================================================
+var Swaggerize = require('swaggerize-express');
+Swaggerize.expressParentAppRemoveViewSettings(); // convenience function to remove view configuration settings.
+
+app.use(Swaggerize({
+    api: path.resolve('./<API_NAME>/config/swagger.json'),
+    handlers: path.resolve('./<API_NAME>/handlers')
+}));
+
+// launch ===================================================================
+app.listen(port);
+console.log('The magic happens on port ' + port);
+```
