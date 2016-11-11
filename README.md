@@ -308,9 +308,9 @@ Example:
 ```
 
 var Swaggerize = require('swaggerize-express');
-delete Swaggerize.expressOptions['views'];
-delete Swaggerize.expressOptions['view cache'];
-delete Swaggerize.expressOptions['view engine'];
+delete Swaggerize.defaultExpressOptions['views'];
+delete Swaggerize.defaultExpressOptions['view cache'];
+delete Swaggerize.defaultExpressOptions['view engine'];
 
 ... the bulk of your other server stuff goes here ...
 
