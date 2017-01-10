@@ -21,7 +21,7 @@ test('express routes', function (t) {
                         method: 'get',
                         path: '/pets/:id',
                         validators: [],
-                        handler: function (req, res) {}
+                        handler: function () {}
                     }
                 ]
             });
@@ -76,8 +76,8 @@ test('express routes', function (t) {
                         path: '/pets',
                         validators: [],
                         handler: [
-                            function m1(req, res, next) {},
-                            function (req, res) {}
+                            function m1() {},
+                            function () {}
                         ]
                     }
                 ]

@@ -105,7 +105,7 @@ test('swaggerize', function (t) {
             request(app).put('/v1/petstore/pets').end(function (error, response) {
                 t.ok(!error, 'no error.');
                 t.strictEqual(response.statusCode, 405, '405 status.');
-                t.strictEqual(response.headers.allow, 'GET, POST', 'Allow Header')
+                t.strictEqual(response.headers.allow, 'GET, POST', 'Allow Header');
             });
         });
     });
@@ -124,7 +124,7 @@ test('input validation', function (t) {
         handlers: {
             'pets': {
                 '{id}': {
-                    $get: function (req, res) {
+                    $get: function () {
 
                     },
                     $delete: function (req, res) {
@@ -190,7 +190,7 @@ test('input validation', function (t) {
                 t.strictEqual(response.statusCode, 200, '200 status.');
                 t.ok(response.body.id === 0, 'id should exist and be zero');
                 t.ok(response.body.name === 'fluffy', 'name should exist and equal "fluffy"');
-                t.ok(!response.body.extra, 'extra parameters are ignored and stripped')
+                t.ok(!response.body.extra, 'extra parameters are ignored and stripped');
             });
         });
 
@@ -209,25 +209,25 @@ test('input validation', function (t) {
 test('yaml support', function (t) {
     var app = express();
     t.test('api as yaml', function (t) {
-            t.plan(1);
+        t.plan(1);
 
-            t.doesNotThrow(function () {
-                app.use(swaggerize({
-                    api: path.join(__dirname, './fixtures/defs/pets.yaml'),
-                    handlers: path.join(__dirname, 'fixtures/handlers')
-                }));
+        t.doesNotThrow(function () {
+            app.use(swaggerize({
+                api: path.join(__dirname, './fixtures/defs/pets.yaml'),
+                handlers: path.join(__dirname, 'fixtures/handlers')
+            }));
+        });
+    });
+    app.on('route', function () {
+        t.test('get /pets', function (t) {
+            t.plan(2);
+
+            request(app).get('/v1/petstore/pets').end(function (error, response) {
+                t.ok(!error, 'no error.');
+                t.strictEqual(response.statusCode, 200, '200 status.');
             });
         });
-        app.on('route', function () {
-            t.test('get /pets', function (t) {
-                t.plan(2);
-
-                request(app).get('/v1/petstore/pets').end(function (error, response) {
-                    t.ok(!error, 'no error.');
-                    t.strictEqual(response.statusCode, 200, '200 status.');
-                });
-            });
-        });
+    });
 });
 
 test('express options', function (t) {
@@ -244,7 +244,7 @@ test('express options', function (t) {
         }
     }));
     app.on('route', function () {
-        request(app).get('/v1/petstore/pets').end(function (error, response) {
+        request(app).get('/v1/petstore/pets').end(function () {
             t.equal(app.get('trust proxy'), true, 'express override took effect.');
             t.equal(app.get('view engine'), true, 'express override took effect.');
         });
