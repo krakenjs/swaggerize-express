@@ -31,7 +31,7 @@ test('express routes', function (t) {
             t.strictEqual(stack.length, 3, '3 routes added.');
             t.strictEqual(stack[0].route.path, '/v1/petstore/api-docs', 'api-docs added.');
             t.strictEqual(stack[1].route.path, '/v1/petstore/pets/:id', 'hello added.');
-            t.strictEqual(stack[2].regexp.toString(), '/^\\/v1\\/petstore\\/pets\\/([^\\/]+?)(?:\\/(?=$))?$/i', 'bleb');
+            t.strictEqual(stack[2].regexp.toString(), '/^\\/v1\\/petstore\\/pets\\/((?:[^\\/]+?))(?:\\/(?=$))?$/i', 'bleb');
         });
 
         app.use(child);
