@@ -121,6 +121,7 @@ test('input validation', function (t) {
 
     var options = {
         api: require('./fixtures/defs/pets.json'),
+        joischema: true,
         handlers: {
             'pets': {
                 '{id}': {
