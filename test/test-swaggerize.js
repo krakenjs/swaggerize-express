@@ -20,7 +20,7 @@ test('swaggerize', function (t) {
     app.use(swagger);
 
     t.test('api', function (t) {
-        t.plan(7);
+        t.plan(6);
 
         t.ok(app.hasOwnProperty('swagger'), 'app has swagger property.');
         t.ok(app.swagger, 'swagger is an object.');
@@ -30,8 +30,6 @@ test('swaggerize', function (t) {
 
         t.ok(app.swagger.hasOwnProperty('routes'), 'app.swagger has routes property.');
         t.ok(app.swagger.routes, 'app.swagger.routes is an object.');
-
-        t.strictEqual(app.mountpath, '/v1/petstore', 'mount path set.');
     });
 
     t.test('api as path', function (t) {
@@ -225,24 +223,4 @@ test('yaml support', function (t) {
         });
     });
 
-});
-
-test('express options', function (t) {
-    var app = express();
-
-    t.plan(2);
-
-    app.use(swaggerize({
-        api: require('./fixtures/defs/pets.json'),
-        handlers: path.join(__dirname, 'fixtures/handlers'),
-        express: {
-            'trust proxy': true,
-            'view engine': true
-        }
-    }));
-
-    request(app).get('/v1/petstore/pets').end(function (error, response) {
-        t.equal(app.get('trust proxy'), true, 'express override took effect.');
-        t.equal(app.get('view engine'), true, 'express override took effect.');
-    });
 });
