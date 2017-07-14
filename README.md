@@ -1,7 +1,4 @@
-swaggerize-express
-==================
-
-Lead Maintainer: [Trevor Livingston](https://github.com/tlivings/)  
+# swaggerize-express
 
 [![Build Status](https://travis-ci.org/krakenjs/swaggerize-express.svg?branch=master)](https://travis-ci.org/krakenjs/swaggerize-express)  
 [![NPM version](https://badge.fury.io/js/swaggerize-express.png)](http://badge.fury.io/js/swaggerize-express)  
