@@ -59,26 +59,36 @@ You now have a working api and can use something like [Swagger UI](https://githu
 ### Manual Usage
 
 ```javascript
-var swaggerize = require('swaggerize-express');
+const swaggerize = require('swaggerize-express');
 
 app.use(swaggerize({
-    api: require('./api.json'),
+    api: Path.resolve('./api.json'),
     docspath: '/api-docs',
-    handlers: './handlers'
+    handlers: './handlers',
+    security: './security' //Optional - security authorize handlers as per `securityDefinitions`
 }));
 ```
 
 Options:
 
-- `api` - a valid Swagger 2.0 document.
+- `api` - (*Object*) or (*String*) or (*Promise*) - (required) - a valid Swagger 2.0 document. api can be one of the following.
+    - A relative or absolute path to the Swagger api document.
+    - A URL of the Swagger api document.
+    - The swagger api Object
+    - A promise (or a `thenable`) that resolves to the swagger api Object.
 - `docspath` - the path to expose api docs for swagger-ui, etc. Defaults to `/`.
-- `handlers` - either a directory structure for route handlers or a premade object (see *Handlers Object* below).
+- `handlers` - - (*Object*) or (*String*) - (required) - either a directory structure for route handlers or a pre-created object (see *Handlers Object* below). If `handlers` option is not provided, route builder will try to use the default `handlers` directory (only if it exists). If there is no `handlers` directory available, then the route builder will try to use the `x-handler` swagger schema extension.
 - `express` - express settings overrides.
+- `security` - (*String*) - (optional) - directory to scan for authorize handlers corresponding to `securityDefinitions`.
+- `validated` -  (*Boolean*) - (optional) - Set this property to `true` if the api is already validated against swagger schema and already dereferenced all the `$ref`. This is really useful to generate validators for parsed api specs. Default value for this is `false` and the api will be validated using [swagger-parser validate](https://github.com/BigstickCarpet/swagger-parser/blob/master/docs/swagger-parser.md#validateapi-options-callback).
+- `joischema` - (*Boolean*) - (optional) - Set to `true` if you want to use [Joi](https://github.com/hapijs/joi) schema based Validators. Swaggerize modules use [enjoi](https://github.com/tlivings/enjoi) - The json to joi schema converter - to build the validator functions, if `joischema` option is set to `true`.
 
 After using this middleware, a new property will be available on the `app` called `swagger`, containing the following properties:
 
 - `api` - the api document.
 - `routes` - the route definitions based on the api document.
+
+An event `route` will be triggered as soon as `swaggerize-express` has completed configuring routes and validator middlewares.
 
 Example:
 
@@ -97,9 +107,12 @@ app.use(swaggerize({
     handlers: './handlers'
 }));
 
-server.listen(port, 'localhost', function () {
-    app.swagger.api.host = server.address().address + ':' + server.address().port;
+app.on('route', () => {
+    server.listen(port, 'localhost', () => {
+        app.swagger.api.host = server.address().address + ':' + server.address().port;
+    });
 });
+
 ```
 
 ### Mount Path

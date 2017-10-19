@@ -28,16 +28,16 @@
   },
   "bugs": "http://github.com/krakenjs/swaggerize-express/issues",
   "engines": {
-    "node": "<=4.x"
+    "node": ">=6.x"
   },
   "dependencies": {
-    "async": "^1.5.0",
+    "async": "^2",
     "caller": "^1.0.1",
     "core-util-is": "^1.0.1",
     "debuglog": "^1.0.1",
     "js-yaml": "^3.2.6",
     "path-to-regexp": "^1.2.1",
-    "swaggerize-routes": "^1.0.0"
+    "swaggerize-routes": "subeeshcbabu/swaggerize-routes#v2.x"
   },
   "peerDependencies": {
     "express": "^4.0.0"
@@ -45,15 +45,15 @@
   "devDependencies": {
     "tape": "^4.2.2",
     "istanbul": "~0.4.0",
-    "jshint": "^2.4.1",
+    "eslint": "^2",
     "express": "^4.6.1",
-    "supertest": "^1.1.0",
+    "supertest": "^2",
     "body-parser": "^1.7.0"
   },
   "scripts": {
     "test": "tape test/*.js",
     "cover": "istanbul cover tape -- test/*.js",
-    "lint": "jshint -c .jshintrc lib/*.js"
+    "lint": "eslint ."
   },
   "license": "Apache-2.0"
 }

@@ -1,3 +1,15 @@
+### 5.0.0
+
+* Use `swaggerize-routes^2`
+    - Use [swagger-parser](https://github.com/BigstickCarpet/swagger-parser) to validate the Swagger spec.
+    - The api is dereferenced (both remote and local $ref are dereferenced) using [swagger-parser](https://github.com/BigstickCarpet/swagger-parser) #40
+    - Use [JSON schema validator](https://github.com/mafintosh/is-my-json-valid) as the default validator. #30.
+    - Option to set `joischema` to `true` to use [Joi](https://github.com/hapijs/joi) schema validator. Uses [enjoi](https://github.com/tlivings/enjoi) - The json to joi schema converter - to build the validator functions.
+
+* Start the server (or `listen` to port) only on `route` event emitted by the app. Route builder is an async api, now capable of parsing and validating remote $ref in swagger spec, so the app/server need to wait for the `route` event before processing requests.
+
+* es6 changes
+
 ### 4.0.0
 
 * Support for `swaggerize-routes` security.
