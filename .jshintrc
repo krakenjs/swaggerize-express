@@ -49,7 +49,7 @@
     "lastsemic": false,
     "iterator": false,
     "funcscope": false,
-    "esnext": false,
+    "esnext": true,
 
     "newcap": false,
     "noempty": false,

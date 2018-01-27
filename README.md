@@ -161,6 +161,16 @@ module.exports = {
 }
 ```
 
+### Async Handlders
+async/await requires at least node 7.6. Errors that occurred in async function will be automatically passed to next() callback
+```javascript
+module.exports = {
+    get: async (req, res) => { ... },
+    put: async (req, res) => { ... },
+    ...
+}
+```
+
 ### Handler Middleware
 
 Handlers can also specify middleware chains by providing an array of handler functions under the verb:
