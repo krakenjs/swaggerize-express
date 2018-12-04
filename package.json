@@ -1,10 +1,11 @@
 {
   "name": "swaggerize-express",
-  "version": "4.0.6",
+  "version": "4.1.0",
   "author": "Trevor Livingston <trlivingston@paypal.com>",
   "contributors": [
     "Trevor Livingston <tlivings@gmail.com>",
-    "Subeesh Chothendavida <subeeshcbabu@yahoo.co.in>"
+    "Subeesh Chothendavida <subeeshcbabu@yahoo.co.in>",
+    "Adam McCormick <awmccormick@sbgtv.com>"
   ],
   "description": "Design-driven apis with swagger 2.0 and express.",
   "keywords": [
@@ -24,9 +25,9 @@
   "main": "./lib/index",
   "repository": {
     "type": "git",
-    "url": "git://github.com/krakenjs/swaggerize-express.git"
+    "url": "git://github.com/SinclairDigital/swaggerize-express.git"
   },
-  "bugs": "http://github.com/krakenjs/swaggerize-express/issues",
+  "bugs": "http://github.com/SinclairDigital/swaggerize-express/issues",
   "engines": {
     "node": "<=4.x"
   },
