@@ -1,3 +1,9 @@
+### 5.0.0-alpha.1
+
+* Add support to Node > v12.
+* Add `nyc` as a code coverage tool instead of `istambul`.
+* Add `eslint` as a lint tool instead of `jshint`.
+* Update `swaggerize-routes` package and add `package-lock.json` file.
 ### 4.0.0
 
 * Support for `swaggerize-routes` security.
