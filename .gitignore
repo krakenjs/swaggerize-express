@@ -34,3 +34,4 @@ Thumbs.db
 .LSOverride
 .Spotlight-V100
 .Trashes
+.nyc_output/
